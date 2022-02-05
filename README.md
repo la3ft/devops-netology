@@ -91,8 +91,26 @@ Date:   Thu Mar 5 21:12:06 2020 +0000
 
     Cleanup after v0.12.23 release
 
-- **5.**
+- **5.** git log -L:'func providerSource':provider_source.go
 
-- **6.**
+commit 5af1e6234ab6da412fb8637393c5a17a1b293663
 
-- **7.**
++func providerSource(configs []*cliconfig.ProviderInstallation, services *disco.Disco) (getproviders.Source, tfdiags.Diagnostics)
+
+- **6.** commits on globalPluginDirs:
+
+commit 78b12205587fe839f10d946ea3fdc06719decb05
+
+commit 52dbf94834cb970b510f2fba853a5b49ad9b1a46
+
+commit 41ab0aef7a0fe030e84018973a64135b11abcd70
+
+commit 66ebff90cdfaa6938f26f908c7ebad8d547fea17
+
+commit 8364383c359a6b738a436d1b7745ccdce178df47
+
+- **7.** synchronizedWriters:
+
+commit 5ac311e2a91e381e2f52234668b49ba670aa0fe5
+
+author Martin Atkins <mart@degeneration.co.uk> 1493853941 -0700
