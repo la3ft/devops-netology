@@ -4,17 +4,23 @@
 # ДЗ 2.4. Инструменты Git
 
 - **1.** commit aefead:
+
 full hash - aefead2207ef7e2aa5dc81a34aedf0cad4c32545
+
 comment - Update CHANGELOG.md
 
 - **2.** commit 85024d3:
+
 tag -  v0.12.23
 
 - **3.** commit b8d720:
+
 parent 56cd7859e05c36c06b56d013b55a252d0bb7e158
+
 parent 9ea88f22fc6269854151c571162c5bcf958bee2b
 
 - **4.** git log v0.12.23..v0.12.24
+
 commit 33ff1c03bb960b332be3af2e333462dde88b279e (tag: v0.12.24)
 Author: tf-release-bot <terraform@hashicorp.com>
 Date:   Thu Mar 19 15:04:05 2020 +0000
