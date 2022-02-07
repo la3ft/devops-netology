@@ -101,4 +101,4 @@ vagrant@vagrant:~$ mkdir /tmp/new_path_directory/
 vagrant@vagrant:~$ cp /bin/bash /tmp/new_path_directory/ # копируем исполняемый файл
 vagrant@vagrant:~$ sudo vim /etc/environment # правим пути переменных, вставляя нашу новую директору перед /usr/bin
 ```
-- **13.** 
+- **13.** Команда `batch` выполняется когда средняя нагрузка системы меньше 1.5 (load average в команде `top`), время выполнения для `batch` не задаётся. Для команды же `at` задаётся точное время выполнения, load average не учитывается.
