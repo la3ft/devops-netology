@@ -74,3 +74,5 @@ commit 8364383c359a6b738a436d1b7745ccdce178df47
 commit 5ac311e2a91e381e2f52234668b49ba670aa0fe5
 
 author Martin Atkins <mart@degeneration.co.uk> 1493853941 -0700
+
+# ДЗ Работа в терминале (лекция 1)
