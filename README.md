@@ -95,3 +95,16 @@ author Martin Atkins <mart@degeneration.co.uk> 1493853941 -0700
 - **9.** Скобки {} применимы при использовании массивов, описание lists содержатся на строке 257.
 
 - **10.** Создать 100000 файлов можно при помощи команды touch {1..100000}.log. Аналогичным образом создать 300000 не получится из-за ошибки -bash: /usr/bin/touch: Argument list too long, данный параметр задан значением ARG_MAX (чтобы посмотреть - getconf ARG_MAX).
+
+- **11.** 
+
+- **12.** Для задания пути переменной необходимо выполнить следующие команды:
+
+'''
+vagrant@vagrant:~$ mkdir /tmp/new_path_directory/
+vagrant@vagrant:~$ mkdir /tmp/new_path_directory/bash
+vagrant@vagrant:~$ cp /bin/bash /tmp/new_path_directory/
+vagrant@vagrant:~$ sudo vim /etc/environment
+'''
+
+- **13.** 
