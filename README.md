@@ -101,7 +101,6 @@ author Martin Atkins <mart@degeneration.co.uk> 1493853941 -0700
 - **12.** Для задания пути переменной необходимо выполнить следующие команды(также приложил скриншоты 12-1.png и 12-2.png) :
 ```
 vagrant@vagrant:~$ mkdir /tmp/new_path_directory/
-vagrant@vagrant:~$ mkdir /tmp/new_path_directory/bash
 vagrant@vagrant:~$ cp /bin/bash /tmp/new_path_directory/ # копируем исполняемый файл
 vagrant@vagrant:~$ sudo vim /etc/environment # правим пути переменных, вставляя нашу новую директору перед /usr/bin
 ```
