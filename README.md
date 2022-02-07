@@ -3,7 +3,7 @@
 
 # ДЗ 2.4. Инструменты Git
 
-- **1.** git show aefea
+- **1.** `git show aefea`
 
 commit aefead2207ef7e2aa5dc81a34aedf0cad4c32545
 
@@ -13,11 +13,11 @@ Date:   Thu Jun 18 10:29:58 2020 -0400
 
     Update CHANGELOG.md
 
-- **2.** git show 85024d3
+- **2.** `git show 85024d3`
 
 commit 85024d3100126de36331c6982bfaac02cdab9e76 (tag: v0.12.23)
 
-- **3.** git show --pretty=raw b8d720
+- **3.** `git show --pretty=raw b8d720`
 
 commit b8d720f8340221f2146e4e4870bf2ee0bc48f2d5
 
@@ -29,7 +29,7 @@ tree cec002aab630c8bc701cb85bc94e55e751cd2d8f
 
 ...
 
-- **4.** git log --oneline v0.12.23..v0.12.24
+- **4.** `git log --oneline v0.12.23..v0.12.24`
 
 33ff1c03b (tag: v0.12.24) v0.12.24
 
@@ -51,13 +51,13 @@ dd01a3507 Update CHANGELOG.md
 
 225466bc3 Cleanup after v0.12.23 release
 
-- **5.** git log -L:'func providerSource':provider_source.go
+- **5.** `git log -L:'func providerSource':provider_source.go`
 
 commit 5af1e6234ab6da412fb8637393c5a17a1b293663
 
 +func providerSource(configs []*cliconfig.ProviderInstallation, services *disco.Disco) (getproviders.Source, tfdiags.Diagnostics)
 
-- **6.** git log -L:globalPluginDirs:plugins.go
+- **6.** `git log -L:globalPluginDirs:plugins.go`
 
 commit 78b12205587fe839f10d946ea3fdc06719decb05
 
@@ -69,7 +69,7 @@ commit 66ebff90cdfaa6938f26f908c7ebad8d547fea17
 
 commit 8364383c359a6b738a436d1b7745ccdce178df47
 
-- **7.** git log -SsynchronizedWriters
+- **7.** `git log -SsynchronizedWriters`
 
 commit 5ac311e2a91e381e2f52234668b49ba670aa0fe5
 
