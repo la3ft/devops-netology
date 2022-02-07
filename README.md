@@ -88,3 +88,7 @@ author Martin Atkins <mart@degeneration.co.uk> 1493853941 -0700
     vb.cpus = 2 # Количество потоков
     
   end
+
+- **7.** Максимальная длина журнала history задаётся переменной max_input_history, описание есть в man history по 325 строке
+- 
+Включение директивы ignoreboth в HISTCONTROL означает, что повторающиеся значения вводимых команд не будут отображаться в записях history
