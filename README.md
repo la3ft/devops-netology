@@ -82,6 +82,9 @@ author Martin Atkins <mart@degeneration.co.uk> 1493853941 -0700
 - **6.** Для добавления оперативной памяти и потоков в виртуальную машину через Vagrant необходимо добавить следующие строки в Vagrantfile:
 
   config.vm.provider "virtualbox" do |vb|
+  
     vb.memory = 2048 # Размер оперативной памяти
+    
     vb.cpus = 2 # Количество потоков
+    
   end
