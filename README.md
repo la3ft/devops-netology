@@ -119,12 +119,12 @@ cd is a shell builtin
 - **6.** 
 - **7.** 
 - **8.** 
-- **9.** 
+- **9.** Вывод команды `cat /proc/$$/environ` отобразит следующее:
 ```
 vagrant@vagrant:~$ cat /proc/$$/environ
-
 USER=vagrantLOGNAME=vagrantHOME=/home/vagrantPATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/tmp/new_path_directory:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/binSHELL=/bin/bashTERM=xterm-256colorXDG_SESSION_ID=3XDG_RUNTIME_DIR=/run/user/1000DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/busXDG_SESSION_TYPE=ttyXDG_SESSION_CLASS=userMOTD_SHOWN=pamLANG=en_US.UTF-8SSH_CLIENT=10.0.2.2 64334 22SSH_CONNECTION=10.0.2.2 64334 10.0.2.15 22SSH_TTY=/dev/pts/0
 ```
+Это вывод переменных окружения текущего пользователя, также просмотреть их в более удобном виде можно с помощью команды `printenv`.
 - **10.** 
 - **11.** 
 - **12.** 
