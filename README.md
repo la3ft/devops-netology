@@ -164,7 +164,13 @@ vagrant@vagrant:~$ ls -lt /proc/842/exe
 lrwxrwxrwx 1 root root 0 Feb 12 20:20 /proc/842/exe -> /opt/VBoxGuestAdditions-6.1.30/sbin/VBoxService
 ```
 - **11.** Судя по выводу команды `cat /proc/cpuinfo` поддерживается набор инструкций sse4_2.
-- **12.** 
+- **12.** По умолчанию для команды ssh не предусмотрено выделение псевдотерминала, поэтому выдаётся сообщение об ошибке, чтобы этого избежать можно использовать ключ `-t`:
+```
+vagrant@vagrant:~$ ssh -t localhost 'tty'
+vagrant@localhost's password:
+/dev/pts/1
+Connection to localhost closed.
+```
 - **13.** Мне не удалось перевести выполение команды `ping 127.0.0.1` с одного терминала на другой, reptyr вываливает ошибку:
 ```
 vagrant@vagrant:~$ reptyr $(pgrep ping)
