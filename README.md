@@ -125,8 +125,17 @@ vagrant@vagrant:~$ cat /proc/$$/environ
 USER=vagrantLOGNAME=vagrantHOME=/home/vagrantPATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/tmp/new_path_directory:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/binSHELL=/bin/bashTERM=xterm-256colorXDG_SESSION_ID=3XDG_RUNTIME_DIR=/run/user/1000DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/busXDG_SESSION_TYPE=ttyXDG_SESSION_CLASS=userMOTD_SHOWN=pamLANG=en_US.UTF-8SSH_CLIENT=10.0.2.2 64334 22SSH_CONNECTION=10.0.2.2 64334 10.0.2.15 22SSH_TTY=/dev/pts/0
 ```
 Это вывод переменных окружения текущего пользователя, также просмотреть их в более удобном виде можно с помощью команды `printenv`.
-- **10.** 
-- **11.** 
+- **10.** В `/proc/<PID>/cmdline` содержатся файлы только для чтения содержащие полную информацию о процессе, если это зомби процесс то содержимого файла не будет отображаться, например:
+```
+root@vagrant:/home/vagrant# cat /proc/842/cmdline
+/usr/sbin/VBoxService--pidfile/var/run/vboxadd-service.shroot@vagrant:/home/vagrant#
+```
+В `/proc/<PID>/exe` содержатся символические ссылки на сами работающие программы, например:
+```
+root@vagrant:/home/vagrant# ls -lt /proc/842/exe
+lrwxrwxrwx 1 root root 0 Feb 12 20:20 /proc/842/exe -> /opt/VBoxGuestAdditions-6.1.30/sbin/VBoxService
+```
+- **11.** Судя по выводу команды `cat /proc/cpuinfo` поддерживается набор инструкций sse4_2.
 - **12.** 
 - **13.** 
 - **14.** 
