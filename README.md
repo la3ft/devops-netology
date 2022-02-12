@@ -120,13 +120,33 @@ cd is a shell builtin
 vagrant@vagrant:~$ echo 'test' > 1234.txt | cat 1234.txt
 test
 ```
-- **6.** 
+- **6.** Да мы можем передать вывод на другой терминал используя /dev/tty1, например:
+```
+vagrant@vagrant:~$ tty
+/dev/pts/1
+vagrant@vagrant:~$ echo tst > /dev/tty1
+```
+Вывод сообщения 'tst' уйдёт на наш другой терминал.
 - **7.** Командой `bash 5>&1` мы создали файловый дескриптор, который прописался в /proc/$$/fd/5, следовательно переслав на этот файл вывод echo мы получим следующий результат:
 ```
 vagrant@vagrant:~$ echo netology > /proc/$$/fd/5
 netology
 ```
-- **8.** 
+- **8.** Это можно сделать с помощью ввода комманд:
+```
+vagrant@vagrant:~$ bash 5>&2
+vagrant@vagrant:~$ cat 123.txt > /proc/$$/fd/5 | cat 1
+cat: 1: No such file or directory
+1
+2
+3
+4
+5
+6
+7
+123
+1234
+```
 - **9.** Вывод команды `cat /proc/$$/environ` отобразит следующее:
 ```
 vagrant@vagrant:~$ cat /proc/$$/environ
