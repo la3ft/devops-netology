@@ -121,7 +121,11 @@ vagrant@vagrant:~$ echo 'test' > 1234.txt | cat 1234.txt
 test
 ```
 - **6.** 
-- **7.** 
+- **7.** Командой `bash 5>&1` мы создали файловый дескриптор, который прописался в /proc/$$/fd/5, следовательно переслав на этот файл вывод echo мы получим следующий результат:
+```
+vagrant@vagrant:~$ echo netology > /proc/$$/fd/5
+netology
+```
 - **8.** 
 - **9.** Вывод команды `cat /proc/$$/environ` отобразит следующее:
 ```
@@ -131,15 +135,22 @@ USER=vagrantLOGNAME=vagrantHOME=/home/vagrantPATH=/usr/local/sbin:/usr/local/bin
 Это вывод переменных окружения текущей сессии, также просмотреть их в более удобном виде можно с помощью команды `printenv`.
 - **10.** В `/proc/<PID>/cmdline` содержатся файлы только для чтения содержащие полную информацию о процессе, если это зомби процесс то содержимого файла не будет отображаться, например:
 ```
-root@vagrant:/home/vagrant# cat /proc/842/cmdline
+vagrant@vagrant:~$ cat /proc/842/cmdline
 /usr/sbin/VBoxService--pidfile/var/run/vboxadd-service.shroot@vagrant:/home/vagrant#
 ```
 В `/proc/<PID>/exe` содержатся символические ссылки на сами работающие программы, например:
 ```
-root@vagrant:/home/vagrant# ls -lt /proc/842/exe
+vagrant@vagrant:~$ ls -lt /proc/842/exe
 lrwxrwxrwx 1 root root 0 Feb 12 20:20 /proc/842/exe -> /opt/VBoxGuestAdditions-6.1.30/sbin/VBoxService
 ```
 - **11.** Судя по выводу команды `cat /proc/cpuinfo` поддерживается набор инструкций sse4_2.
 - **12.** 
-- **13.** 
+- **13.** Мне не удалось перевести выполение команды `ping 127.0.0.1` с одного терминала на другой, reptyr вываливает ошибку:
+```
+vagrant@vagrant:~$ reptyr $(pgrep ping)
+Unable to attach to pid 4044: Operation not permitted
+The kernel denied permission while attaching. If your uid matches
+the target's, check the value of /proc/sys/kernel/yama/ptrace_scope.
+For more information, see /etc/sysctl.d/10-ptrace.conf
+```
 - **14.** Командой `tee` можно записывать вывод в файл. Команда `sudo` позволяет выполнять другие команды с правами суперпользователя - root, поэтому команда `echo string | sudo tee /root/new_file` выполнится, так как у суперпользователя есть доступ к директории /root/.
