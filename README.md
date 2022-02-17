@@ -190,14 +190,35 @@ chdir("/tmp")                           = 0
 ```
 openat(AT_FDCWD, "/usr/share/misc/magic.mgc", O_RDONLY) = 3
 ```
-- **3.** В такой файл можно записать вывод пустоты через `echo`, например:
+- **3.** В такой файл можно записать вывод пустоты через `echo`, например(увдиеть такие файлы можно с помощью команды `ll`, либо найти с помощью `lsof`):
 ```
 vagrant@vagrant:/tmp$ echo '' > .123.txt.swp
 ```
 Запись лога продолжится, но при этом уже с нуля, что позволит освободить место на диске.
 - **4.** Зомби-процесс не расходует ресурсов системы, так как он завершён, но при этом его запись остаётся. Такой процесс удаляется если его родительский процесс передал функцию wait().
-- **5.** 
-- **6.** 
-- **7.** 
+- **5.** Вывод `opensnoop-bpfcc`:
+```
+root@vagrant:/tmp# opensnoop-bpfcc
+PID    COMM               FD ERR PATH
+642    irqbalance          6   0 /proc/interrupts
+642    irqbalance          6   0 /proc/stat
+642    irqbalance          6   0 /proc/irq/20/smp_affinity
+642    irqbalance          6   0 /proc/irq/0/smp_affinity
+642    irqbalance          6   0 /proc/irq/1/smp_affinity
+642    irqbalance          6   0 /proc/irq/8/smp_affinity
+642    irqbalance          6   0 /proc/irq/12/smp_affinity
+642    irqbalance          6   0 /proc/irq/14/smp_affinity
+642    irqbalance          6   0 /proc/irq/15/smp_affinity
+```
+- **6.** /usr/lib/locale/locale-archive
+- **7.** Используется `uname()`:
+```
+uname({sysname="Linux", nodename="vagrant", ...}) = 0
+```
+Выдержка из `man 2`:
+```
+Part of the utsname information is  also  accessible  via  /proc/sys/ker‐
+       nel/{ostype, hostname, osrelease, version, domainname}.
+```
 - **8.** 
 - **9.** 
