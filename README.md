@@ -190,7 +190,7 @@ chdir("/tmp")                           = 0
 ```
 openat(AT_FDCWD, "/usr/share/misc/magic.mgc", O_RDONLY) = 3
 ```
-- **3.** В такой файл можно записать вывод пустоты через `echo`, например(увдиеть такие файлы можно с помощью команды `ll`, либо найти с помощью `lsof`):
+- **3.** В такой файл можно записать вывод пустоты через `echo`, например(увидеть такие файлы можно с помощью команды `ll`, либо найти с помощью `lsof`):
 ```
 vagrant@vagrant:/tmp$ echo '' > .123.txt.swp
 ```
@@ -210,8 +210,7 @@ PID    COMM               FD ERR PATH
 642    irqbalance          6   0 /proc/irq/14/smp_affinity
 642    irqbalance          6   0 /proc/irq/15/smp_affinity
 ```
-- **6.** /usr/lib/locale/locale-archive
-- **7.** Используется `uname()`:
+- **6.** Используется `uname()`:
 ```
 uname({sysname="Linux", nodename="vagrant", ...}) = 0
 ```
@@ -220,5 +219,32 @@ uname({sysname="Linux", nodename="vagrant", ...}) = 0
 Part of the utsname information is  also  accessible  via  /proc/sys/ker‐
        nel/{ostype, hostname, osrelease, version, domainname}.
 ```
-- **8.** 
-- **9.** 
+- **7.** Команда `test -d /tmp/some_dir; echo Hi` выполнится в любом случае с выводом Hi, так как `;` - всего лишь разделитель (аналогично `|`). Команда же `test -d /tmp/some_dir && echo Hi` выполняется без вывода Hi, так как `&&` - оператор условия и\или (аналогинчо `||`), и первая наша команда `test -d /tmp/some_dir` не возвращает успешный вывод, так как директории /tmp/some_dir нет и команда echo Hi соответственно не выполняется.
+Команда `set -e` завершает сессию после вывода 1 или 2, использовать `<команда1> && set -e` не имеет смысла, так как если у первой команды вывод 1, то и `set -e` не будет выполнена.
+- **8.** Судя по `set --help`:
+```
+errexit      same as -e
+nounset      same as -u
+xtrace       same as -x
+pipefail     the return value of a pipeline is the status of
+                           the last command to exit with a non-zero status,
+                           or zero if no command exited with a non-zero status
+```
+Что в переводе с `set -euxo pipefail` по-русски будет означать следующее - выводить подробную информацию о последовательности выполнения команды построчно и в случае неудачного выполнения (вывод не равен 0) - завершать сеанс.
+- **9.** Вывод `ps -o stat`:
+```
+vagrant@vagrant:~$ ps -o stat
+STAT
+Ss
+R+
+```
+В man даётся описание таким процессам:
+```
+S    interruptible sleep (waiting for an event to complete)
+R    running or runnable (on run queue)
+...
+s    is a session leader
++    is in the foreground process group
+```
+Ss - в данной сессии большинство процессов ожидают выполнения
+R+ - запускаемые процессы или готовые к запуску.
