@@ -247,4 +247,5 @@ s    is a session leader
 +    is in the foreground process group
 ```
 Ss - в данной сессии большинство процессов ожидают выполнения
+
 R+ - запускаемые процессы или готовые к запуску.
