@@ -274,8 +274,8 @@ WantedBy=multi-user.target
 ```
 5. Перезапустить службы, включить службу в автозагрузку (enable):
 ```
-systemctl daemon-reload
-systemctl enable --now node_exporter
+root@vagrant:/home/vagrant# systemctl daemon-reload
+root@vagrant:/home/vagrant# systemctl enable --now node_exporter
 ```
 6. Проверить работу демона `systemctl status node_exporter`:
 ```
