@@ -299,7 +299,27 @@ Feb 22 19:01:25 vagrant node_exporter[668]: ts=2022-02-22T14:01:25.260Z caller=n
 Feb 22 19:01:25 vagrant node_exporter[668]: ts=2022-02-22T14:01:25.260Z caller=nod>
 Feb 22 19:01:25 vagrant node_exporter[668]: ts=2022-02-22T14:01:25.260Z caller=tls>
 ```
-- **2.**
+- **2.** По найденным параметрам "cpu", "memory", "disk", "network":
+```
+CPU
+node_cpu_seconds_total{cpu="0",mode="idle"} 319.68
+node_cpu_seconds_total{cpu="0",mode="iowait"} 0.2
+process_cpu_seconds_total
+
+Память
+node_memory_MemFree_bytes
+node_memory_MemTotal_bytes
+
+Диск
+node_disk_io_time_seconds_total{device="dm-0"} 7.908
+node_disk_io_time_seconds_total{device="sda"} 8.132
+node_disk_write_time_seconds_total{device="dm-0"} 1.964
+node_disk_write_time_seconds_total{device="sda"} 1.95
+
+Сеть
+node_network_speed_bytes{device="eth0"}
+node_network_receive_errs_total{device="eth0"}
+```
 - **3.** Удалось установить и пробросить указанный порт, приложил скрины (dz_3_1.PNG и dz_3_2.PNG)
 - **4.**
 - **5.**
