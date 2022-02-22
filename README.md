@@ -258,7 +258,7 @@ R+ - запускаемые процессы или готовые к запус
 4. Создать файл демона и прописать ему настройки `vim /etc/systemd/system/node_exporter.service`:
 ```
 [Unit]
-Description=Prometheus Node Exporter
+Description=Node Exporter
 Wants=network-online.target
 After=network-online.target
 
@@ -287,7 +287,6 @@ root@vagrant:/home/vagrant# systemctl status node_exporter
      Memory: 14.1M
      CGroup: /system.slice/node_exporter.service
              └─668 /usr/local/bin/node_exporter
-
 Feb 22 19:01:25 vagrant node_exporter[668]: ts=2022-02-22T14:01:25.260Z caller=nod>
 Feb 22 19:01:25 vagrant node_exporter[668]: ts=2022-02-22T14:01:25.260Z caller=nod>
 Feb 22 19:01:25 vagrant node_exporter[668]: ts=2022-02-22T14:01:25.260Z caller=nod>
