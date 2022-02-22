@@ -259,10 +259,11 @@ R+ - запускаемые процессы или готовые к запус
 ```
 [Unit]
 Description=Node Exporter
-Wants=network-online.target
-After=network-online.target
+After=network.target
 
 [Service]
+#Внешний файл по аналогии с cron
+EnvironmentFile=-/opt/node_exporter/tst.yml
 User=node_exporter
 Group=node_exporter
 Type=simple
