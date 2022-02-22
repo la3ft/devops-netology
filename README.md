@@ -251,7 +251,54 @@ Ss - в данной сессии большинство процессов ож
 R+ - запускаемые процессы или готовые к запуску.
 
 # ДЗ 3.4. Операционные системы, лекция 2
-- **1.**
+- **1.** Выполнялось под root (`sudo su`)
+1. Создать пользователя node_exporter - `useradd node_exporter`;
+2. Скачать и разархивировать пакет `node_exporter-1.3.1.linux-amd64`;
+3. Перейти в папку и расположить node_exporter в /usr/local/bin - `cp node_exporter /usr/local/bin`;
+4. Создать файл демона и прописать ему настройки `vim /etc/systemd/system/node_exporter.service`:
+...
+[Unit]
+Description=Prometheus Node Exporter
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=node_exporter
+Group=node_exporter
+Type=simple
+ExecStart=/usr/local/bin/node_exporter
+
+[Install]
+WantedBy=multi-user.target
+...
+5. Перезапустить службы, включить службу в автозагрузку (enable):
+...
+systemctl daemon-reload
+systemctl enable --now node_exporter
+...
+6. Проверить работу демона `systemctl status node_exporter`:
+...
+root@vagrant:/home/vagrant# systemctl status node_exporter
+● node_exporter.service - Node Exporter
+     Loaded: loaded (/etc/systemd/system/node_exporter.service; enabled; vendor pr>
+     Active: active (running) since Tue 2022-02-22 19:01:24 +05; 1min 40s ago
+   Main PID: 668 (node_exporter)
+      Tasks: 5 (limit: 2314)
+     Memory: 14.1M
+     CGroup: /system.slice/node_exporter.service
+             └─668 /usr/local/bin/node_exporter
+
+Feb 22 19:01:25 vagrant node_exporter[668]: ts=2022-02-22T14:01:25.260Z caller=nod>
+Feb 22 19:01:25 vagrant node_exporter[668]: ts=2022-02-22T14:01:25.260Z caller=nod>
+Feb 22 19:01:25 vagrant node_exporter[668]: ts=2022-02-22T14:01:25.260Z caller=nod>
+Feb 22 19:01:25 vagrant node_exporter[668]: ts=2022-02-22T14:01:25.260Z caller=nod>
+Feb 22 19:01:25 vagrant node_exporter[668]: ts=2022-02-22T14:01:25.260Z caller=nod>
+Feb 22 19:01:25 vagrant node_exporter[668]: ts=2022-02-22T14:01:25.260Z caller=nod>
+Feb 22 19:01:25 vagrant node_exporter[668]: ts=2022-02-22T14:01:25.260Z caller=nod>
+Feb 22 19:01:25 vagrant node_exporter[668]: ts=2022-02-22T14:01:25.260Z caller=nod>
+Feb 22 19:01:25 vagrant node_exporter[668]: ts=2022-02-22T14:01:25.260Z caller=nod>
+Feb 22 19:01:25 vagrant node_exporter[668]: ts=2022-02-22T14:01:25.260Z caller=tls>
+...
 - **2.**
 - **3.** Удалось установить и пробросить указанный порт, приложил скрины (dz_3_1.PNG и dz_3_2.PNG)
 - **4.**
