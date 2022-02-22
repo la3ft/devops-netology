@@ -321,7 +321,14 @@ node_network_speed_bytes{device="eth0"}
 node_network_receive_errs_total{device="eth0"}
 ```
 - **3.** Удалось установить и пробросить указанный порт, приложил скрины (dz_3_1.PNG и dz_3_2.PNG)
-- **4.**
+- **4.** Да, можно грепнуть ключевое слово и увидеть запись о ядре KVM - `dmesg | grep virt`
+```
+root@vagrant:/home/vagrant# dmesg | grep virt
+[    0.002428] CPU MTRRs all blank - virtualized system.
+[    0.026488] Booting paravirtualized kernel on KVM
+[    0.370112] Performance Events: PMU not available due to virtualization, using software events only.
+[    4.006548] systemd[1]: Detected virtualization oracle.
+```
 - **5.**
 - **6.**
 - **7.**
