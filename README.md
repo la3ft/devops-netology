@@ -299,7 +299,7 @@ Feb 22 19:01:25 vagrant node_exporter[668]: ts=2022-02-22T14:01:25.260Z caller=n
 Feb 22 19:01:25 vagrant node_exporter[668]: ts=2022-02-22T14:01:25.260Z caller=nod>
 Feb 22 19:01:25 vagrant node_exporter[668]: ts=2022-02-22T14:01:25.260Z caller=tls>
 ```
-- **2.** По найденным параметрам "cpu", "memory", "disk", "network":
+- **2.** По найденным параметрам "cpu", "memory", "disk", "network" ():
 ```
 CPU
 node_cpu_seconds_total{cpu="0",mode="idle"} 319.68
@@ -329,6 +329,30 @@ root@vagrant:/home/vagrant# dmesg | grep virt
 [    0.370112] Performance Events: PMU not available due to virtualization, using software events only.
 [    4.006548] systemd[1]: Detected virtualization oracle.
 ```
-- **5.**
-- **6.**
-- **7.**
+- **5.** Судя по выподу `sysctl -n fs.nr_open` - 1048576:
+```
+root@vagrant:/home/vagrant# sysctl -n fs.nr_open
+1048576
+```
+Это лимит на маскимальное количетсво открытых файловых дескрипторов. Судя по `ulimit --help` лимит кратен 1024, `ulimit -Sn` - показывает текущий лимит, `ulimit -Hn` - показывает максимально доступный лимит.
+- **6.** Вызовем на другом терминале `sleep 1h`, в нашем другом терминале сделаем вызов `ps aux | grep sleep`:
+```
+root@vagrant:/# ps aux | grep sleep
+vagrant     2525  0.0  0.0   5476   532 pts/1    S+   21:02   0:00 sleep 1h
+```
+Если выполняю команду `nsenter -t 2525 -p -m -F` то я перемещаюсь в новый неймспейс, но при этом PID остаётся прежним (даже флаг -F не помогает), разобраться так и не удалось.
+- **7.** `:(){ :|:& };:` - это функция которая рекурсивно вызывает саму себя, моя ВМ приходила в норму достаточно долго. Если посмотреть вызов `dmesg | grep rejected` томожно увидеть следующее:
+```
+vagrant@vagrant:~$ dmesg | grep rejected
+[  189.998690] cgroup: fork rejected by pids controller in /user.slice/user-1000.slice/session-5.scope
+```
+С помощью `ulimit -a` можно посмотреть максимальное количество процессов для пользователя:
+```
+max user processes              (-u) 7715
+```
+Изменить это количество можно с помощью `ulimit -u`, например:
+```
+vagrant@vagrant:~$ ulimit -u 100
+vagrant@vagrant:~$ ulimit -u
+100
+```
