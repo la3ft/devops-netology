@@ -324,7 +324,7 @@ root@vagrant:/home/vagrant# dmesg | grep virt
 [    0.370112] Performance Events: PMU not available due to virtualization, using software events only.
 [    4.006548] systemd[1]: Detected virtualization oracle.
 ```
-- **5.** Судя по выподу `sysctl -n fs.nr_open` - 1048576:
+- **5.** Судя по выводу `sysctl -n fs.nr_open` - 1048576:
 ```
 root@vagrant:/home/vagrant# sysctl -n fs.nr_open
 1048576
