@@ -351,3 +351,36 @@ vagrant@vagrant:~$ ulimit -u 100
 vagrant@vagrant:~$ ulimit -u
 100
 ```
+
+# ДЗ 3.5. Файловые системы
+- **3.** Сделано:
+```
+Disk /dev/sdb: 2.51 GiB, 2684354560 bytes, 5242880 sectors
+Disk model: VBOX HARDDISK
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/sdc: 2.51 GiB, 2684354560 bytes, 5242880 sectors
+Disk model: VBOX HARDDISK
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+```
+- **4.** 
+- **5.** 
+- **6.** 
+- **7.** 
+- **8.** 
+- **9.** 
+- **10.** 
+- **11.** 
+- **12.** 
+- **13.** 
+- **14.** 
+- **15.** 
+- **16.** 
+- **17.** 
+- **18.** 
+- **19.** 
