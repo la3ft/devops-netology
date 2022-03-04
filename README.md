@@ -634,7 +634,7 @@ Set-Cookie: prov=3fd012d6-8a8b-a9c3-d749-e88896d5a7c3; domain=.stackoverflow.com
 
 Connection closed by foreign host.
 ```
-- **2.** Возвращается код 307, что тоже соответствует правилу перенаправления. Самый долгий ответ с picture?type=large - 120 ms, приложил скриншот (DZ_3_6-1.PNG).
+- **2.** Возвращается код 307, что тоже соответствует правилу перенаправления. Самый долгий ответ с `picture?type=large` - 120 ms, приложил скриншот (DZ_3_6-1.PNG).
 - **3.** Адрес - 178.214.XXX.XXX, обнаружен с помощью dig - `dig +short myip.opendns.com @resolver1.opendns.com`.
 - **4.** whois 178.214.XXX.XXX:
 ```
