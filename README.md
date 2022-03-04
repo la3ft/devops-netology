@@ -683,19 +683,25 @@ Keys:  Help   Display mode   Restart statistics   Order of fields   quit
 25. AS15169  8.8.8.8                    10.8%    65   35.9  37.1  34.9  38.8   1.0
 ```
 - **6.** Наибольшая процент на этом участке `AS15169  142.251.49.24`
-- **7.** A записи и серверы dig `dns.google`:
+- **7.** A записи и серверы `dig dns.google`:
 ```
+...
 ;; ANSWER SECTION:
 dns.google.             859     IN      A       8.8.8.8
 dns.google.             859     IN      A       8.8.4.4
+...
 ```
 - **8.** `dig -x 8.8.8.8`:
 ```
+...
 ;; ANSWER SECTION:
 8.8.8.8.in-addr.arpa.   79351   IN      PTR     dns.google.
+...
 ```
 `dig -x 8.8.4.4`: 
 ```
+...
 ;; ANSWER SECTION:
 4.4.8.8.in-addr.arpa.   85837   IN      PTR     dns.google.
+...
 ```
