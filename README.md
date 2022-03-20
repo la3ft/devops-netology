@@ -822,7 +822,22 @@ udp        0      0 10.0.2.15:68            0.0.0.0:*                           
 # ДЗ 3.9. Элементы безопасности информационных систем
 - **1.** Готово, скрин DZ_3_9-1.PNG
 - **2.** Готово, скрин DZ_3_9-2.PNG
-- **3.** 
+- **3.** Установить apache2 с помощью `apt install apache2`, включить mod_ssl:
+```
+root@vagrant:/etc/apache2# a2enmod ssl
+Considering dependency setenvif for ssl:
+Module setenvif already enabled
+Considering dependency mime for ssl:
+Module mime already enabled
+Considering dependency socache_shmcb for ssl:
+Enabling module socache_shmcb.
+Enabling module ssl.
+See /usr/share/doc/apache2/README.Debian.gz on how to configure SSL and create self-signed certificates.
+To activate the new configuration, you need to run:
+  systemctl restart apache2
+root@vagrant:/etc/apache2# systemctl restart apache2
+```
+Создать пару ключ сертификат - `openssl req -x509 -nodes -days 365 -newkey rsa:2048 \-keyout /etc/ssl/private/apache-selfsigned.key \-out /etc/ssl/certs/apache-selfsigned.crt`. После создания пары их можно использовать в нашем вебсервере, я использовал ключ и сертификат в самом apache2 - скриншот DZ_3_9-3.PNG.
 - **4.** Проверка github.com:
 ```
 root@vagrant:/home/vagrant/testssl.sh# ./testssl.sh -e --fast --parallel https://github.com/
@@ -932,4 +947,4 @@ Your Hardware Enablement Stack (HWE) is supported until April 2025.
 Last login: Sun Mar 20 18:11:16 2022 from 192.168.3.58
 laft@laft-VirtualBox:~$
 ```
-- **7.** Выполнил запись с помощью команды `root@vagrant:/home/vagrant# tcpdump -i eth1 -c 100 -w 0001.pcap`. Скрин с Wireshark - DZ_3_9-3.PNG
+- **7.** Выполнил запись с помощью команды `root@vagrant:/home/vagrant# tcpdump -i eth1 -c 100 -w 0001.pcap`. Скрин с Wireshark - DZ_3_9-4.PNG
