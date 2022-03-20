@@ -876,6 +876,60 @@ Hexcode  Cipher Suite Name (OpenSSL)       KeyExch.   Encryption  Bits     Ciphe
 
  Done 2022-03-20 11:57:32 [   7s] -->> 140.82.121.4:443 (github.com) <<--
 ```
-- **5.** 
-- **6.** 
+- **5.** Удалось выполнить подключение к своей другой ВМ:
+```
+root@vagrant:/home/vagrant# ssh-copy-id -i /home/vagrant/key1.pub laft@192.16
+8.3.55
+/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "/home/vagrant/key1.pub"
+The authenticity of host '192.168.3.55 (192.168.3.55)' can't be established.
+ECDSA key fingerprint is SHA256:hJBJVXggQhDq5vr+V9251h5LdKykMmw4tfRBMhxch5g.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+laft@192.168.3.55's password:
+
+Number of key(s) added: 1
+
+Now try logging into the machine, with:   "ssh 'laft@192.168.3.55'"
+and check to make sure that only the key(s) you wanted were added.
+
+root@vagrant:/home/vagrant# ssh laft@192.168.3.55
+laft@192.168.3.55's password:
+Welcome to Ubuntu 20.04.3 LTS (GNU/Linux 5.13.0-28-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+82 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+Your Hardware Enablement Stack (HWE) is supported until April 2025.
+Last login: Sat Feb  5 18:30:18 2022 from fe80::e869:d7bb:f8cf:3a7b%enp0s3
+laft@laft-VirtualBox:~$
+```
+- **6.** Создать файл конфигурации `vagrant@vagrant:~/.ssh$ vim config`:
+```
+Host laft-vm
+HostName 192.168.3.55
+User laft
+Port 22
+```
+После этого можно подключаться:
+```
+vagrant@vagrant:~/.ssh$ ssh laft-vm
+laft@192.168.3.55's password:
+Welcome to Ubuntu 20.04.3 LTS (GNU/Linux 5.13.0-28-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+82 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+Your Hardware Enablement Stack (HWE) is supported until April 2025.
+Last login: Sun Mar 20 18:11:16 2022 from 192.168.3.58
+laft@laft-VirtualBox:~$
+```
 - **7.** Выполнил запись с помощью команды `root@vagrant:/home/vagrant# tcpdump -i eth1 -c 100 -w 0001.pcap`. Скрин с Wireshark - DZ_3_9-3.PNG
