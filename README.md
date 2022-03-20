@@ -878,4 +878,4 @@ Hexcode  Cipher Suite Name (OpenSSL)       KeyExch.   Encryption  Bits     Ciphe
 ```
 - **5.** 
 - **6.** 
-- **7.** 
+- **7.** Выполнил запись с помощью команды `root@vagrant:/home/vagrant# tcpdump -i eth1 -c 100 -w 0001.pcap`. Скрин с Wireshark - DZ_3_9-3.PNG
