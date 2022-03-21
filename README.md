@@ -5,6 +5,7 @@
 
 - **2.** Готово:
 
+![Alt text](https://u.netology.ngcdn.ru/backend/uploads/lms/tasks/homework_solutions/hashed_file/1/1528491/DZ_3_9-2.PNG)
 
 - **3.** Установить apache2 с помощью `apt install apache2`, включить mod_ssl:
 ```
@@ -21,7 +22,10 @@ To activate the new configuration, you need to run:
   systemctl restart apache2
 root@vagrant:/etc/apache2# systemctl restart apache2
 ```
-Создать пару ключ сертификат - `openssl req -x509 -nodes -days 365 -newkey rsa:2048 \-keyout /etc/ssl/private/apache-selfsigned.key \-out /etc/ssl/certs/apache-selfsigned.crt`. После создания пары их можно использовать в нашем вебсервере, я использовал ключ и сертификат в самом apache2 - скриншот DZ_3_9-3.PNG.
+Создать пару ключ сертификат - `openssl req -x509 -nodes -days 365 -newkey rsa:2048 \-keyout /etc/ssl/private/apache-selfsigned.key \-out /etc/ssl/certs/apache-selfsigned.crt`. После создания пары их можно использовать в нашем вебсервере, я использовал ключ и сертификат в самом apache2:
+
+![Alt text](https://u.netology.ngcdn.ru/backend/uploads/lms/tasks/homework_solutions/hashed_file/2/1528492/DZ_3_9-3.PNG)
+
 - **4.** Проверка github.com:
 ```
 root@vagrant:/home/vagrant/testssl.sh# ./testssl.sh -e --fast --parallel https://github.com/
@@ -131,7 +135,9 @@ Your Hardware Enablement Stack (HWE) is supported until April 2025.
 Last login: Sun Mar 20 18:11:16 2022 from 192.168.3.58
 laft@laft-VirtualBox:~$
 ```
-- **7.** Выполнил запись с помощью команды `root@vagrant:/home/vagrant# tcpdump -i eth1 -c 100 -w 0001.pcap`. Скрин с Wireshark - DZ_3_9-4.PNG
+- **7.** Выполнил запись с помощью команды `root@vagrant:/home/vagrant# tcpdump -i eth1 -c 100 -w 0001.pcap`. Скрин:
+
+![Alt text](https://u.netology.ngcdn.ru/backend/uploads/lms/tasks/homework_solutions/hashed_file/3/1528493/DZ_3_9-4.PNG)
 
 # ДЗ
 Если в файле /terraform/.gitignore будет прописано "*.tfvars" - файлы с расширением tfvars не будут попадать в репозиторий.
