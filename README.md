@@ -1,5 +1,6 @@
 # ДЗ 3.9. Элементы безопасности информационных систем
 - **1.** Готово:
+
 ![Alt text](https://u.netology.ngcdn.ru/backend/uploads/lms/tasks/homework_solutions/hashed_file/0/1528490/DZ_3_9-1.PNG)
 
 - **2.** Готово:
