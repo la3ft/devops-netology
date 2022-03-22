@@ -603,3 +603,359 @@ root@vagrant:/home/vagrant# dmesg | grep md/raid1
                md/raid1:md1: Operation continuing on 1 devices.
 ```
 - **19.** Возвращает 0 (добавил скрин dz_3_5.PNG)
+
+# ДЗ 3.6. Компьютерные сети, лекция 1
+- **1.** Выдаёт код 301, это означает что на вебсервере настроено правило на перенаправление на другую страницу, в нашем случае location: https://stackoverflow.com/questions
+```
+vagrant@vagrant:~$ telnet stackoverflow.com 80
+Trying 151.101.1.69...
+Connected to stackoverflow.com.
+Escape character is '^]'.
+GET /questions HTTP/1.0
+HOST: stackoverflow.com
+
+HTTP/1.1 301 Moved Permanently
+cache-control: no-cache, no-store, must-revalidate
+location: https://stackoverflow.com/questions
+x-request-guid: a1aa3d27-50e6-42c9-b004-bd8840f0d074
+feature-policy: microphone 'none'; speaker 'none'
+content-security-policy: upgrade-insecure-requests; frame-ancestors 'self' https://stackexchange.com
+Accept-Ranges: bytes
+Date: Fri, 04 Mar 2022 12:41:30 GMT
+Via: 1.1 varnish
+Connection: close
+X-Served-By: cache-hel1410033-HEL
+X-Cache: MISS
+X-Cache-Hits: 0
+X-Timer: S1646397691.873302,VS0,VE109
+Vary: Fastly-SSL
+X-DNS-Prefetch-Control: off
+Set-Cookie: prov=3fd012d6-8a8b-a9c3-d749-e88896d5a7c3; domain=.stackoverflow.com; expires=Fri, 01-Jan-2055 00:00:00 GMT; path=/; HttpOnly
+
+Connection closed by foreign host.
+```
+- **2.** Возвращается код 307, что тоже соответствует правилу перенаправления. Самый долгий ответ с `picture?type=large` - 120 ms, приложил скриншот (DZ_3_6-1.PNG).
+- **3.** Адрес - 178.214.XXX.XXX, обнаружен с помощью dig - `dig +short myip.opendns.com @resolver1.opendns.com`.
+- **4.** whois 178.214.XXX.XXX:
+```
+...
+descr:          JSC "Ufanet", Ufa, Russia
+origin:         AS24955
+...
+```
+- **5.** Из-за NAT использованного в виртуалке можно увидеть только это:
+```
+root@vagrant:/home/vagrant# traceroute -An 8.8.8.8
+traceroute to 8.8.8.8 (8.8.8.8), 30 hops max, 60 byte packets
+ 1  10.0.2.2 [*]  0.195 ms  0.151 ms  0.532 ms
+ 2  10.0.2.2 [*]  2.141 ms  2.111 ms  2.027 ms
+```
+При прогоне через mtr определяет только одну AS - `AS15169`:
+```
+vagrant (10.0.2.15)                                       2022-03-04T14:34:16+0000
+Keys:  Help   Display mode   Restart statistics   Order of fields   quit
+                                          Packets               Pings
+ Host                                   Loss%   Snt   Last   Avg  Best  Wrst StDev
+ 1. AS???    10.0.2.2                    0.0%    66    1.2   0.2   0.2   1.2   0.1
+ 2. AS???    192.168.3.1                 0.0%    66    0.8   0.8   0.7   1.1   0.1
+ 3. AS???    100.103.0.1                 1.5%    66    2.2   2.5   1.2  29.4   3.8
+ 4. AS???    10.2.3.17                   0.0%    66    2.1   2.1   1.4  30.1   3.5
+ 5. AS???    10.1.84.49                  0.0%    66    2.1   5.7   1.8  73.0  12.6
+ 6. AS???    10.1.67.14                  0.0%    66    1.4   1.4   1.2   1.7   0.1
+ 7. AS???    10.1.67.65                  0.0%    66    1.6   1.8   1.5   4.9   0.5
+ 8. AS???    10.1.190.62                 0.0%    66    1.7   3.9   1.5  38.7   6.0
+ 9. AS???    10.3.2.3                    1.5%    66   28.0  28.6  27.9  44.9   2.2
+10. AS15169  72.14.220.188               0.0%    66   23.6  23.9  23.5  25.6   0.3
+11. AS15169  142.251.68.223              1.5%    66   23.5  23.6  23.4  25.3   0.3
+12. AS15169  108.170.250.99              0.0%    66   24.1  24.2  23.8  25.7   0.4
+13. AS15169  142.251.49.24              53.0%    66   35.8  35.9  35.6  36.9   0.3
+14. AS15169  209.85.254.20               0.0%    66   39.2  39.1  38.3  48.3   1.4
+15. AS15169  216.239.42.21               0.0%    66   38.4  39.0  38.3  43.3   0.8
+16. (waiting for reply)
+17. (waiting for reply)
+18. (waiting for reply)
+19. (waiting for reply)
+20. (waiting for reply)
+21. (waiting for reply)
+22. (waiting for reply)
+23. (waiting for reply)
+24. (waiting for reply)
+25. AS15169  8.8.8.8                    10.8%    65   35.9  37.1  34.9  38.8   1.0
+```
+- **6.** Наибольшая процент на этом участке `AS15169  142.251.49.24`
+- **7.** A записи и серверы `dig dns.google`:
+```
+...
+;; ANSWER SECTION:
+dns.google.             859     IN      A       8.8.8.8
+dns.google.             859     IN      A       8.8.4.4
+...
+```
+- **8.** `dig -x 8.8.8.8`:
+```
+...
+;; ANSWER SECTION:
+8.8.8.8.in-addr.arpa.   79351   IN      PTR     dns.google.
+...
+```
+`dig -x 8.8.4.4`: 
+```
+...
+;; ANSWER SECTION:
+4.4.8.8.in-addr.arpa.   85837   IN      PTR     dns.google.
+...
+```
+# ДЗ 3.7. Компьютерные сети, лекция 2
+- **1.** ipconfig
+```
+Настройка протокола IP для Windows
+
+
+Адаптер Ethernet Ethernet:
+
+...
+
+Адаптер Ethernet Ethernet 4:
+
+...
+
+Адаптер Ethernet Ethernet 5:
+
+...
+
+Адаптер Ethernet vEthernet (Default Switch):
+...
+```
+Для linux можно использовать `ip a`, `ifconfig`. Для Windows `ipconfig`.
+- **2.** Используется протокол LLDP. Пакет можно Установить можно командой `apt install lldpd`, после установки необходимо запустить службу.
+```
+root@vagrant:/home/vagrant# lldpctl
+-------------------------------------------------------------------------------
+LLDP neighbors:
+-------------------------------------------------------------------------------
+Interface:    eth1, via: LLDP, RID: 1, Time: 0 day, 01:36:18
+  Chassis:
+    ChassisID:    mac 
+  Port:
+    PortID:       mac 
+    TTL:          3601
+    PMD autoneg:  supported: yes, enabled: yes
+      Adv:          1000Base-T, HD: no, FD: yes
+      MAU oper type: unknown
+  LLDP-MED:
+    Device Type:  Generic Endpoint (Class I)
+    Capability:   Capabilities, yes
+```
+- **3.** Технология VLAN. Пакет vlan, установка - `apt install vlan`. Конфигурация настраивается в /etc/network/interfaces, например для eth0:
+```
+root@vagrant:/home/vagrant# vim /etc/network/interfaces
+auto eth0.100
+iface eth0.100 inet static
+address 192.168.1.100
+netmask 255.255.255.0
+vlan-raw-device eth0
+```
+- **4.** Используется bonding, с помощью утилиты `ifenslave` - `apt install ifenslave`. Конфигурация также настраивается в /etc/network/interfaces:
+```
+root@vagrant:/home/vagrant# vim /etc/network/interfaces
+...
+auto bond0
+iface bond0 inet static
+bond-mode 4
+bond-miimon 100
+bond-lacp-rate 1
+bond-slaves none
+address 10.0.0.80
+gateway 10.0.0.1
+netmask 255.255.255.0
+```
+Перезагрузить ВМ, состояние хранится в /proc/net/bonding/bond0.
+- **5.** Всего 8. /29 подсетей в сети с маской /24 можно построить 32. Минимальное значение адреса 10.10.10.1, максимальное значение адреса 10.10.10.6.
+- **6.** Если всё правильно понял можно использовать такую сеть - 100.64.0.0/26.
+- **7.** В Windows `arp -a`, в linux `ip neigh`. Очистить в linux `ip neigh flush all`, в windows `netsh interface ip delete arpcache`. Удалить адрес в windows `arp -d x.x.x.x`, в linux `ip neigh del dev enp0s3 x.x.x.x`.
+
+# ДЗ 3.8. Компьютерные сети, лекция 3
+- **1.** Приложил скриншоты DZ_3_8-1.PNG и DZ_3_8-2.PNG
+- **2.** Создание интерфейса, его поднятие, добавление маршрутов и отображение конечной маршрутизации:
+```
+root@vagrant:/home/vagrant# ip link add dummy0 type dummy
+root@vagrant:/home/vagrant# ifconfig -a | grep dummy
+dummy0: flags=130<BROADCAST,NOARP>  mtu 1500
+root@vagrant:/home/vagrant# ip link set dev dummy0 up
+root@vagrant:/home/vagrant# ip route add 172.16.10.0/24 dev dummy0 metric 100
+root@vagrant:/home/vagrant# ip route add 172.16.15.0/24 dev dummy0 metric 100
+root@vagrant:/home/vagrant# route
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+default         berdb2.nix.tele 0.0.0.0         UG    100    0        0 eth0
+default         _gateway        0.0.0.0         UG    100    0        0 eth1
+10.0.2.0        0.0.0.0         255.255.255.0   U     0      0        0 eth0
+berdb2.nix.tele 0.0.0.0         255.255.255.255 UH    100    0        0 eth0
+172.16.10.0     0.0.0.0         255.255.255.0   U     100    0        0 dummy0
+172.16.15.0     0.0.0.0         255.255.255.0   U     100    0        0 dummy0
+192.168.3.0     0.0.0.0         255.255.255.0   U     0      0        0 eth1
+192.168.3.0     0.0.0.0         255.255.255.0   U     100    0        0 eth1
+_gateway        0.0.0.0         255.255.255.255 UH    100    0        0 eth1
+```
+- **3.** Просмотр портов с помощью `netstat`
+```
+root@vagrant:/home/vagrant# netstat -ntlp
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 127.0.0.53:53           0.0.0.0:*               LISTEN      641/systemd-resolve
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      767/sshd: /usr/sbin
+tcp6       0      0 :::22                   :::*                    LISTEN      767/sshd: /usr/sbin
+```
+53 порт указанный для петли используется для DNS-сервера, порт 22 используется для подключения по SSH, адрес вида 0.0.0.0:* говорит о том, что подключение доступно с любого ip, tcp6 аналогично для ipv6. 
+- **4.** Также используем `netstat`
+```
+root@vagrant:/home/vagrant# netstat -ulpn
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+udp        0      0 127.0.0.53:53           0.0.0.0:*                           641/systemd-resolve
+udp        0      0 192.168.3.58:68         0.0.0.0:*                           639/systemd-network
+udp        0      0 10.0.2.15:68            0.0.0.0:*                           639/systemd-network
+```
+аналогично как и в прошлом задании, 68 порт отвечает за DHCP.
+- **5.** Набрасал простую сеть в drawio (файл DZ_3_8-3.drawio)
+
+# ДЗ 3.9. Элементы безопасности информационных систем
+- **1.** Готово:
+
+![Alt text](https://u.netology.ngcdn.ru/backend/uploads/lms/tasks/homework_solutions/hashed_file/0/1528490/DZ_3_9-1.PNG)
+
+- **2.** Готово:
+
+![Alt text](https://u.netology.ngcdn.ru/backend/uploads/lms/tasks/homework_solutions/hashed_file/1/1528491/DZ_3_9-2.PNG)
+
+- **3.** Установить apache2 с помощью `apt install apache2`, включить mod_ssl:
+```
+root@vagrant:/etc/apache2# a2enmod ssl
+Considering dependency setenvif for ssl:
+Module setenvif already enabled
+Considering dependency mime for ssl:
+Module mime already enabled
+Considering dependency socache_shmcb for ssl:
+Enabling module socache_shmcb.
+Enabling module ssl.
+See /usr/share/doc/apache2/README.Debian.gz on how to configure SSL and create self-signed certificates.
+To activate the new configuration, you need to run:
+  systemctl restart apache2
+root@vagrant:/etc/apache2# systemctl restart apache2
+```
+Создать пару ключ сертификат - `openssl req -x509 -nodes -days 365 -newkey rsa:2048 \-keyout /etc/ssl/private/apache-selfsigned.key \-out /etc/ssl/certs/apache-selfsigned.crt`. После создания пары их можно использовать в нашем вебсервере, я использовал ключ и сертификат в самом apache2:
+
+![Alt text](https://u.netology.ngcdn.ru/backend/uploads/lms/tasks/homework_solutions/hashed_file/2/1528492/DZ_3_9-3.PNG)
+
+- **4.** Проверка github.com:
+```
+root@vagrant:/home/vagrant/testssl.sh# ./testssl.sh -e --fast --parallel https://github.com/
+
+###########################################################
+    testssl.sh       3.1dev from https://testssl.sh/dev/
+    (90c6134 2022-03-16 15:25:06 -- )
+
+      This program is free software. Distribution and
+             modification under GPLv2 permitted.
+      USAGE w/o ANY WARRANTY. USE IT AT YOUR OWN RISK!
+
+       Please file bugs @ https://testssl.sh/bugs/
+
+###########################################################
+
+ Using "OpenSSL 1.0.2-chacha (1.0.2k-dev)" [~183 ciphers]
+ on vagrant:./bin/openssl.Linux.x86_64
+ (built: "Jan 18 17:12:17 2019", platform: "linux-x86_64")
+
+
+ Start 2022-03-20 11:57:26        -->> 140.82.121.4:443 (github.com) <<--
+
+ rDNS (140.82.121.4):    lb-140-82-121-4-fra.github.com.
+ Service detected:       HTTP
+
+
+
+ Testing all 183 locally available ciphers against the server, ordered by encryption strength
+
+
+Hexcode  Cipher Suite Name (OpenSSL)       KeyExch.   Encryption  Bits     Cipher Suite Name (IANA/RFC)
+-----------------------------------------------------------------------------------------------------------------------------
+ xc030   ECDHE-RSA-AES256-GCM-SHA384       ECDH 256   AESGCM      256      TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+ xc02c   ECDHE-ECDSA-AES256-GCM-SHA384     ECDH 256   AESGCM      256      TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+ xc028   ECDHE-RSA-AES256-SHA384           ECDH 256   AES         256      TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384
+ xc024   ECDHE-ECDSA-AES256-SHA384         ECDH 256   AES         256      TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384
+ xc014   ECDHE-RSA-AES256-SHA              ECDH 256   AES         256      TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA
+ xc00a   ECDHE-ECDSA-AES256-SHA            ECDH 256   AES         256      TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA
+ x9d     AES256-GCM-SHA384                 RSA        AESGCM      256      TLS_RSA_WITH_AES_256_GCM_SHA384
+ x3d     AES256-SHA256                     RSA        AES         256      TLS_RSA_WITH_AES_256_CBC_SHA256
+ x35     AES256-SHA                        RSA        AES         256      TLS_RSA_WITH_AES_256_CBC_SHA
+ xc02f   ECDHE-RSA-AES128-GCM-SHA256       ECDH 256   AESGCM      128      TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+ xc02b   ECDHE-ECDSA-AES128-GCM-SHA256     ECDH 256   AESGCM      128      TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+ xc027   ECDHE-RSA-AES128-SHA256           ECDH 256   AES         128      TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256
+ xc023   ECDHE-ECDSA-AES128-SHA256         ECDH 256   AES         128      TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256
+ x9c     AES128-GCM-SHA256                 RSA        AESGCM      128      TLS_RSA_WITH_AES_128_GCM_SHA256
+ x3c     AES128-SHA256                     RSA        AES         128      TLS_RSA_WITH_AES_128_CBC_SHA256
+ x2f     AES128-SHA                        RSA        AES         128      TLS_RSA_WITH_AES_128_CBC_SHA
+
+
+ Done 2022-03-20 11:57:32 [   7s] -->> 140.82.121.4:443 (github.com) <<--
+```
+- **5.** Удалось выполнить подключение к своей другой ВМ:
+```
+root@vagrant:/home/vagrant# ssh-copy-id -i /home/vagrant/key1.pub laft@192.16
+8.3.55
+/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "/home/vagrant/key1.pub"
+The authenticity of host '192.168.3.55 (192.168.3.55)' can't be established.
+ECDSA key fingerprint is SHA256:hJBJVXggQhDq5vr+V9251h5LdKykMmw4tfRBMhxch5g.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+laft@192.168.3.55's password:
+
+Number of key(s) added: 1
+
+Now try logging into the machine, with:   "ssh 'laft@192.168.3.55'"
+and check to make sure that only the key(s) you wanted were added.
+
+root@vagrant:/home/vagrant# ssh laft@192.168.3.55
+laft@192.168.3.55's password:
+Welcome to Ubuntu 20.04.3 LTS (GNU/Linux 5.13.0-28-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+82 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+Your Hardware Enablement Stack (HWE) is supported until April 2025.
+Last login: Sat Feb  5 18:30:18 2022 from fe80::e869:d7bb:f8cf:3a7b%enp0s3
+laft@laft-VirtualBox:~$
+```
+- **6.** Создать файл конфигурации `vagrant@vagrant:~/.ssh$ vim config`:
+```
+Host laft-vm
+HostName 192.168.3.55
+User laft
+Port 22
+```
+После этого можно подключаться:
+```
+vagrant@vagrant:~/.ssh$ ssh laft-vm
+laft@192.168.3.55's password:
+Welcome to Ubuntu 20.04.3 LTS (GNU/Linux 5.13.0-28-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+82 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+Your Hardware Enablement Stack (HWE) is supported until April 2025.
+Last login: Sun Mar 20 18:11:16 2022 from 192.168.3.58
+laft@laft-VirtualBox:~$
+```
+- **7.** Выполнил запись с помощью команды `root@vagrant:/home/vagrant# tcpdump -i eth1 -c 100 -w 0001.pcap`. Скрин:
+
+![Alt text](https://u.netology.ngcdn.ru/backend/uploads/lms/tasks/homework_solutions/hashed_file/3/1528493/DZ_3_9-4.PNG)
