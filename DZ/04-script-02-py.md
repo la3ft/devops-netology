@@ -91,10 +91,34 @@ fatal: not a git repository (or any of the parent directories): .git
 
 ### Ваш скрипт:
 ```python
-???
+#!/usr/bin/env python3
+
+import socket
+
+a = 1
+b = 0
+hosts = {'drive.google.com':'0.0.0.0', 'mail.google.com':'0.0.0.0', 'google.com':'0.0.0.0'}
+
+#Вывод текущих значений + запись их в справочник
+for host in hosts:
+    ip = socket.gethostbyname(host)
+    print(host+' '+ip)
+    hosts[host] = ip
+#Цикл проверки соответствия, в случае изменения будет выведено соотвутствующее сообщение и выход из цикла
+while 1==1:
+  for host in hosts:
+    ip = socket.gethostbyname(host)
+    if ip != hosts[host]:
+      if a==1 and b !=1:
+        print(' [ERROR] ' + str(host) +' IP mistmatch: '+hosts[host]+' '+ip)
+        exit()
 ```
 
 ### Вывод скрипта при запуске при тестировании:
 ```
-???
+root@vagrant:/home/vagrant/git# ./04-script-04.py
+drive.google.com 74.125.131.194
+mail.google.com 64.233.164.83
+google.com 173.194.73.100
+ [ERROR] google.com IP mistmatch: 173.194.73.100 173.194.73.113
 ```
