@@ -110,7 +110,7 @@ while 1==1:
     ip = socket.gethostbyname(host)
     if ip != hosts[host]:
       if a==1 and b !=1:
-        print(' [ERROR] ' + str(host) +' IP mistmatch: '+hosts[host]+' '+ip)
+        print('[ERROR] ' + str(host) +' IP mistmatch: '+hosts[host]+' '+ip)
         exit()
 ```
 
@@ -120,5 +120,5 @@ root@vagrant:/home/vagrant/git# ./04-script-04.py
 drive.google.com 74.125.131.194
 mail.google.com 64.233.164.83
 google.com 173.194.73.100
- [ERROR] google.com IP mistmatch: 173.194.73.100 173.194.73.113
+[ERROR] google.com IP mistmatch: 173.194.73.100 173.194.73.113
 ```
