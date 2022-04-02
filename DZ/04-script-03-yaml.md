@@ -44,35 +44,37 @@
 ```python
 import socket, json, yaml
 
-a = 1
-b = 0
 hosts = {'drive.google.com':'0.0.0.0', 'mail.google.com':'0.0.0.0', 'google.com':'0.0.0.0'}
+actual = []
 
-#print(hosts['drive.google.com'])
 #Вывод текущих значений + запись их в справочник + запись в файлы 1.json и 2.yml
 for host in hosts:
     ip = socket.gethostbyname(host)
     print(host+' '+ip)
     hosts[host] = ip
-j = json.dumps(hosts)
+    actual.append({host:ip})
+j = json.dumps(actual)
 with open('1.json', 'w') as outfile:
     outfile.write(j)
 with open('2.yml', 'w') as outfile:
-    data = yaml.dump(hosts, outfile)
+    data = yaml.dump(actual, outfile)
 #Цикл проверки соответствия, в случае изменения будет выведено соотвутствующее сообщение и выход из цикла + перезапись файлов 1.json и 2.yml
 while 1==1:
   for host in hosts:
     ip = socket.gethostbyname(host)
+    actual[:] = [d for d in actual if d.get(host) != ip]
     if ip != hosts[host]:
-      if a==1 and b !=1:
-        print('[ERROR] ' + str(host) +' IP mistmatch: '+hosts[host]+' '+ip)
-        hosts[host] = ip
-        j = json.dumps(hosts)
-        with open('1.json', 'w') as outfile:
-            outfile.write(j)
-        with open('2.yml', 'w') as outfile:
-            data = yaml.dump(hosts, outfile)
-        exit()
+      print('[ERROR] ' + str(host) +' IP mistmatch: '+hosts[host]+' '+ip)
+      for host in hosts:
+          ip = socket.gethostbyname(host)
+          hosts[host] = ip
+          actual.append({host: ip})
+      j = json.dumps(actual)
+      with open('1.json', 'w') as outfile:
+        outfile.write(j)
+      with open('2.yml', 'w') as outfile:
+        data = yaml.dump(actual, outfile)
+      exit()
 ```
 
 ### Вывод скрипта при запуске при тестировании:
