@@ -42,38 +42,57 @@
 
 ### Ваш скрипт:
 ```python
-???
+import socket, json, yaml
+
+a = 1
+b = 0
+hosts = {'drive.google.com':'0.0.0.0', 'mail.google.com':'0.0.0.0', 'google.com':'0.0.0.0'}
+
+#print(hosts['drive.google.com'])
+#Вывод текущих значений + запись их в справочник + запись в файлы 1.json и 2.yml
+for host in hosts:
+    ip = socket.gethostbyname(host)
+    print(host+' '+ip)
+    hosts[host] = ip
+j = json.dumps(hosts)
+with open('1.json', 'w') as outfile:
+    outfile.write(j)
+with open('2.yml', 'w') as outfile:
+    data = yaml.dump(hosts, outfile)
+#Цикл проверки соответствия, в случае изменения будет выведено соотвутствующее сообщение и выход из цикла + перезапись файлов 1.json и 2.yml
+while 1==1:
+  for host in hosts:
+    ip = socket.gethostbyname(host)
+    if ip != hosts[host]:
+      if a==1 and b !=1:
+        print('[ERROR] ' + str(host) +' IP mistmatch: '+hosts[host]+' '+ip)
+        hosts[host] = ip
+        j = json.dumps(hosts)
+        with open('1.json', 'w') as outfile:
+            outfile.write(j)
+        with open('2.yml', 'w') as outfile:
+            data = yaml.dump(hosts, outfile)
+        exit()
 ```
 
 ### Вывод скрипта при запуске при тестировании:
 ```
-???
+drive.google.com 142.250.150.194
+mail.google.com 74.125.131.19
+google.com 142.251.1.139
+[ERROR] drive.google.com IP mistmatch: 142.250.150.194 64.233.161.194
+
+Process finished with exit code 0
 ```
 
 ### json-файл(ы), который(е) записал ваш скрипт:
 ```json
-???
+{"drive.google.com": "64.233.161.194", "mail.google.com": "74.125.131.19", "google.com": "142.251.1.139"}
 ```
 
 ### yml-файл(ы), который(е) записал ваш скрипт:
 ```yaml
-???
+drive.google.com: 64.233.161.194
+google.com: 142.251.1.139
+mail.google.com: 74.125.131.19
 ```
-
-## Дополнительное задание (со звездочкой*) - необязательно к выполнению
-
-Так как команды в нашей компании никак не могут прийти к единому мнению о том, какой формат разметки данных использовать: JSON или YAML, нам нужно реализовать парсер из одного формата в другой. Он должен уметь:
-   * Принимать на вход имя файла
-   * Проверять формат исходного файла. Если файл не json или yml - скрипт должен остановить свою работу
-   * Распознавать какой формат данных в файле. Считается, что файлы *.json и *.yml могут быть перепутаны
-   * Перекодировать данные из исходного формата во второй доступный (из JSON в YAML, из YAML в JSON)
-   * При обнаружении ошибки в исходном файле - указать в стандартном выводе строку с ошибкой синтаксиса и её номер
-   * Полученный файл должен иметь имя исходного файла, разница в наименовании обеспечивается разницей расширения файлов
-
-### Ваш скрипт:
-```python
-???
-```
-
-### Пример работы скрипта:
-???
