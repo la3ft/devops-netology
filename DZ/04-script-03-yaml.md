@@ -78,21 +78,19 @@ while 1==1:
 ### Вывод скрипта при запуске при тестировании:
 ```
 drive.google.com 142.250.150.194
-mail.google.com 74.125.131.19
-google.com 142.251.1.139
-[ERROR] drive.google.com IP mistmatch: 142.250.150.194 64.233.161.194
-
-Process finished with exit code 0
+mail.google.com 74.125.131.17
+google.com 173.194.221.100
+[ERROR] google.com IP mistmatch: 173.194.221.100 173.194.221.139
 ```
 
 ### json-файл(ы), который(е) записал ваш скрипт:
 ```json
-{"drive.google.com": "64.233.161.194", "mail.google.com": "74.125.131.19", "google.com": "142.251.1.139"}
+[{"drive.google.com": "142.250.150.194"}, {"mail.google.com": "74.125.131.17"}, {"google.com": "173.194.221.139"}]
 ```
 
 ### yml-файл(ы), который(е) записал ваш скрипт:
 ```yaml
-drive.google.com: 64.233.161.194
-google.com: 142.251.1.139
-mail.google.com: 74.125.131.19
+- drive.google.com: 142.250.150.194
+- mail.google.com: 74.125.131.17
+- google.com: 173.194.221.139
 ```
