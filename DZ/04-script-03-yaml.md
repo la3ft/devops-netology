@@ -59,10 +59,10 @@ with open('1.json', 'w') as outfile:
 with open('2.yml', 'w') as outfile:
     data = yaml.dump(actual, outfile)
 #Цикл проверки соответствия, в случае изменения будет выведено соотвутствующее сообщение и выход из цикла + перезапись файлов 1.json и 2.yml
-while 1==1:
+while True:
   for host in hosts:
     ip = socket.gethostbyname(host)
-    actual[:] = [d for d in actual if d.get(host) != ip]
+    actual = []
     if ip != hosts[host]:
       print('[ERROR] ' + str(host) +' IP mistmatch: '+hosts[host]+' '+ip)
       for host in hosts:
