@@ -67,6 +67,25 @@ https://hub.docker.com/r/la3ft/nginx/tags
 - Подключитесь во второй контейнер и отобразите листинг и содержание файлов в ```/data``` контейнера.
 
 ### Ответ:
+```
+
+root@vagrant:/home/vagrant# docker run -v /data:/data --name centos_1 -td centos /bin/bash
+4c32aee73c8a60e00887862001c58976f1c5d5c70fb76c25173c141dca386773
+root@vagrant:/home/vagrant# docker run -v /data:/data --name debian_2 -td debian /bin/bash
+258d77889e8ce1f93537b43e7c76a4d4b502b66ad30fc5e76c26795145fb31eb
+root@vagrant:/home/vagrant# docker exec -it centos_1 bash
+[root@4c32aee73c8a /]# cd data/
+[root@4c32aee73c8a data]# vi 123.txt
+[root@4c32aee73c8a data]# exit
+root@vagrant:/home/vagrant# vim /data/host123.txt
+root@vagrant:/home/vagrant# docker ps
+CONTAINER ID   IMAGE     COMMAND       CREATED              STATUS              PORTS     NAMES
+258d77889e8c   debian    "/bin/bash"   About a minute ago   Up About a minute
+    debian_2
+4c32aee73c8a   centos    "/bin/bash"   2 minutes ago        Up 2 minutes
+    centos_1
+root@vagrant:/home/vagrant# docker exec -it debian_2 bash
+```
 123.txt - создан в контейнере образа centos;  
 host123.txt - создан в самом хосте
 ```
