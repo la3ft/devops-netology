@@ -68,3 +68,7 @@ docker ps
 ```
 
 ### Ответ:
+```
+root@vagrant:/home/vagrant# docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+```
