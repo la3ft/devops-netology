@@ -67,3 +67,11 @@ https://hub.docker.com/r/la3ft/nginx/tags
 - Подключитесь во второй контейнер и отобразите листинг и содержание файлов в ```/data``` контейнера.
 
 ### Ответ:
+123.txt - создан в контейнере образа centos;  
+host123.txt - создан в самом хосте
+```
+root@258d77889e8c:/# ls -l /data/
+total 8
+-rw-r--r-- 1 root root 4 Apr 23 19:07 123.txt
+-rw-r--r-- 1 root root 6 Apr 23 19:08 host123.txt
+```
