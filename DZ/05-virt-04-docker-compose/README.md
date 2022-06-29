@@ -18,7 +18,7 @@
 
 # Ответ:
 <p align="center">
-  <img width="1200" height="780" src="./assets/1.png">
+  <img width="640" height="480" src="./assets/1.png">
 </p>
 
 ## Задача 2
@@ -28,7 +28,7 @@
 
 # Ответ:
 <p align="center">
-  <img width="1200" height="780" src="./assets/2.png">
+  <img width="640" height="480" src="./assets/2.png">
 </p>
 
 ## Задача 3
