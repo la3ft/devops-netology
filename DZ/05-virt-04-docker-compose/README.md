@@ -35,7 +35,7 @@ yc compute instance list
 +----------------------+------+---------------+---------+--------------+-------------+  
 
 <p align="center">
-  <img width="800" height="500" src="./assets/2.png">
+  <img width="800" height="500" src="./assets/1.png">
 </p>
 
 ## Задача 3
