@@ -19,7 +19,7 @@
 docker node ls
 ```
 <p align="center">
-  <img width="800" height="500" src="./assets/1.png">
+  <img width="1024" height="500" src="./assets/1.png">
 </p>
 
 
@@ -32,5 +32,5 @@ docker node ls
 docker service ls
 ```
 <p align="center">
-  <img width="800" height="500" src="./assets/2.png">
+  <img width="1024" height="500" src="./assets/2.png">
 </p>
