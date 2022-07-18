@@ -151,7 +151,7 @@ Select:
 `SELECT * from clients WHERE ordern is not null;`
 
 <p align="left">
-  <img width="200" height="150" src="./assets/6.png">
+  <img width="350" height="150" src="./assets/6.png">
 </p>
 
 
