@@ -112,14 +112,14 @@ test_db=# INSERT into orders VALUES (1, 'Шоколад', 10), (2, 'Принте
 test_db=# INSERT into clients VALUES (1, 'Иванов Иван Иванович', 'USA'), (2, 'Петров Петр Петрович', 'Canada'), (3, 'Иог
 анн Себастьян Бах', 'Japan'), (4, 'Ронни Джеймс Дио', 'Russia'), (5, 'Ritchie Blackmore', 'Russia');  
 <p align="center">
-  <img width="1024" height="450" src="./assets/4.png">
+  <img width="500" height="250" src="./assets/4.png">
 </p>
 
-```SELECT count(*) from orders;```
+```SELECT count(*) from orders;```  
 ```SELECT count(*) from clients;```
 
 <p align="center">
-  <img width="1024" height="450" src="./assets/5.png">
+  <img width="500" height="250" src="./assets/5.png">
 </p>
 
 
