@@ -115,8 +115,8 @@ test_db=# INSERT into clients VALUES (1, 'Иванов Иван Иванович
   <img width="500" height="250" src="./assets/4.png">
 </p>
 
-```SELECT count(*) from orders;```  
-```SELECT count(*) from clients;```
+`SELECT count(*) from orders;`  
+`SELECT count(*) from clients;`  
 
 <p align="center">
   <img width="500" height="250" src="./assets/5.png">
@@ -142,7 +142,17 @@ test_db=# INSERT into clients VALUES (1, 'Иванов Иван Иванович
 Подсказк - используйте директиву `UPDATE`.
 
 ### Ответ:  
+Update:  
+`UPDATE clients set ordern = 3 where id = 1;`  
+`UPDATE clients set ordern = 4 where id = 2;`  
+`UPDATE clients set ordern = 5 where id = 3;`  
 
+Select:  
+`SELECT * from clients WHERE ordern is not null;`
+
+<p align="center">
+  <img width="200" height="150" src="./assets/6.png">
+</p>
 
 
 ## Задача 5
