@@ -186,5 +186,58 @@ Select:
 Приведите список операций, который вы применяли для бэкапа данных и восстановления. 
 
 ### Ответ:  
+```
+root@vagrant:/var/lib/docker/volumes/postgredock_vol2/_data# docker ps
+CONTAINER ID   IMAGE         COMMAND                  CREATED       STATUS       PORTS
+     NAMES
+177544b5a256   postgres:12   "docker-entrypoint.s…"   3 hours ago   Up 3 hours   0.0.0.0:5432->5432/tcp, :::5432->5432/tcp   postgredock-postgres-1
+root@vagrant:/var/lib/docker/volumes/postgredock_vol2/_data# docker exec -t postgredock-postgres-1 pg_dump -U postgres test_db -f /var/lib/postgresql/bckp/dump_test.sql
+root@vagrant:/var/lib/docker/volumes/postgredock_vol2/_data# ls
+dump_test.sql
+```
+Останавливаем наш compose с помощью `docker-compose stop` и поднимаем новый контейнер с postgre:
+```
+root@vagrant:/home/# docker run -d --name postgresdock -e POSTGRES_PASSWORD=postgres -d -p 5432:5432 -v vol3:/var/lib/postgresql/data  --mount type=volume,source=postgredock_vol2,destination=/home/tst postgres:12
+```
+Создаём БД в контейнере:
+```
+root@vagrant:/home/# docker exec -ti postgresdock psql -U postgres -c 'create database test_db;'
+```
+Заливаем бэкап:
+```
+root@vagrant:/home/# docker exec postgresdock7 psql -U postgres -d test_db -f /home/tst/dump_test.sql
+SET
+SET
+SET
+SET
+SET
+ set_config
+------------
 
+(1 row)
 
+SET
+SET
+SET
+SET
+SET
+SET
+CREATE TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+CREATE SEQUENCE
+ALTER TABLE
+ALTER SEQUENCE
+ALTER TABLE
+COPY 5
+COPY 5
+ setval
+--------
+      1
+(1 row)
+
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+```
