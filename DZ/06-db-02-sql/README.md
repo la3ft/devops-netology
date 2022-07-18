@@ -65,12 +65,12 @@ volumes:
 </p>
 
 SQL-запрос для выдачи списка пользователей с правами над таблицами test_db:  
-SELECT * FROM information_schema.table_privileges where table_catalog = 'test_db';
+`SELECT * FROM information_schema.table_privileges where table_catalog = 'test_db';`
 
 
 Список пользователей с правами над таблицами test_db (ограничил пользователями test-admin-user и test-admin-user):
-SELECT * FROM information_schema.table_privileges where table_catalog = 'test_db' and grantee in ('test-simple
--user', 'test-admin-user');
+`SELECT * FROM information_schema.table_privileges where table_catalog = 'test_db' and grantee in ('test-simple
+-user', 'test-admin-user');`
 <p align="left">
   <img width="1024" height="450" src="./assets/3.png">
 </p>
@@ -163,7 +163,12 @@ Select:
 Приведите получившийся результат и объясните что значат полученные значения.
 
 ### Ответ:  
+`EXPLAIN SELECT * from clients WHERE ordern is not null;`
 
+                        QUERY PLAN
+-----------------------------------------------------------
+ Seq Scan on clients  (cost=0.00..18.10 rows=806 width=72)
+   Filter: (ordern IS NOT NULL)
 
 
 ## Задача 6
