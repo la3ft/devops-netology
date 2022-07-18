@@ -54,18 +54,26 @@ volumes:
 - список пользователей с правами над таблицами test_db
 
 ### Ответ:  
-test_db=# \l
-                                 List of databases
-   Name    |  Owner   | Encoding |  Collate   |   Ctype    |   Access privileges
------------+----------+----------+------------+------------+-----------------------
- postgres  | postgres | UTF8     | en_US.utf8 | en_US.utf8 |
- template0 | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
-           |          |          |            |            | postgres=CTc/postgres
- template1 | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
-           |          |          |            |            | postgres=CTc/postgres
- test_db   | postgres | UTF8     | en_US.utf8 | en_US.utf8 |
-(4 rows)
+Итоговый список БД после выполнения пунктов выше:  
+<p align="center">
+  <img width="1024" height="450" src="./assets/1.png">
+</p>
 
+Описание таблиц (describe)
+<p align="center">
+  <img width="1024" height="450" src="./assets/2.png">
+</p>
+
+SQL-запрос для выдачи списка пользователей с правами над таблицами test_db:  
+SELECT * FROM information_schema.table_privileges where table_catalog = 'test_db';
+
+
+Список пользователей с правами над таблицами test_db (ограничил пользователями test-admin-user и test-admin-user):
+SELECT * FROM information_schema.table_privileges where table_catalog = 'test_db' and grantee in ('test-simple
+-user', 'test-admin-user');
+<p align="center">
+  <img width="1024" height="450" src="./assets/3.png">
+</p>
 
 ## Задача 3
 
