@@ -9,6 +9,22 @@
 Приведите получившуюся команду или docker-compose манифест.
 
 ### Ответ:  
+```yaml
+version: "3.9"
+services:
+  postgres:
+    image: postgres:12
+    environment:
+      POSTGRES_PASSWORD: "postgres"
+    ports:
+      - "5432:5432"
+    volumes:
+      - vol1:/var/lib/postgresql/data
+      - vol2:/var/lib/postgresql/bckp
+volumes:
+  vol1:
+  vol2:
+```
 
 ## Задача 2
 
