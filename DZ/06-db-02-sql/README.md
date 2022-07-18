@@ -9,6 +9,7 @@
 Приведите получившуюся команду или docker-compose манифест.
 
 ### Ответ:  
+docker-compose:
 ```yaml
 version: "3.9"
 services:
