@@ -55,12 +55,12 @@ volumes:
 
 ### Ответ:  
 Итоговый список БД после выполнения пунктов выше:  
-<p align="center">
+<p align="left">
   <img width="200" height="300" src="./assets/1.png">
 </p>
 
 Описание таблиц (describe)
-<p align="center">
+<p align="left">
   <img width="1024" height="450" src="./assets/2.png">
 </p>
 
@@ -71,7 +71,7 @@ SELECT * FROM information_schema.table_privileges where table_catalog = 'test_db
 Список пользователей с правами над таблицами test_db (ограничил пользователями test-admin-user и test-admin-user):
 SELECT * FROM information_schema.table_privileges where table_catalog = 'test_db' and grantee in ('test-simple
 -user', 'test-admin-user');
-<p align="center">
+<p align="left">
   <img width="1024" height="450" src="./assets/3.png">
 </p>
 
@@ -118,7 +118,7 @@ test_db=# INSERT into clients VALUES (1, 'Иванов Иван Иванович
 `SELECT count(*) from orders;`  
 `SELECT count(*) from clients;`  
 
-<p align="center">
+<p align="left">
   <img width="500" height="250" src="./assets/5.png">
 </p>
 
@@ -150,7 +150,7 @@ Update:
 Select:  
 `SELECT * from clients WHERE ordern is not null;`
 
-<p align="center">
+<p align="left">
   <img width="200" height="150" src="./assets/6.png">
 </p>
 
