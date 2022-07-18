@@ -165,10 +165,12 @@ Select:
 ### Ответ:  
 `EXPLAIN SELECT * from clients WHERE ordern is not null;`
 
-                        QUERY PLAN
+                        QUERY PLAN  
 -----------------------------------------------------------
- Seq Scan on clients  (cost=0.00..18.10 rows=806 width=72)
-   Filter: (ordern IS NOT NULL)
+ Seq Scan on clients  (cost=0.00..18.10 rows=806 width=72)  
+   Filter: (ordern IS NOT NULL)  
+   
+`EXPLAIN` вычисляет стоимость (время выполнения запроса), а также показывает как будут сканироваться таблицы. 
 
 
 ## Задача 6
