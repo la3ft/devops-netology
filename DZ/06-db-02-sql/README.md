@@ -56,7 +56,7 @@ volumes:
 ### Ответ:  
 Итоговый список БД после выполнения пунктов выше:  
 <p align="center">
-  <img width="1024" height="450" src="./assets/1.png">
+  <img width="200" height="300" src="./assets/1.png">
 </p>
 
 Описание таблиц (describe)
