@@ -193,5 +193,50 @@ mysql> SHOW PROFILES;
 
 
 ### Ответ:  
+```
+root@vagrant:/home/vagrant/mysqldock# docker exec -ti mysqldock-mysql-1 cat /etc/my.cnf
+Вывод без комментариев:
+[mysqld]
+skip-host-cache
+skip-name-resolve
+datadir=/var/lib/mysql
+socket=/var/run/mysqld/mysqld.sock
+secure-file-priv=/var/lib/mysql-files
+user=mysql
 
+pid-file=/var/run/mysqld/mysqld.pid
+[client]
+socket=/var/run/mysqld/mysqld.sock
 
+!includedir /etc/mysql/conf.d/
+```
+Добавить в my.cnf изменения:
+```
+innodb_flush_log_at_trx_commit = 0 
+innodb_file_format=Barracuda
+innodb_log_buffer_size	= 1M
+key_buffer_size = 1024М
+max_binlog_size	= 100M
+```
+
+```
+[mysqld]
+skip-host-cache
+skip-name-resolve
+datadir=/var/lib/mysql
+socket=/var/run/mysqld/mysqld.sock
+secure-file-priv=/var/lib/mysql-files
+user=mysql
+
+innodb_flush_log_at_trx_commit = 0 
+innodb_file_format=Barracuda
+innodb_log_buffer_size	= 1M
+key_buffer_size = 1024М
+max_binlog_size	= 100M
+
+pid-file=/var/run/mysqld/mysqld.pid
+[client]
+socket=/var/run/mysqld/mysqld.sock
+
+!includedir /etc/mysql/conf.d/
+```
