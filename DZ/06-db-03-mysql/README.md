@@ -21,8 +21,26 @@
 В следующих заданиях мы будем продолжать работу с данным контейнером.
 
 ### Ответ:  
+docker-compose:
+```yaml
+version: "3.9"
+services:
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: "mysql"
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql:/var/lib/mysql/
+volumes:
+  mysql:
+```  
+```
+root@vagrant:/home/vagrant/mysqldock# docker exec -ti mysqldock-mysql-1 mysql -uroot -p
+mysql> \h
 
-
+```
 
 ## Задача 2
 
