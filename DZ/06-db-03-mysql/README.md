@@ -144,8 +144,39 @@ mysql> select * from INFORMATION_SCHEMA.USER_ATTRIBUTES where user='test';
 - на `InnoDB`
 
 ### Ответ:  
+```
+mysql> SET profiling = 1;
+Query OK, 0 rows affected, 1 warning (0.00 sec)
 
+mysql> SHOW PROFILES;
+Empty set, 1 warning (0.00 sec)
 
+mysql> SELECT TABLE_NAME, ENGINE FROM information_schema.TABLES where TABLE_SCHEMA = 'test';
++------------+--------+
+| TABLE_NAME | ENGINE |
++------------+--------+
+| orders     | InnoDB |
++------------+--------+
+1 row in set (0.00 sec)
+
+mysql> ALTER TABLE orders ENGINE = MyISAM;
+Query OK, 5 rows affected (0.08 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE orders ENGINE = InnoDB;
+Query OK, 5 rows affected (0.10 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SHOW PROFILES;
++----------+------------+--------------------------------------------------------------------------------------+
+| Query_ID | Duration   | Query                                                                                |
++----------+------------+--------------------------------------------------------------------------------------+
+|        1 | 0.00093000 | SELECT TABLE_NAME, ENGINE FROM information_schema.TABLES where TABLE_SCHEMA = 'test' |
+|        2 | 0.08483625 | ALTER TABLE orders ENGINE = MyISAM                                                   |
+|        3 | 0.09219850 | ALTER TABLE orders ENGINE = InnoDB                                                   |
++----------+------------+--------------------------------------------------------------------------------------+
+3 rows in set, 1 warning (0.01 sec)
+```
 
 ## Задача 4 
 
