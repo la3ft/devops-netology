@@ -105,8 +105,32 @@ mysql> select count(*) from orders where price > 300;
 **приведите в ответе к задаче**.
 
 ### Ответ:  
+```
+mysql> create user 'test'@'localhost' identified by 'test-pass';
+Query OK, 0 rows affected (0.01 sec)
 
+mysql> alter user 'test'@'localhost'
+    -> identified by 'test-pass'
+    -> with
+    -> max_queries_per_hour 100
+    -> password expire interval 180 day
+    -> failed_login_attempts 3 password_lock_time 2;
+Query OK, 0 rows affected (0.01 sec)
 
+mysql> alter user 'test'@'localhost' attribute '{"first_name":"James", "last_name":"Pretty"}';
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> grant select on test.orders TO 'test'@'localhost';
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+mysql> select * from INFORMATION_SCHEMA.USER_ATTRIBUTES where user='test';
++------+-----------+------------------------------------------------+
+| USER | HOST      | ATTRIBUTE                                      |
++------+-----------+------------------------------------------------+
+| test | localhost | {"last_name": "Pretty", "first_name": "James"} |
++------+-----------+------------------------------------------------+
+1 row in set (0.00 sec)
+```
 
 ## Задача 3
 
