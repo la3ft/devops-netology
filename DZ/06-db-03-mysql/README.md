@@ -38,8 +38,54 @@ volumes:
 ```  
 ```
 root@vagrant:/home/vagrant/mysqldock# docker exec -ti mysqldock-mysql-1 mysql -uroot -p
+mysql> CREATE DATABASE test;
+mysql> \q
+root@vagrant:/home/vagrant/mysqldock# cat /home/vagrant/test_dump.sql | docker exec -i mysqldock-mysql-1 mysql -u root -p mysql test
+root@vagrant:/home/vagrant/mysqldock# docker exec -ti mysqldock-mysql-1 mysql -uroot -p
 mysql> \h
+mysql> \s
+--------------
+mysql  Ver 8.0.29 for Linux on x86_64 (MySQL Community Server - GPL)
 
+Connection id:          18
+Current database:
+Current user:           root@localhost
+SSL:                    Not in use
+Current pager:          stdout
+Using outfile:          ''
+Using delimiter:        ;
+Server version:         8.0.29 MySQL Community Server - GPL
+Protocol version:       10
+Connection:             Localhost via UNIX socket
+Server characterset:    utf8mb4
+Db     characterset:    utf8mb4
+Client characterset:    latin1
+Conn.  characterset:    latin1
+UNIX socket:            /var/run/mysqld/mysqld.sock
+Binary data as:         Hexadecimal
+Uptime:                 41 min 27 sec
+
+Threads: 5  Questions: 134  Slow queries: 0  Opens: 232  Flush tables: 3  Open tables: 150  Queries per second avg: 0.053
+--------------
+mysql> use test;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_test |
++----------------+
+| orders         |
++----------------+
+1 row in set (0.00 sec)
+mysql> select count(*) from orders where price > 300;
++----------+
+| count(*) |
++----------+
+|        1 |
++----------+
+1 row in set (0.00 sec)
 ```
 
 ## Задача 2
