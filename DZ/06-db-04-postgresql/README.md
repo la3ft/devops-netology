@@ -202,5 +202,11 @@ WHERE  inhparent = 'orders'::regclass;
 
 
 ### Ответ:  
-
-
+```
+root@vagrant:/home/vagrant# docker exec 177544b5a256 pg_dump -U postgres test_database > /home/vagrant/test_dump_3.sql
+```
+Можно добавить строки создания индекса сразу после создания таблицы orders:
+```
+CREATE INDEX title_index 
+ON orders(title);
+```
