@@ -64,7 +64,6 @@ Access method: heap
 - Выход из psql
 ```
 test_db=# \q
-root@vagrant:/home/vagrant/postgredock#
 ```
 
 ## Задача 2
