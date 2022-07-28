@@ -16,8 +16,56 @@
 - выхода из psql
 
 ### Ответ:  
-
-
+- Вывода списка БД:
+```
+postgres=# \l
+                                 List of databases
+   Name    |  Owner   | Encoding |  Collate   |   Ctype    |   Access privileges
+-----------+----------+----------+------------+------------+-----------------------
+ postgres  | postgres | UTF8     | en_US.utf8 | en_US.utf8 |
+ template0 | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
+           |          |          |            |            | postgres=CTc/postgres
+ template1 | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
+           |          |          |            |            | postgres=CTc/postgres
+ test_db   | postgres | UTF8     | en_US.utf8 | en_US.utf8 |
+(4 rows)
+```
+- Подключения к БД
+```
+postgres-# \c test_db
+```
+- Вывод списка таблиц
+```
+test_db=#  \d
+              List of relations
+ Schema |     Name      |   Type   |  Owner
+--------+---------------+----------+----------
+ public | clients       | table    | postgres
+ public | orders        | table    | postgres
+ public | orders_id_seq | sequence | postgres
+(3 rows)
+```
+- Вывод описания содержимого таблиц
+```
+test_db=# \dS+ clients
+                                   Table "public.clients"
+  Column  |  Type   | Collation | Nullable | Default | Storage  | Stats target | Description
+----------+---------+-----------+----------+---------+----------+--------------+-------------
+ id       | integer |           | not null |         | plain    |              |
+ lastname | text    |           |          |         | extended |              |
+ country  | text    |           |          |         | extended |              |
+ ordern   | integer |           |          |         | plain    |              |
+Indexes:
+    "clients_pkey" PRIMARY KEY, btree (id)
+Foreign-key constraints:
+    "clients_ordern_fkey" FOREIGN KEY (ordern) REFERENCES orders(id)
+Access method: heap
+```
+- Выход из psql
+```
+test_db=# \q
+root@vagrant:/home/vagrant/postgredock#
+```
 
 ## Задача 2
 
