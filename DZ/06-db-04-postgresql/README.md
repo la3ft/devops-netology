@@ -158,8 +158,41 @@ test_database=# select avg_width from pg_stats where tablename='orders';
 Можно ли было изначально исключить "ручное" разбиение при проектировании таблицы orders?
 
 ### Ответ:  
+```
+test_database=# select * from orders;
+ id |        title         | price
+----+----------------------+-------
+  1 | War and peace        |   100
+  2 | My little database   |   500
+  3 | Adventure psql time  |   300
+  4 | Server gravity falls |   300
+  5 | Log gossips          |   123
+  6 | WAL never lies       |   900
+  7 | Me and my bash-pet   |   499
+  8 | Dbiezdmin            |   501
+(8 rows)
 
+Переименуем исходную таблицу и создадим новую, скопировав туда данные:
 
+test_database=# alter table orders rename to orders_2;
+create table orders (id integer, title varchar(80), price integer) partition by range(price);
+create table orders_part_one partition of orders for values from (0) to (499);
+create table orders_part_two partition of orders for values from (499) to (999999999);
+insert into orders (id, title, price) select * from orders_2;
+ALTER TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 8
+test_database=# SELECT count(*) AS partitions
+FROM   pg_catalog.pg_inherits
+WHERE  inhparent = 'orders'::regclass;
+ partitions
+------------
+          2
+(1 row)
+```
+Да, можно было изначально создать таблицу orders разбитую по частям.
 
 ## Задача 4
 
