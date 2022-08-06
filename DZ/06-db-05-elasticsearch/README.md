@@ -104,7 +104,116 @@ https://hub.docker.com/repository/docker/la3ft/elastic
 
 ### Ответ:
 
+Создать:
+```
+root@80483e8bdfe6:/# curl -X PUT localhost:9200/ind-1 -H 'Content-Type: application/json' -d'{ "settings": { "number_of_shards": 1,  "number_of_replicas": 0 }}'
+root@80483e8bdfe6:/# curl -X PUT localhost:9200/ind-2 -H 'Content-Type: application/json' -d'{ "settings": { "number_of_shards": 2,  "number_of_replicas": 1 }}'
+root@80483e8bdfe6:/# curl -X PUT localhost:9200/ind-3 -H 'Content-Type: application/json' -d'{ "settings": { "number_of_shards": 4,  "number_of_replicas": 2 }}'
+```
+Получение списка:
+```
+root@80483e8bdfe6:/# curl -X GET 'http://localhost:9200/_cat/indices?v'
+health status index            uuid                   pri rep docs.count docs.deleted store.size pri.store.size
+green  open   .geoip_databases 3dYnejPnQHK9bXJn3sBG2Q   1   0         39            0       37mb           37mb
+green  open   ind-1            yacq-QErQMaDqyT32-0aFQ   1   0          0            0       226b           226b
+yellow open   ind-3            UmhxlKnxRmeTwvT1H7a9eA   4   2          0            0       904b           904b
+yellow open   ind-2            QGNS-HJlTNW5F8tCjosmbg   2   1          0            0       452b           452b
+```
+Получение статуса:
+```
+root@80483e8bdfe6:/# curl -X GET 'http://localhost:9200/_cluster/health/ind-1?pretty'
+{
+  "cluster_name" : "netology_test",
+  "status" : "green",
+  "timed_out" : false,
+  "number_of_nodes" : 1,
+  "number_of_data_nodes" : 1,
+  "active_primary_shards" : 1,
+  "active_shards" : 1,
+  "relocating_shards" : 0,
+  "initializing_shards" : 0,
+  "unassigned_shards" : 0,
+  "delayed_unassigned_shards" : 0,
+  "number_of_pending_tasks" : 0,
+  "number_of_in_flight_fetch" : 0,
+  "task_max_waiting_in_queue_millis" : 0,
+  "active_shards_percent_as_number" : 100.0
+}
+root@80483e8bdfe6:/# curl -X GET 'http://localhost:9200/_cluster/health/ind-2?pretty'
+{
+  "cluster_name" : "netology_test",
+  "status" : "yellow",
+  "timed_out" : false,
+  "number_of_nodes" : 1,
+  "number_of_data_nodes" : 1,
+  "active_primary_shards" : 2,
+  "active_shards" : 2,
+  "relocating_shards" : 0,
+  "initializing_shards" : 0,
+  "unassigned_shards" : 2,
+  "delayed_unassigned_shards" : 0,
+  "number_of_pending_tasks" : 0,
+  "number_of_in_flight_fetch" : 0,
+  "task_max_waiting_in_queue_millis" : 0,
+  "active_shards_percent_as_number" : 50.0
+}
+root@80483e8bdfe6:/# curl -X GET 'http://localhost:9200/_cluster/health/ind-3?pretty'
+{
+  "cluster_name" : "netology_test",
+  "status" : "yellow",
+  "timed_out" : false,
+  "number_of_nodes" : 1,
+  "number_of_data_nodes" : 1,
+  "active_primary_shards" : 4,
+  "active_shards" : 4,
+  "relocating_shards" : 0,
+  "initializing_shards" : 0,
+  "unassigned_shards" : 8,
+  "delayed_unassigned_shards" : 0,
+  "number_of_pending_tasks" : 0,
+  "number_of_in_flight_fetch" : 0,
+  "task_max_waiting_in_queue_millis" : 0,
+  "active_shards_percent_as_number" : 50.0
+}
+```
+Статус кластера:
+```
+root@80483e8bdfe6:/# curl -XGET localhost:9200/_cluster/health/?pretty=true
+{
+  "cluster_name" : "netology_test",
+  "status" : "yellow",
+  "timed_out" : false,
+  "number_of_nodes" : 1,
+  "number_of_data_nodes" : 1,
+  "active_primary_shards" : 10,
+  "active_shards" : 10,
+  "relocating_shards" : 0,
+  "initializing_shards" : 0,
+  "unassigned_shards" : 10,
+  "delayed_unassigned_shards" : 0,
+  "number_of_pending_tasks" : 0,
+  "number_of_in_flight_fetch" : 0,
+  "task_max_waiting_in_queue_millis" : 0,
+  "active_shards_percent_as_number" : 50.0
+}
+```
+Статус yellow из-за неподписанных шардов, значение "unassigned_shards", это в свою очередь из-за указанных реплик, хотя у нас по факту одна нода.
 
+Удаление:
+```
+root@80483e8bdfe6:/# curl -X DELETE 'http://localhost:9200/ind-1?pretty'
+{
+  "acknowledged" : true
+}
+root@80483e8bdfe6:/# curl -X DELETE 'http://localhost:9200/ind-2?pretty'
+{
+  "acknowledged" : true
+}
+root@80483e8bdfe6:/# curl -X DELETE 'http://localhost:9200/ind-3?pretty'
+{
+  "acknowledged" : true
+}
+```
 
 ## Задача 3
 
