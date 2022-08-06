@@ -32,7 +32,45 @@
 Далее мы будем работать с данным экземпляром elasticsearch.
 
 ### Ответ:
-
+Последовательность команд:
+```
+root@vagrant:/home/vagrant# docker pull elasticsearch:7.17.5
+root@vagrant:/home/vagrant# docker run -d --name elasticsearch -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" elasticsearch:7.17.5
+root@vagrant:/home/vagrant# docker exec -u 0 -it 8dbde2dcc600 /bin/bash
+root@8dbde2dcc600:/usr/share/elasticsearch# cd /usr/share/elasticsearch/config/
+root@8dbde2dcc600:/usr/share/elasticsearch/config# mkdir /var/lib/elasticsearch_data
+root@8dbde2dcc600:/usr/share/elasticsearch/config# mkdir /var/lib/elasticsearch_logs
+root@8dbde2dcc600:/usr/share/elasticsearch/config# vim elasticsearch.yml
+root@8dbde2dcc600:/usr/share/elasticsearch/config# cat elasticsearch.yml
+cluster.name: "netology_test"
+network.host: 0.0.0.0
+path.data: /var/lib/elasticsearch_data
+path.logs: /var/lib/elasticsearch_logs
+root@vagrant:/home/vagrant# docker commit 8dbde2dcc600 la3ft/elastic:1.0
+root@vagrant:/home/vagrant# docker image push la3ft/elastic:1.0
+root@vagrant:/home/vagrant# docker run -d --name elasticsearch_my -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" la3ft/elastic:1.0
+root@vagrant:/home/vagrant# docker exec -u 0 -it 321a45aa485a /bin/bash
+root@321a45aa485a:/usr/share/elasticsearch# curl -X GET http://localhost:9200/
+{
+  "name" : "321a45aa485a",
+  "cluster_name" : "netology_test",
+  "cluster_uuid" : "CZFYkxdEQN2ZnSAcJ4ge2Q",
+  "version" : {
+    "number" : "7.17.5",
+    "build_flavor" : "default",
+    "build_type" : "docker",
+    "build_hash" : "8d61b4f7ddf931f219e3745f295ed2bbc50c8e84",
+    "build_date" : "2022-06-23T21:57:28.736740635Z",
+    "build_snapshot" : false,
+    "lucene_version" : "8.11.1",
+    "minimum_wire_compatibility_version" : "6.8.0",
+    "minimum_index_compatibility_version" : "6.0.0-beta1"
+  },
+  "tagline" : "You Know, for Search"
+}
+```
+Созданная репа:
+https://hub.docker.com/repository/docker/la3ft/elastic
 
 
 ## Задача 2
