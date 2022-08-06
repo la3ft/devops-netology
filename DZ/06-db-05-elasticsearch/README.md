@@ -247,3 +247,87 @@ root@80483e8bdfe6:/# curl -X DELETE 'http://localhost:9200/ind-3?pretty'
 
 ### Ответ:
 
+Добавить строку в elasticsearch.yml:
+```
+path.repo: /usr/share/elasticsearch/snapshots
+```
+Создание и вывод: 
+```
+root@80483e8bdfe6:/# curl -XPOST localhost:9200/_snapshot/netology_backup?pretty -H 'Content-Type: application/json' -d'{"type": "fs", "settings": { "location":"/usr/share/elasticsearch/snapshots" }}'
+{
+  "acknowledged" : true
+}
+root@80483e8bdfe6:/# curl -XGET http://localhost:9200/_snapshot/netology_backup?pretty
+{
+  "netology_backup" : {
+    "type" : "fs",
+    "settings" : {
+      "location" : "/usr/share/elasticsearch/snapshots"
+    }
+  }
+}
+```
+
+Индекс и снепшот:
+
+```
+root@80483e8bdfe6:/# curl -X PUT localhost:9200/test -H 'Content-Type: application/json' -d'{ "settings": { "number_of_shards": 1,  "number_of_replicas": 0 }}'
+{"acknowledged":true,"shards_acknowledged":true,"index":"test"}
+
+root@80483e8bdfe6:/# curl -XGET http://localhost:9200/test?pretty
+{
+  "test" : {
+    "aliases" : { },
+    "mappings" : { },
+    "settings" : {
+      "index" : {
+        "routing" : {
+          "allocation" : {
+            "include" : {
+              "_tier_preference" : "data_content"
+            }
+          }
+        },
+        "number_of_shards" : "1",
+        "provided_name" : "test",
+        "creation_date" : "1659812723468",
+        "number_of_replicas" : "0",
+        "uuid" : "erVCTBbTSNyrEQhWg1g71Q",
+        "version" : {
+          "created" : "7170599"
+        }
+      }
+    }
+  }
+}
+
+root@80483e8bdfe6:/# curl -X PUT localhost:9200/_snapshot/netology_backup/elasticsearch?wait_for_completion=true
+{"snapshot":{"snapshot":"elasticsearch","uuid":"GFJ9sH_vQrq_BtwGr0ZotA","repository":"netology_backup","version_id":7170599,"version":"7.17.5","indices":["test",".ds-ilm-history-5-2022.08.06-000001",".geoip_databases",".ds-.logs-deprecation.elasticsearch-default-2022.08.06-000001"],"data_streams":["ilm-history-5",".logs-deprecation.elasticsearch-default"],"include_global_state":true,"state":"SUCCESS","start_time":"2022-08-06T19:07:48.942Z","start_time_in_millis":1659812868942,"end_time":"2022-08-06T19:07:50.145Z","end_time_in_millis":1659812870145,"duration_in_millis":1203,"failures":[],"shards":{"total":4,"failed":0,"successful":4},"feature_states":[{"feature_name":"geoip","indices":[".geoip_databases"]}]}}
+
+root@80483e8bdfe6:/# ll /usr/share/elasticsearch/snapshots
+total 60
+drwxrwxrwx 3 root          root  4096 Aug  6 19:07 ./
+drwxrwxr-x 1 root          root  4096 Aug  6 18:55 ../
+-rw-rw-r-- 1 elasticsearch root  1425 Aug  6 19:07 index-0
+-rw-rw-r-- 1 elasticsearch root     8 Aug  6 19:07 index.latest
+drwxrwxr-x 6 elasticsearch root  4096 Aug  6 19:07 indices/
+-rw-rw-r-- 1 elasticsearch root 29235 Aug  6 19:07 meta-GFJ9sH_vQrq_BtwGr0ZotA.dat
+-rw-rw-r-- 1 elasticsearch root   712 Aug  6 19:07 snap-GFJ9sH_vQrq_BtwGr0ZotA.dat
+```
+
+Удаление и создание нового индексов:
+```
+root@80483e8bdfe6:/# curl -X DELETE 'http://localhost:9200/test?pretty'
+{
+  "acknowledged" : true
+}
+
+root@80483e8bdfe6:/# curl -X PUT localhost:9200/test-2?pretty -H 'Content-Type: application/json' -d'{ "settings": { "number_of_shards": 1,  "number_of_replicas": 0 }}'
+{
+  "acknowledged" : true,
+  "shards_acknowledged" : true,
+  "index" : "test-2"
+}
+```
+Восстановление из снепшота - 
+У меня так и не получилось восстановить снэпшот, ругается на индекс истории -  cannot restore index [.ds-ilm-history-5-2022.08.06-000001] because an open index with same name already exists in the cluster. Погуглил что это из-за свойства indices.lifecycle.history_index_enabled, выставил его в false, перезапустился, проделал манипуляции с удалением и созданием заново - анологичная ошибка..
