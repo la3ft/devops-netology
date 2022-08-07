@@ -330,4 +330,4 @@ root@80483e8bdfe6:/# curl -X PUT localhost:9200/test-2?pretty -H 'Content-Type: 
 }
 ```
 Восстановление из снепшота - 
-У меня так и не получилось восстановить снэпшот, ругается на индекс истории -  cannot restore index [.ds-ilm-history-5-2022.08.06-000001] because an open index with same name already exists in the cluster. Погуглил что это из-за свойства indices.lifecycle.history_index_enabled, выставил его в false, перезапустился, проделал манипуляции с удалением и созданием заново - анологичная ошибка..
+У меня так и не получилось восстановить снэпшот, ругается на индекс истории -  cannot restore index [.ds-ilm-history-5-2022.08.06-000001] because an open index with same name already exists in the cluster. Погуглил что это из-за свойства indices.lifecycle.history_index_enabled, выставил его в false, перезапустился, проделал манипуляции с удалением и созданием заново - аналогичная ошибка..
