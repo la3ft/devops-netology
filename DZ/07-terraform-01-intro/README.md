@@ -79,5 +79,5 @@ is 1.2.7. You can update by downloading from https://www.terraform.io/downloads.
 ### Ответ:  
 
 <p align="center">
-  <img width="800" height="500" src="./assets/1.png">
+  <img width="800" height="300" src="./assets/1.png">
 </p>
