@@ -42,4 +42,18 @@ dynamodb.
 * Вывод команды `terraform plan` для воркспейса `prod`.
 
 ### Ответ:
+Создание воркспейсов:  
+```
+root@vagrant:/home/vagrant/07-terraform-02-syntax/terraform# terraform workspace new stage
+Created and switched to workspace "stage"!
 
+You're now on a new, empty workspace. Workspaces isolate their state,
+so if you run "terraform plan" Terraform will not see any existing state
+for this configuration.
+root@vagrant:/home/vagrant/07-terraform-02-syntax/terraform# terraform workspace new prod
+Created and switched to workspace "prod"!
+
+You're now on a new, empty workspace. Workspaces isolate their state,
+so if you run "terraform plan" Terraform will not see any existing state
+for this configuration.
+```
