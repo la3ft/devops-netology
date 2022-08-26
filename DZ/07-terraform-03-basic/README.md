@@ -11,8 +11,16 @@
 1. Зарегистрируйте бэкэнд в терраформ проекте как описано по ссылке выше. 
 
 ### Ответ:
+Настроено на yandex cloud (https://cloud.yandex.ru/docs/tutorials/infrastructure-management/terraform-state-storage - блок `backend "s3"`):
+```
+root@vagrant:/home/vagrant/07-terraform-02-syntax/terraform# terraform init
 
+Initializing the backend...
 
+Initializing provider plugins...
+- Reusing previous version of yandex-cloud/yandex from the dependency lock file
+- Using previously-installed yandex-cloud/yandex v0.77.0
+```
 
 ## Задача 2. Инициализируем проект и создаем воркспейсы. 
 
