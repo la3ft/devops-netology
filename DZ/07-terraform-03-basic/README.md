@@ -164,7 +164,7 @@ Terraform will perform the following actions:
       + id                        = (known after apply)
       + metadata                  = {
           + "ssh-keys" = <<-EOT
-                centos:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDAoA0UwOOC99Y+dG0db/W4O/aDcqJI+yHJnSq7R/cAM63DPM6fXc1VGV5Zvxn8QhVBC/CmBDeW+QPthwHaV3T40DZmkT28rWZBx6tfx8MEUVzxqx/6DQCHD8Dj58FKjxql6+zE5erGOvs3hGWYu2XoKxAcKgZhBwJ7hlkDiteAWy0VKLScischDPU1sH+oiCrFCxeej+NRVDqNK189R3LDVsTnxaTAC5ZQbiPKAoFRHyWxh1mTSdH0RtwqvJg8czgdAdvTwdIbxu8X9fEtcQiQJ1qHSH+R6WafENmRLjEovKG6Wq5itdQOAJHrqY+43JyTl8EBiGUPKMQKwMRIvijt root@vagrant
+                centos:ssh-rsa  root@vagrant
             EOT
         }
       + name                      = "Server 1"
@@ -231,7 +231,7 @@ Terraform will perform the following actions:
       + id                        = (known after apply)
       + metadata                  = {
           + "ssh-keys" = <<-EOT
-                centos:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDAoA0UwOOC99Y+dG0db/W4O/aDcqJI+yHJnSq7R/cAM63DPM6fXc1VGV5Zvxn8QhVBC/CmBDeW+QPthwHaV3T40DZmkT28rWZBx6tfx8MEUVzxqx/6DQCHD8Dj58FKjxql6+zE5erGOvs3hGWYu2XoKxAcKgZhBwJ7hlkDiteAWy0VKLScischDPU1sH+oiCrFCxeej+NRVDqNK189R3LDVsTnxaTAC5ZQbiPKAoFRHyWxh1mTSdH0RtwqvJg8czgdAdvTwdIbxu8X9fEtcQiQJ1qHSH+R6WafENmRLjEovKG6Wq5itdQOAJHrqY+43JyTl8EBiGUPKMQKwMRIvijt root@vagrant
+                centos:ssh-rsa root@vagrant
             EOT
         }
       + name                      = "prod"
@@ -298,7 +298,7 @@ Terraform will perform the following actions:
       + id                        = (known after apply)
       + metadata                  = {
           + "ssh-keys" = <<-EOT
-                centos:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDAoA0UwOOC99Y+dG0db/W4O/aDcqJI+yHJnSq7R/cAM63DPM6fXc1VGV5Zvxn8QhVBC/CmBDeW+QPthwHaV3T40DZmkT28rWZBx6tfx8MEUVzxqx/6DQCHD8Dj58FKjxql6+zE5erGOvs3hGWYu2XoKxAcKgZhBwJ7hlkDiteAWy0VKLScischDPU1sH+oiCrFCxeej+NRVDqNK189R3LDVsTnxaTAC5ZQbiPKAoFRHyWxh1mTSdH0RtwqvJg8czgdAdvTwdIbxu8X9fEtcQiQJ1qHSH+R6WafENmRLjEovKG6Wq5itdQOAJHrqY+43JyTl8EBiGUPKMQKwMRIvijt root@vagrant
+                centos:ssh-rsa root@vagrant
             EOT
         }
       + name                      = "stage"
