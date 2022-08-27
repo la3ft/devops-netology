@@ -79,14 +79,15 @@ root@vagrant:/home/vagrant/07-terraform-02-syntax/terraform# terraform workspace
  ```
  Plan:
  ```
- Terraform used the selected providers to generate the following execution plan.
+────────────────────────────────────────────────────────────────────────────────
+
+Terraform used the selected providers to generate the following execution plan.
 Resource actions are indicated with the following symbols:
   + create
 
 Terraform will perform the following actions:
 
   # yandex_compute_instance.node01[0] will be created
-  # (moved from yandex_compute_instance.node01)
   + resource "yandex_compute_instance" "node01" {
       + allow_stopping_for_update = true
       + created_at                = (known after apply)
@@ -96,10 +97,10 @@ Terraform will perform the following actions:
       + id                        = (known after apply)
       + metadata                  = {
           + "ssh-keys" = <<-EOT
-                centos:ssh-rsa  root@vagrant
+                centos:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDAoA0UwOOC99Y+dG0db/W4O/aDcqJI+yHJnSq7R/cAM63DPM6fXc1VGV5Zvxn8QhVBC/CmBDeW+QPthwHaV3T40DZmkT28rWZBx6tfx8MEUVzxqx/6DQCHD8Dj58FKjxql6+zE5erGOvs3hGWYu2XoKxAcKgZhBwJ7hlkDiteAWy0VKLScischDPU1sH+oiCrFCxeej+NRVDqNK189R3LDVsTnxaTAC5ZQbiPKAoFRHyWxh1mTSdH0RtwqvJg8czgdAdvTwdIbxu8X9fEtcQiQJ1qHSH+R6WafENmRLjEovKG6Wq5itdQOAJHrqY+43JyTl8EBiGUPKMQKwMRIvijt root@vagrant
             EOT
         }
-      + name                      = "prod"
+      + name                      = "Server 0"
       + network_acceleration_type = "standard"
       + platform_id               = "standard-v1"
       + service_account_id        = (known after apply)
@@ -116,7 +117,7 @@ Terraform will perform the following actions:
               + block_size  = (known after apply)
               + description = (known after apply)
               + image_id    = "fd88d14a6790do254kj7"
-              + name        = "prod"
+              + name        = "root 0"
               + size        = 50
               + snapshot_id = (known after apply)
               + type        = "network-nvme"
@@ -163,10 +164,10 @@ Terraform will perform the following actions:
       + id                        = (known after apply)
       + metadata                  = {
           + "ssh-keys" = <<-EOT
-                centos:ssh-rsa  root@vagrant
+                centos:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDAoA0UwOOC99Y+dG0db/W4O/aDcqJI+yHJnSq7R/cAM63DPM6fXc1VGV5Zvxn8QhVBC/CmBDeW+QPthwHaV3T40DZmkT28rWZBx6tfx8MEUVzxqx/6DQCHD8Dj58FKjxql6+zE5erGOvs3hGWYu2XoKxAcKgZhBwJ7hlkDiteAWy0VKLScischDPU1sH+oiCrFCxeej+NRVDqNK189R3LDVsTnxaTAC5ZQbiPKAoFRHyWxh1mTSdH0RtwqvJg8czgdAdvTwdIbxu8X9fEtcQiQJ1qHSH+R6WafENmRLjEovKG6Wq5itdQOAJHrqY+43JyTl8EBiGUPKMQKwMRIvijt root@vagrant
             EOT
         }
-      + name                      = "prod"
+      + name                      = "Server 1"
       + network_acceleration_type = "standard"
       + platform_id               = "standard-v1"
       + service_account_id        = (known after apply)
@@ -183,7 +184,7 @@ Terraform will perform the following actions:
               + block_size  = (known after apply)
               + description = (known after apply)
               + image_id    = "fd88d14a6790do254kj7"
-              + name        = "prod"
+              + name        = "root 1"
               + size        = 50
               + snapshot_id = (known after apply)
               + type        = "network-nvme"
@@ -230,7 +231,7 @@ Terraform will perform the following actions:
       + id                        = (known after apply)
       + metadata                  = {
           + "ssh-keys" = <<-EOT
-                centos:ssh-rsa  root@vagrant
+                centos:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDAoA0UwOOC99Y+dG0db/W4O/aDcqJI+yHJnSq7R/cAM63DPM6fXc1VGV5Zvxn8QhVBC/CmBDeW+QPthwHaV3T40DZmkT28rWZBx6tfx8MEUVzxqx/6DQCHD8Dj58FKjxql6+zE5erGOvs3hGWYu2XoKxAcKgZhBwJ7hlkDiteAWy0VKLScischDPU1sH+oiCrFCxeej+NRVDqNK189R3LDVsTnxaTAC5ZQbiPKAoFRHyWxh1mTSdH0RtwqvJg8czgdAdvTwdIbxu8X9fEtcQiQJ1qHSH+R6WafENmRLjEovKG6Wq5itdQOAJHrqY+43JyTl8EBiGUPKMQKwMRIvijt root@vagrant
             EOT
         }
       + name                      = "prod"
@@ -297,10 +298,10 @@ Terraform will perform the following actions:
       + id                        = (known after apply)
       + metadata                  = {
           + "ssh-keys" = <<-EOT
-                centos:ssh-rsa  root@vagrant
+                centos:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDAoA0UwOOC99Y+dG0db/W4O/aDcqJI+yHJnSq7R/cAM63DPM6fXc1VGV5Zvxn8QhVBC/CmBDeW+QPthwHaV3T40DZmkT28rWZBx6tfx8MEUVzxqx/6DQCHD8Dj58FKjxql6+zE5erGOvs3hGWYu2XoKxAcKgZhBwJ7hlkDiteAWy0VKLScischDPU1sH+oiCrFCxeej+NRVDqNK189R3LDVsTnxaTAC5ZQbiPKAoFRHyWxh1mTSdH0RtwqvJg8czgdAdvTwdIbxu8X9fEtcQiQJ1qHSH+R6WafENmRLjEovKG6Wq5itdQOAJHrqY+43JyTl8EBiGUPKMQKwMRIvijt root@vagrant
             EOT
         }
-      + name                      = "prod"
+      + name                      = "stage"
       + network_acceleration_type = "standard"
       + platform_id               = "standard-v1"
       + service_account_id        = (known after apply)
@@ -317,7 +318,7 @@ Terraform will perform the following actions:
               + block_size  = (known after apply)
               + description = (known after apply)
               + image_id    = "fd88d14a6790do254kj7"
-              + name        = "prod"
+              + name        = "stage"
               + size        = 50
               + snapshot_id = (known after apply)
               + type        = "network-nvme"
