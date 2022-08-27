@@ -13,6 +13,19 @@
 ### Ответ:
 Настроено на yandex cloud (https://cloud.yandex.ru/docs/tutorials/infrastructure-management/terraform-state-storage - блок `backend "s3"`):
 ```
+backend "s3" {
+    endpoint   = "storage.yandexcloud.net"
+    bucket     = "test-bucket-netology"
+    region     = "ru-central1"
+    key        = "ter1.tfstate"
+    access_key = ""
+    secret_key = ""
+
+    skip_region_validation      = true
+    skip_credentials_validation = true
+  }
+```
+```
 root@vagrant:/home/vagrant/07-terraform-02-syntax/terraform# terraform init
 
 Initializing the backend...
