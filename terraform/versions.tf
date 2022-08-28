@@ -9,7 +9,7 @@ terraform {
     endpoint   = "storage.yandexcloud.net"
     bucket     = "<имя бакета>"
     region     = "ru-central1"
-    key        = "<путь к файлу состояния в бакете>/<имя файла состояния>.tfstate"
+    key        = "ter1.tfstate"
     access_key = "<идентификатор статического ключа>"
     secret_key = "<секретный ключ>"
 
