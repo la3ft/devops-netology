@@ -11,7 +11,8 @@ resource "yandex_compute_instance" "node01" {
 
   boot_disk {
     initialize_params {
-      image_id    = "data.yandex_compute_image.ubuntu_image.id"
+#centos-7
+      image_id    = "fd88d14a6790do254kj7"
       name        = "root-node01"
       type        = "network-nvme"
       size        = "50"
@@ -19,7 +20,7 @@ resource "yandex_compute_instance" "node01" {
   }
 
   network_interface {
-    subnet_id = "yandex_vpc_subnet.subnet_terraform.id"
+    subnet_id = yandex_vpc_subnet.subnet_terraform.id
     nat       = true
   }
 
