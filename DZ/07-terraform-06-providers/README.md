@@ -41,4 +41,6 @@ docker_compose-api-1  | 2022-08-29T22:42:36.530Z [INFO]  Handle Orders | CreateO
 docker_compose-api-1  | 2022-08-29T22:42:36.576Z [INFO]  Handle Orders | GetUserOrder
 ```
 Компиляция и успешный запуск: 
-
+<p align="center">
+  <img width="1000" height="200" src="./assets/provider-build.png">
+</p>
