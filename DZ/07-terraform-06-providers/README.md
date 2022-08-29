@@ -33,4 +33,12 @@
 3. Попробуйте скомпилировать провайдер, если получится то приложите снимок экрана с командой и результатом компиляции.   
 
 ### Ответ:
+Ссылка на рабочий tf для провайдера - https://github.com/la3ft/devops-netology/blob/main/DZ/07-terraform-06-providers/main.tf  
+Результат выполнения terraform apply:
+```
+docker_compose-api-1  | 2022-08-29T22:42:36.517Z [INFO]  Handle User | signin
+docker_compose-api-1  | 2022-08-29T22:42:36.530Z [INFO]  Handle Orders | CreateOrder
+docker_compose-api-1  | 2022-08-29T22:42:36.576Z [INFO]  Handle Orders | GetUserOrder
+```
+Компиляция и успешный запуск: 
 
