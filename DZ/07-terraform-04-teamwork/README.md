@@ -85,7 +85,7 @@ projects:
 ```
 P.S. Получилось встроить проверку с помощью вебхука:
 <p align="center">
-  <img width="1100" height="500" src="./assets/atlantis.png">
+  <img width="800" height="300" src="./assets/atlantis.png">
 </p>
 
 
