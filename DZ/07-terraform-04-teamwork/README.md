@@ -83,6 +83,10 @@ projects:
     enabled: true
   apply_requirements: [mergeable, approved]
 ```
+P.S. Получилось встроить проверку с помощью вебхука:
+<p align="center">
+  <img width="1100" height="500" src="./assets/atlantis.png">
+</p>
 
 
 ## Задача 3. Знакомство с каталогом модулей. 
