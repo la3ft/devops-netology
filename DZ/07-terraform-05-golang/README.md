@@ -59,7 +59,6 @@ func main() {
 	output := input * float64(0.3048)
 	fmt.Println(output)
 }
-
 ```
 2. Вычисление элемента в массиве:
 
