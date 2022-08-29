@@ -46,8 +46,44 @@
 В виде решения ссылку на код или сам код. 
 
 ### Ответ:
+1. Перевод в метры:
+```
+package main
 
+import "fmt"
 
+func main() {
+	fmt.Print("Enter a number: ")
+	var input float64
+	fmt.Scanf("%f", &input)
+	output := input * float64(0.3048)
+	fmt.Println(output)
+}
+
+```
+2. Вычисление элемента в массиве:
+
+package main
+
+import "fmt"
+```
+func main() {
+	x := []int{48, 2, 96, 86, 3, 68, 57, 82, 63, 70, 37, 34, 83, 27, 19, 97, 9, 17, 1}
+	current := 0
+	fmt.Println("Массив: ", x)
+	for i, value := range x {
+		if i == 0 {
+			current = value
+		} else {
+			if value < current {
+				current = value
+			}
+		}
+	}
+	fmt.Println("Наименьший элемент в массиве: ", current)
+}
+```
+3. 
 
 ## Задача 4. Протестировать код (не обязательно).
 
