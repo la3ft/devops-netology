@@ -33,7 +33,7 @@
 3. Попробуйте скомпилировать провайдер, если получится то приложите снимок экрана с командой и результатом компиляции.   
 
 ### Ответ:
-Код data_source_coffee.go -   
+Код data_source_coffee.go - https://github.com/la3ft/devops-netology/blob/main/DZ/07-terraform-06-providers/data_source_coffee.go  
 
 Компиляция и успешный запуск: 
 <p align="center">
@@ -175,4 +175,10 @@ edu_order = {
   ])
   "last_updated" = tostring(null)
 }
+```
+Вывод в контейнере:  
+```
+docker_compose-api-1  | 2022-08-29T23:12:26.842Z [INFO]  Handle User | signin
+docker_compose-api-1  | 2022-08-29T23:12:26.852Z [INFO]  Handle Orders | CreateOrder
+docker_compose-api-1  | 2022-08-29T23:12:26.896Z [INFO]  Handle Orders | GetUserOrder
 ```
