@@ -40,7 +40,49 @@
 В качестве результата приложите ссылку на файлы `server.yaml` и `atlantis.yaml`.
 
 ### Ответ:
+1. server.yaml:
+```
+repos:
 
+- id: github.com/la3ft/devops-netology
+
+  branch: /.*/
+
+  apply_requirements: [approved, mergeable]
+
+  allowed_overrides: [workflow]
+
+  allow_custom_workflows: true
+
+  workflow: custom
+
+workflows:
+  myworkflow:
+    plan:
+      steps:
+      - plan:
+          extra_args: ["-lock=false"]
+```
+2. atlantis.yaml:
+```
+version: 3
+automerge: true
+parallel_plan: true
+parallel_apply: true
+projects:
+- name: devops-netology
+  workspace: stage
+  autoplan:
+    when_modified: ["*.tf"]
+    enabled: true
+  apply_requirements: [mergeable, approved]
+- name: devops-netology
+  workspace: prod
+  autoplan:
+    when_modified: ["*.tf"]
+    enabled: true
+  apply_requirements: [mergeable, approved]
+```
 
 
 ## Задача 3. Знакомство с каталогом модулей. 
