@@ -33,14 +33,146 @@
 3. Попробуйте скомпилировать провайдер, если получится то приложите снимок экрана с командой и результатом компиляции.   
 
 ### Ответ:
-Ссылка на рабочий tf для провайдера - https://github.com/la3ft/devops-netology/blob/main/DZ/07-terraform-06-providers/main.tf  
-Результат выполнения terraform apply:
-```
-docker_compose-api-1  | 2022-08-29T22:42:36.517Z [INFO]  Handle User | signin
-docker_compose-api-1  | 2022-08-29T22:42:36.530Z [INFO]  Handle Orders | CreateOrder
-docker_compose-api-1  | 2022-08-29T22:42:36.576Z [INFO]  Handle Orders | GetUserOrder
-```
+Код data_source_coffee.go -   
+
 Компиляция и успешный запуск: 
 <p align="center">
   <img width="1000" height="200" src="./assets/provider-build.png">
-</p>
+</p>  
+
+Выполнение `terraform init && terraform apply --auto-approve` для собранного провайдера (main.tf - https://github.com/la3ft/devops-netology/blob/main/DZ/07-terraform-06-providers/main.tf):
+```
+root@vagrant:/home/vagrant/07-terraform-06-providers/terraform-provider-hashicups# terraform init -upgrade && terraform apply --auto-approve
+
+Initializing the backend...
+
+Initializing provider plugins...
+- Finding hashicorp.com/edu/hashicups versions matching "~> 0.3.1"...
+- Installing hashicorp.com/edu/hashicups v0.3.1...
+- Installed hashicorp.com/edu/hashicups v0.3.1 (unauthenticated)
+
+Terraform has made some changes to the provider dependency selections recorded
+in the .terraform.lock.hcl file. Review those changes and commit them to your
+version control system if they represent changes you intended to make.
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # hashicups_order.edu will be created
+  + resource "hashicups_order" "edu" {
+      + id           = (known after apply)
+      + last_updated = (known after apply)
+
+      + items {
+          + quantity = 2
+
+          + coffee {
+              + description = (known after apply)
+              + id          = 3
+              + image       = (known after apply)
+              + name        = (known after apply)
+              + price       = (known after apply)
+              + teaser      = (known after apply)
+            }
+        }
+      + items {
+          + quantity = 2
+
+          + coffee {
+              + description = (known after apply)
+              + id          = 2
+              + image       = (known after apply)
+              + name        = (known after apply)
+              + price       = (known after apply)
+              + teaser      = (known after apply)
+            }
+        }
+    }
+
+Plan: 1 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + edu_order = {
+      + id           = (known after apply)
+      + items        = [
+          + {
+              + coffee   = [
+                  + {
+                      + description = (known after apply)
+                      + id          = 3
+                      + image       = (known after apply)
+                      + name        = (known after apply)
+                      + price       = (known after apply)
+                      + teaser      = (known after apply)
+                    },
+                ]
+              + quantity = 2
+            },
+          + {
+              + coffee   = [
+                  + {
+                      + description = (known after apply)
+                      + id          = 2
+                      + image       = (known after apply)
+                      + name        = (known after apply)
+                      + price       = (known after apply)
+                      + teaser      = (known after apply)
+                    },
+                ]
+              + quantity = 2
+            },
+        ]
+      + last_updated = (known after apply)
+    }
+hashicups_order.edu: Creating...
+hashicups_order.edu: Creation complete after 0s [id=2]
+
+Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+edu_order = {
+  "id" = "2"
+  "items" = tolist([
+    {
+      "coffee" = tolist([
+        {
+          "description" = ""
+          "id" = 3
+          "image" = "/nomad.png"
+          "name" = "Nomadicano"
+          "price" = 150
+          "teaser" = "Drink one today and you will want to schedule another"
+        },
+      ])
+      "quantity" = 2
+    },
+    {
+      "coffee" = tolist([
+        {
+          "description" = ""
+          "id" = 2
+          "image" = "/vault.png"
+          "name" = "Vaulatte"
+          "price" = 200
+          "teaser" = "Nothing gives you a safe and secure feeling like a Vaulatte"
+        },
+      ])
+      "quantity" = 2
+    },
+  ])
+  "last_updated" = tostring(null)
+}
+```
