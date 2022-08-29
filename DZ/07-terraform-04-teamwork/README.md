@@ -101,5 +101,6 @@ P.S. Получилось встроить проверку с помощью в
 В качестве результата задания приложите ссылку на созданный блок конфигураций. 
 
 ### Ответ:
-
+Создал шаблон для yandex cloud:  
+https://github.com/la3ft/devops-netology/blob/main/terraform/modules/instance.tf
 
