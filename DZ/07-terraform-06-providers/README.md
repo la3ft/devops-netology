@@ -20,8 +20,18 @@
     * Какому регулярному выражению должно подчиняться имя? 
     
 ### Ответ:
-
-
+1. resource - https://github.com/hashicorp/terraform-provider-aws/blob/main/internal/provider/provider.go#L924  
+data_source - https://github.com/hashicorp/terraform-provider-aws/blob/main/internal/provider/provider.go#L414
+1. ConflictsWith: - https://github.com/hashicorp/terraform-provider-aws/blob/main/internal/service/sqs/queue.go#L87  
+80 символов - https://github.com/hashicorp/terraform-provider-aws/blob/main/internal/service/sqs/queue.go#L427  
+Регулярное выражение:
+```
+if fifoQueue {
+			re = regexp.MustCompile(`^[a-zA-Z0-9_-]{1,75}\.fifo$`)
+		} else {
+			re = regexp.MustCompile(`^[a-zA-Z0-9_-]{1,80}$`)
+		}
+```
 
 ## Задача 2. (Не обязательно) 
 В рамках вебинара и презентации мы разобрали как создать свой собственный провайдер на примере кофемашины. 
