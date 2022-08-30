@@ -14,6 +14,7 @@
 1. Найдите все коммиты в которых была изменена функция `globalPluginDirs`.
 1. Кто автор функции `synchronizedWriters`? 
 
+## Ответ:
 - **1.** `git show aefea`
 
 commit aefead2207ef7e2aa5dc81a34aedf0cad4c32545
