@@ -22,3 +22,74 @@
 	Почитайте, почему так происходит, и как изменить поведение.
 1. Бывает, что есть необходимость переместить запущенный процесс из одной сессии в другую. Попробуйте сделать это, воспользовавшись `reptyr`. Например, так можно перенести в `screen` процесс, который вы запустили по ошибке в обычной SSH-сессии.
 1. `sudo echo string > /root/new_file` не даст выполнить перенаправление под обычным пользователем, так как перенаправлением занимается процесс shell'а, который запущен без `sudo` под вашим пользователем. Для решения данной проблемы можно использовать конструкцию `echo string | sudo tee /root/new_file`. Узнайте что делает команда `tee` и почему в отличие от `sudo echo` команда с `sudo tee` будет работать.
+
+## Ответ:
+- **1.** `cd` это команда, встроенная в shell, посмотреть это можно с помощью команды type:
+```
+vagrant@vagrant:~$ type cd
+cd is a shell builtin
+```
+Команда `cd` всегда выполняется с exit code 0 в случае успеха, то есть при удачной смене директории, если же к примеру пытаться перейти в несуществующую директорию то команда вернёт ошибку.
+- **2.** Чтобы посмотреть количество строк с помощью `grep` можно воспользоваться параметром `-c`. Например `grep "1" 123.txt -c`.
+- **3.** Под PID 1 скрывается основной init процесс системы - systemd, его можно посмотреть с помощью команды `top -p 1`.
+- **4.** Для этого необходимо отркыть новую сессию терминала, выяснить номер с помощью команды `tty` - которая вернёт нам вывод `/dev/pts/1`, после этого сможем перенаправить ошибку на другой терминал с помощью команды `ls '123' 2> /dev/pts/1`, в нашем другом окне терминала выведется ошибка `ls: cannot access '123': No such file or directory`.
+- **5.** Исправил, сделал другой вывод:
+```
+vagrant@vagrant:~$ cat 1234.txt
+test
+vagrant@vagrant:~$ cat 12345.txt
+cat: 12345.txt: No such file or directory
+vagrant@vagrant:~$ cat < 1234.txt > 12345.txt
+vagrant@vagrant:~$ cat 12345.txt
+test
+```
+- **6.** Да мы можем передать вывод на другой терминал используя /dev/tty1, например:
+```
+vagrant@vagrant:~$ tty
+/dev/pts/1
+vagrant@vagrant:~$ echo tst > /dev/tty1
+```
+Вывод сообщения 'tst' уйдёт на наш другой терминал.
+- **7.** Командой `bash 5>&1` мы создали файловый дескриптор, который прописался в /proc/$$/fd/5, следовательно переслав на этот файл вывод echo мы получим следующий результат:
+```
+vagrant@vagrant:~$ echo netology > /proc/$$/fd/5
+netology
+```
+- **8.** Попробовал сделать это одной строкой с новым дескриптором 5(сначала вывод ошибок stderr 5>&2, потом stderr в sdtout 2>&1 и вывод в дескриптор 1>&5):
+```
+vagrant@vagrant:~$ cat 1234.txt 5>&2 2>&1 1>&5 | grep test
+test
+```
+- **9.** Вывод команды `cat /proc/$$/environ` отобразит следующее:
+```
+vagrant@vagrant:~$ cat /proc/$$/environ
+USER=vagrantLOGNAME=vagrantHOME=/home/vagrantPATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/tmp/new_path_directory:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/binSHELL=/bin/bashTERM=xterm-256colorXDG_SESSION_ID=3XDG_RUNTIME_DIR=/run/user/1000DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/busXDG_SESSION_TYPE=ttyXDG_SESSION_CLASS=userMOTD_SHOWN=pamLANG=en_US.UTF-8SSH_CLIENT=10.0.2.2 64334 22SSH_CONNECTION=10.0.2.2 64334 10.0.2.15 22SSH_TTY=/dev/pts/0
+```
+Это вывод переменных окружения текущей сессии, также просмотреть их в более удобном виде можно с помощью команды `printenv`.
+- **10.** В `/proc/<PID>/cmdline` содержатся файлы только для чтения содержащие полную информацию о процессе, если это зомби процесс то содержимого файла не будет отображаться, например:
+```
+vagrant@vagrant:~$ cat /proc/842/cmdline
+/usr/sbin/VBoxService--pidfile/var/run/vboxadd-service.shroot@vagrant:/home/vagrant#
+```
+В `/proc/<PID>/exe` содержатся символические ссылки на сами работающие программы, например:
+```
+vagrant@vagrant:~$ ls -lt /proc/842/exe
+lrwxrwxrwx 1 root root 0 Feb 12 20:20 /proc/842/exe -> /opt/VBoxGuestAdditions-6.1.30/sbin/VBoxService
+```
+- **11.** Судя по выводу команды `cat /proc/cpuinfo` поддерживается набор инструкций sse4_2.
+- **12.** По умолчанию для команды ssh не предусмотрено выделение псевдотерминала, поэтому выдаётся сообщение об ошибке, чтобы этого избежать можно использовать ключ `-t`:
+```
+vagrant@vagrant:~$ ssh -t localhost 'tty'
+vagrant@localhost's password:
+/dev/pts/1
+Connection to localhost closed.
+```
+- **13.** Удалось запустить `sleep 1h` в другом терминале и подключиться к нему, выполнил команду `echo 0 > /proc/sys/kernel/yama/ptrace_scope`:
+```
+root@vagrant:/home/vagrant# ps aux | grep sleep
+vagrant     2221  0.0  0.0   5476   596 pts/2    S+   16:54   0:00 sleep 1h
+root        2223  0.0  0.0   6432   676 pts/0    R+   16:54   0:00 grep --color=auto sleep
+root@vagrant:/home/vagrant# sudo reptyr -T 2221
+
+```
+- **14.** Командой `tee` можно записывать вывод в файл. Команда `sudo` позволяет выполнять другие команды с правами суперпользователя - root, поэтому команда `echo string | sudo tee /root/new_file` выполнится, так как у суперпользователя есть доступ к директории /root/.
