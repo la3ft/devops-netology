@@ -28,4 +28,4 @@ resource "yandex_compute_instance" "node01" {
     ssh-keys = "centos:${file("~/.ssh/id_rsa.pub")}"
   }
 }
-## test
+## test23
