@@ -16,7 +16,7 @@ yc compute image list
 +----------------------+---------------+--------+----------------------+--------+  
   
 <p align="center">
-  <img width="800" height="500" src="./assets/1.png">
+  <img width="800" height="350" src="./assets/1.png">
 </p>
 
 ## Задача 2
@@ -35,7 +35,7 @@ yc compute instance list
 +----------------------+------+---------------+---------+--------------+-------------+  
 
 <p align="center">
-  <img width="800" height="500" src="./assets/4.png">
+  <img width="800" height="400" src="./assets/4.png">
 </p>
 
 ## Задача 3
