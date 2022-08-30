@@ -1,9 +1,3 @@
-### Как сдавать задания
-
-Вы уже изучили блок «Системы управления версиями», и начиная с этого занятия все ваши работы будут приниматься ссылками на .md-файлы, размещённые в вашем публичном репозитории.
-
-Скопируйте в свой .md-файл содержимое этого файла; исходники можно посмотреть [здесь](https://raw.githubusercontent.com/netology-code/sysadm-homeworks/devsys10/04-script-02-py/README.md). Заполните недостающие части документа решением задач (заменяйте `???`, ОСТАЛЬНОЕ В ШАБЛОНЕ НЕ ТРОГАЙТЕ чтобы не сломать форматирование текста, подсветку синтаксиса и прочее, иначе можно отправиться на доработку) и отправляйте на проверку. Вместо логов можно вставить скриншоты по желани.
-
 # Домашнее задание к занятию "4.2. Использование Python для решения типовых DevOps задач"
 
 ## Обязательная задача 1
@@ -19,16 +13,18 @@ c = a + b
 ### Вопросы:
 | Вопрос  | Ответ |
 | ------------- | ------------- |
-| Какое значение будет присвоено переменной `c`?  | ???  |
-| Как получить для переменной `c` значение 12?  | ???  |
-| Как получить для переменной `c` значение 3?  | ???  |
+| Какое значение будет присвоено переменной `c`?  | Никакое, будет выведена ошибка "TypeError: unsupported operand type(s) for +: 'int' and 'str'"  |
+| Как получить для переменной `c` значение 12?  | Задать переменную a как строку - a = '1', либо сразу в c преобразовать в строку - c=str(a)+b  |
+| Как получить для переменной `c` значение 3?  | Задать переменную b как целочисленную - b = 2, либо сразу в c преобразовать в число - c=a+int(b)  |
 
 ## Обязательная задача 2
 Мы устроились на работу в компанию, где раньше уже был DevOps Engineer. Он написал скрипт, позволяющий узнать, какие файлы модифицированы в репозитории, относительно локальных изменений. Этим скриптом недовольно начальство, потому что в его выводе есть не все изменённые файлы, а также непонятен полный путь к директории, где они находятся. Как можно доработать скрипт ниже, чтобы он исполнял требования вашего руководителя?
 
 ```python
 #!/usr/bin/env python3
+
 import os
+
 bash_command = ["cd ~/netology/sysadm-homeworks", "git status"]
 result_os = os.popen(' && '.join(bash_command)).read()
 is_change = False
@@ -41,12 +37,25 @@ for result in result_os.split('\n'):
 
 ### Ваш скрипт:
 ```python
-???
+#!/usr/bin/env python3
+
+import os
+
+path = os.getcwd()
+bash_command = ["cd /home/vagrant/git/sysadm-homeworks", "git status"]
+result_os = os.popen(' && '.join(bash_command)).read()
+for result in result_os.split('\n'):
+    if result.find('modified') != -1:
+        prepare_result = result.replace('\tmodified:   ', '/')
+        print(path+prepare_result)
 ```
 
 ### Вывод скрипта при запуске при тестировании:
+(изменялись README.md и /01-intro-01/netology.md)
 ```
-???
+root@vagrant:/home/vagrant/git/sysadm-homeworks# ./04-script-02.py
+/home/vagrant/git/sysadm-homeworks/01-intro-01/netology.md
+/home/vagrant/git/sysadm-homeworks/README.md
 ```
 
 ## Обязательная задача 3
@@ -54,12 +63,27 @@ for result in result_os.split('\n'):
 
 ### Ваш скрипт:
 ```python
-???
+#!/usr/bin/env python3
+
+import os, sys
+
+path = sys.argv[1]
+bash_command = ["cd "+path, "git status"]
+result_os = os.popen(' && '.join(bash_command)).read()
+for result in result_os.split('\n'):
+    if result.find('modified') != -1:
+        prepare_result = result.replace('\tmodified:   ', '')
+        print(path+prepare_result)
 ```
 
 ### Вывод скрипта при запуске при тестировании:
 ```
-???
+root@vagrant:/home/vagrant/git# ./04-script-03.py /home/vagrant/git/sysadm-homeworks/
+/home/vagrant/git/sysadm-homeworks/01-intro-01/netology.md
+/home/vagrant/git/sysadm-homeworks/README.md
+
+root@vagrant:/home/vagrant/git# ./04-script-03.py /home/vagrant/git/
+fatal: not a git repository (or any of the parent directories): .git
 ```
 
 ## Обязательная задача 4
@@ -67,24 +91,34 @@ for result in result_os.split('\n'):
 
 ### Ваш скрипт:
 ```python
-???
+#!/usr/bin/env python3
+
+import socket
+
+a = 1
+b = 0
+hosts = {'drive.google.com':'0.0.0.0', 'mail.google.com':'0.0.0.0', 'google.com':'0.0.0.0'}
+
+#Вывод текущих значений + запись их в справочник
+for host in hosts:
+    ip = socket.gethostbyname(host)
+    print(host+' '+ip)
+    hosts[host] = ip
+#Цикл проверки соответствия, в случае изменения будет выведено соотвутствующее сообщение и выход из цикла
+while 1==1:
+  for host in hosts:
+    ip = socket.gethostbyname(host)
+    if ip != hosts[host]:
+      if a==1 and b !=1:
+        print('[ERROR] ' + str(host) +' IP mistmatch: '+hosts[host]+' '+ip)
+        exit()
 ```
 
 ### Вывод скрипта при запуске при тестировании:
 ```
-???
-```
-
-## Дополнительное задание (со звездочкой*) - необязательно к выполнению
-
-Так получилось, что мы очень часто вносим правки в конфигурацию своей системы прямо на сервере. Но так как вся наша команда разработки держит файлы конфигурации в github и пользуется gitflow, то нам приходится каждый раз переносить архив с нашими изменениями с сервера на наш локальный компьютер, формировать новую ветку, коммитить в неё изменения, создавать pull request (PR) и только после выполнения Merge мы наконец можем официально подтвердить, что новая конфигурация применена. Мы хотим максимально автоматизировать всю цепочку действий. Для этого нам нужно написать скрипт, который будет в директории с локальным репозиторием обращаться по API к github, создавать PR для вливания текущей выбранной ветки в master с сообщением, которое мы вписываем в первый параметр при обращении к py-файлу (сообщение не может быть пустым). При желании, можно добавить к указанному функционалу создание новой ветки, commit и push в неё изменений конфигурации. С директорией локального репозитория можно делать всё, что угодно. Также, принимаем во внимание, что Merge Conflict у нас отсутствуют и их точно не будет при push, как в свою ветку, так и при слиянии в master. Важно получить конечный результат с созданным PR, в котором применяются наши изменения. 
-
-### Ваш скрипт:
-```python
-???
-```
-
-### Вывод скрипта при запуске при тестировании:
-```
-???
+root@vagrant:/home/vagrant/git# ./04-script-04.py
+drive.google.com 74.125.131.194
+mail.google.com 64.233.164.83
+google.com 173.194.73.100
+[ERROR] google.com IP mistmatch: 173.194.73.100 173.194.73.113
 ```
