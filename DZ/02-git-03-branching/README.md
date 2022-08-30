@@ -225,3 +225,6 @@ Fast-forward
 
 Есть еще такой тренажер https://learngitbranching.js.org/, где можно потренироваться в работе с 
 деревом коммитов и ветвлений. 
+
+## Ответ:
+https://github.com/la3ft/devops-netology/network
