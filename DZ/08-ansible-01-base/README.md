@@ -152,7 +152,7 @@ PLAY RECAP *********************************************************************
 centos7                    : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ubuntu                     : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```
-9. Нужен `local`. Список `ansible-doc -t inventory -l`
+9. Нужен `local`. Список `ansible-doc -t connection -l`
 10. Обновим prod.yml, `cat inventory/prod.yml` :
 ```
 ---
