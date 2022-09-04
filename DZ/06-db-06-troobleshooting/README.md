@@ -41,8 +41,13 @@ db.inventory.find(
 Как вы думаете, в чем может быть проблема?
 
 ### Ответ:
-Redis блокирует операции записи из-за закончившейся оперативной памяти, увеличить её можно в конфигурационном файле redis.conf. Либо использовать соответствующую политику удаления ключей (maxmemory-policy): volatile-lru - удалять ключи TTL, которые редко используются.
-
+Судя по документации и блокировке - речь идёт об активном методе удаления ключей - ACTIVE_EXPIRE_CYCLE_LOOKUPS_PER_LOOP (https://redis.io/docs/reference/optimization/latency/#latency-generated-by-expires). Он автоматически запускает удаление каждые 100 миллисекунд, но если общее количество ключей за одну секунду превышает значение в 25% от общего количества ключей, то Redis блокирует запись пока не очистит их до указанного порога. В конфиге redis.conf есть параметр hz, который выставлен по умолчанию в 10, чтобы ускорить процесс очистки можно его увеличить:
+```
+# By default "hz" is set to 10. Raising the value will use more CPU when
+# Redis is idle, but at the same time will make Redis more responsive when
+# there are many keys expiring at the same time, and timeouts may be
+# handled with more precision.
+```
  
 ## Задача 3
 
