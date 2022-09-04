@@ -6,13 +6,11 @@
 3. Скачайте [playbook](./playbook/) из репозитория с домашним заданием и перенесите его в свой репозиторий.
 
 ## Ответ:
-1. 
 ```
 root@vagrant:/home/vagrant/08-ansible-01-base/ansible-test/playbook# ansible --version
 ansible [core 2.13.3]
-```
-1. https://github.com/la3ft/ansible-test
-1. https://github.com/la3ft/ansible-test/tree/main/playbook
+```  
+https://github.com/la3ft/ansible-test/
 
 ## Основная часть
 1. Попробуйте запустить playbook на окружении из `test.yml`, зафиксируйте какое значение имеет факт `some_fact` для указанного хоста при выполнении playbook'a.
