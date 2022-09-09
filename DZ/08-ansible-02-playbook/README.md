@@ -21,5 +21,5 @@
 10. Готовый playbook выложите в свой репозиторий, поставьте тег `08-ansible-02-playbook` на фиксирующий коммит, в ответ предоставьте ссылку на него.
 
 ## Ответ:
-Репозиторий: https://github.com/la3ft/08-ansible-02
+Репозиторий: https://github.com/la3ft/08-ansible-02  
 Коммит с изменениями: https://github.com/la3ft/08-ansible-02/commit/e5ffa03d403cd94f03f3ad93077653608c4b7698#diff-f3654c73e338853dc81113c5ff3f75e176adb4613d5af0baf0c0590bf03aa506
