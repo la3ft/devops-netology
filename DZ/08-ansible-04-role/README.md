@@ -28,3 +28,8 @@
 9. Переработайте playbook на использование roles. Не забудьте про зависимости lighthouse и возможности совмещения `roles` с `tasks`.
 10. Выложите playbook в репозиторий.
 11. В ответ приведите ссылки на оба репозитория с roles и одну ссылку на репозиторий с playbook.
+
+## Ответ:
+1. Роль vector - https://github.com/la3ft/vector-role
+2. Роль lighthouse - https://github.com/la3ft/lighthouse-role
+3. Измененный playbook для использования roles - https://github.com/la3ft/08-ansible-02
