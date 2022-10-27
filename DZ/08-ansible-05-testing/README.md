@@ -31,6 +31,7 @@
 
 ## Ответ:  
 ### Molecule
-https://github.com/la3ft/vector-role/commit/a43390b9a2cdb5c35e3e3cf34502ab58d4863e13
+https://github.com/la3ft/vector-role/commit/a43390b9a2cdb5c35e3e3cf34502ab58d4863e13  
 
 ### Tox
+https://github.com/la3ft/vector-role/commit/6e83e386f3bae8e812b1e351f51b488735c02367  
