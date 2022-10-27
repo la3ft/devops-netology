@@ -30,14 +30,7 @@
 После выполнения у вас должно получится два сценария molecule и один tox.ini файл в репозитории. Ссылка на репозиторий являются ответами на домашнее задание. Не забудьте указать в ответе теги решений Tox и Molecule заданий.
 
 ## Ответ:  
-#### Molecule
-1. Тест ругается на моменте запуска lint:
-```
-INFO     Running centos_8 > lint
-COMMAND: yamllint .
-ansible-lint
-flake8
+### Molecule
+https://github.com/la3ft/vector-role/commit/a43390b9a2cdb5c35e3e3cf34502ab58d4863e13
 
-/bin/bash: yamllint: command not found
-```
-Остальные шаги проходят без ошибок
+### Tox
