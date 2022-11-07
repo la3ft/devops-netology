@@ -28,4 +28,5 @@
 Если всё отработало в рамках ожидания - выгрузить схемы workflow для импорта в XML. Файлы с workflow приложить к решению задания.
 
 ## Ответ:  
-
+Схема для бага - https://github.com/la3ft/devops-netology/blob/main/DZ/09-ci-01-intro/JiraBug.xml  
+Схема для остальных задач - https://github.com/la3ft/devops-netology/blob/main/DZ/09-ci-01-intro/JiraAll.xml
