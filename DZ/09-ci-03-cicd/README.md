@@ -60,7 +60,7 @@
 
 ### SonarQube  
 <p align="center">
-  <img width="900" height="600" src="./answers/passed_py.png">
+  <img width="900" height="500" src="./answers/passed_py.png">
 </p>
 
 ### Nexus
