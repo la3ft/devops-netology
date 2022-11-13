@@ -57,3 +57,14 @@
 4. В ответе присылаем исправленный файл `pom.xml`
 
 ## Ответ:  
+
+### SonarQube  
+<p align="center">
+  <img width="800" height="300" src="./answers/passed_py.png">
+</p>
+
+### Nexus
+https://github.com/la3ft/devops-netology/blob/main/DZ/09-ci-03-cicd/answers/maven-metadata.xml
+
+### Maven
+https://github.com/la3ft/devops-netology/blob/main/DZ/09-ci-03-cicd/answers/pom.xml
