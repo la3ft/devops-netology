@@ -64,7 +64,50 @@
 </p>
 
 ### Nexus
+```xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>netology</groupId>
+  <artifactId>java</artifactId>
+  <versioning>
+    <latest>8_282</latest>
+    <release>8_282</release>
+    <versions>
+      <version>8_102</version>
+      <version>8_282</version>
+    </versions>
+    <lastUpdated>20221113181256</lastUpdated>
+  </versioning>
+</metadata>
+```
 https://github.com/la3ft/devops-netology/blob/main/DZ/09-ci-03-cicd/answers/maven-metadata.xml
 
 ### Maven
+```xml
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>netology</groupId>
+  <artifactId>java</artifactId>
+  <version>8_282</version>
+   <repositories>
+    <repository>
+      <id>netology</id>
+      <name>maven-releases</name>
+      <url>http://192.168.3.73:8081/repository/maven-public/</url>
+    </repository>
+  </repositories>
+  <dependencies>
+<!--     <dependency>
+      <groupId>somegroup</groupId>
+      <artifactId>someart</artifactId>
+      <version>somevers</version>
+      <classifier>someclass</classifier>
+      <type>sometype</type>
+    </dependency> -->
+  </dependencies>
+</project>
+```
 https://github.com/la3ft/devops-netology/blob/main/DZ/09-ci-03-cicd/answers/pom.xml
