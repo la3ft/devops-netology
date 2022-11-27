@@ -18,4 +18,6 @@
 7. Проверить работоспособность, исправить ошибки, исправленный Pipeline вложить в репозиторий в файл `ScriptedJenkinsfile`.
 8. Отправить ссылку на репозиторий с ролью и Declarative Pipeline и Scripted Pipeline.
 
-## Ответ
+## Ответ:
+Declarative Pipeline: https://github.com/la3ft/jenkins-vector-role/blob/main/Jenkinsfile  
+Scripted Pipeline: https://github.com/la3ft/jenkins-vector-role/blob/main/ScriptedJenkinsfile
