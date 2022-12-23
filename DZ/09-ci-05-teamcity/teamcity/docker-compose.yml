@@ -14,4 +14,4 @@ services:
     volumes:
       - ~/teamcity/agent/:/data/teamcity_agent/conf 
     environment:
-      SERVER_URL: "http://teamcity:8111"
+      SERVER_URL: "http://51.250.8.144:8111"
