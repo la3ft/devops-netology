@@ -77,7 +77,7 @@
 </p>  
 4. Вывод JSON:
 <details>
-  <summary>JSON</summary>
+  <summary>Netology_dashboard</summary>
 
   ```json
   {
