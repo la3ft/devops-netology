@@ -62,6 +62,7 @@
 <p align="center">
   <img width="1000" height="550" src="./resources/grafana_1.png">
 </p>  
+
 2. Запросы:  
 - Утилизация CPU для nodeexporter (в процентах, 100-idle)
   - `100 - (avg by (instance) (rate(node_cpu_seconds_total{job="nodeexporter",mode="idle"}[$__rate_interval])) * 100)`
@@ -72,15 +73,18 @@
 - Количество свободной оперативной памяти
   - `node_memory_MemFree_bytes`
 - Количество места на файловой системе
-  - `node_filesystem_free_bytes{fstype="ext4",instance="nodeexporter:9100"}`
+  - `node_filesystem_free_bytes{fstype="ext4",instance="nodeexporter:9100"}`  
+
 Скриншот:  
 <p align="center">
   <img width="1000" height="550" src="./resources/grafana_2.png">
 </p>  
+
 3. Скриншот:  
 <p align="center">
   <img width="1000" height="550" src="./resources/grafana_3.png">
 </p>  
+
 4. Вывод JSON:
 <details>
   <summary>Netology_dashboard</summary>
