@@ -57,13 +57,13 @@
 
 В решении задания - приведите листинг этого файла.  
 
-## Ответ:  
-1. Скриншот:
+## Ответы:  
+### 1. Скриншот:
 <p align="center">
   <img width="1000" height="550" src="./resources/grafana_1.png">
 </p>  
 
-2. Запросы:  
+### 2. Запросы:  
 - Утилизация CPU для nodeexporter (в процентах, 100-idle)
   - `100 - (avg by (instance) (rate(node_cpu_seconds_total{job="nodeexporter",mode="idle"}[$__rate_interval])) * 100)`
 - CPULA 1/5/15
@@ -80,12 +80,12 @@
   <img width="1000" height="550" src="./resources/grafana_2.png">
 </p>  
 
-3. Скриншот:  
+### 3. Скриншот:  
 <p align="center">
   <img width="1000" height="550" src="./resources/grafana_3.png">
 </p>  
 
-4. Вывод JSON:
+### 4. Вывод JSON:
 <details>
   <summary>Netology_dashboard</summary>
 
