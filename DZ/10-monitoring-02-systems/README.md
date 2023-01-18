@@ -77,7 +77,7 @@ P.S.: если при запуске некоторые контейнеры б�
 Факультативно можете изучить какие метрики собирает telegraf после выполнения данного задания.
 
 ## Ответ:  
-1. 
+### 1. 
 Плюсы Push-модели:
 Упрощение репликации данных в разные системы мониторинга или их резервные копии. Особенно если машины разворачиваются динамически.
 Более гибкая настройка отправки пакетов данных с метриками. Можно на клиенте настроить какие данные отдавать и как часто.
@@ -88,27 +88,98 @@ UDP является менее затратным способом переда
 Можно настроить единый proxy-server до всех агентов с TLS (таким образом мы можем разнести систему мониторинга и агенты, с гарантией безопасности их взаимодействия)
 Упрощенная отладка получения данных с агентов (так как данные запрашиваются посредством HTTP, можно самостоятельно запрашивать эти данные, используя ПО вне системы мониторинга)  
 
-2. Виды:
+### 2. Виды:
  - Prometheus - Pull
  - TICK - Push
  - Zabbix - гибридная
  - VictoriaMetrics - гибридная
  - Nagios - Pull
 
-3. Вывод `curl http://localhost:8888` :
+### 3. 
+Вывод `curl http://localhost:8086/ping`:  
 ```
-root@vagrant:/home/vagrant# curl http://localhost:8888
+root@vagrant:/home/vagrant# curl http://localhost:8086/ping -v
+*   Trying 127.0.0.1:8086...
+* TCP_NODELAY set
+* Connected to localhost (127.0.0.1) port 8086 (#0)
+> GET /ping HTTP/1.1
+> Host: localhost:8086
+> User-Agent: curl/7.68.0
+> Accept: */*
+>
+* Mark bundle as not supporting multiuse
+< HTTP/1.1 204 No Content
+< Content-Type: application/json
+< Request-Id: 30ae3a20-9737-11ed-8181-0242c0a82002
+< X-Influxdb-Build: OSS
+< X-Influxdb-Version: 1.8.10
+< X-Request-Id: 30ae3a20-9737-11ed-8181-0242c0a82002
+< Date: Wed, 18 Jan 2023 13:51:21 GMT
+<
+* Connection #0 to host localhost left intact
+```
+
+Вывод `curl http://localhost:8888` :
+```
+root@vagrant:/home/vagrant# curl http://localhost:8888 -v
+*   Trying 127.0.0.1:8888...
+* TCP_NODELAY set
+* Connected to localhost (127.0.0.1) port 8888 (#0)
+> GET / HTTP/1.1
+> Host: localhost:8888
+> User-Agent: curl/7.68.0
+> Accept: */*
+>
+* Mark bundle as not supporting multiuse
+< HTTP/1.1 200 OK
+< Accept-Ranges: bytes
+< Cache-Control: public, max-age=3600
+< Content-Length: 414
+< Content-Security-Policy: script-src 'self'; object-src 'self'
+< Content-Type: text/html; charset=utf-8
+< Etag: ubyGAbz3Tc69bqd3w45d4WQtqoI=
+< Vary: Accept-Encoding
+< X-Chronograf-Version: 1.10.0
+< X-Content-Type-Options: nosniff
+< X-Frame-Options: SAMEORIGIN
+< X-Xss-Protection: 1; mode=block
+< Date: Wed, 18 Jan 2023 13:55:03 GMT
+<
+* Connection #0 to host localhost left intact
 <!DOCTYPE html><html><head><link rel="stylesheet" href="/index.c708214f.css"><meta http-equiv="Content-type" content="text/html; charset=utf-8"><title>Chronograf</title><link rel="icon shortcut" href="/favicon.70d63073.ico"></head><body> <div id="react-root" data-basepath=""></div> <script type="module" src="/index.e81b88ee.js"></script><script src="/index.a6955a67.js" nomodule="" defer></script> </body></html>
 ```
-Страниц `http://localhost:8086/ping` и `http://localhost:9092/kapacitor/v1/ping` нету, хотя 8086 и 9092 доступны и вот уже с них идёт ответ.  
-Скриншот:  
+
+Вывод `curl http://localhost:9092/kapacitor/v1/ping` :
+```
+root@vagrant:/home/vagrant# curl http://localhost:9092/kapacitor/v1/ping -v
+*   Trying 127.0.0.1:9092...
+* TCP_NODELAY set
+* Connected to localhost (127.0.0.1) port 9092 (#0)
+> GET /kapacitor/v1/ping HTTP/1.1
+> Host: localhost:9092
+> User-Agent: curl/7.68.0
+> Accept: */*
+>
+* Mark bundle as not supporting multiuse
+< HTTP/1.1 204 No Content
+< Content-Type: application/json; charset=utf-8
+< Request-Id: 3f23f0ca-9737-11ed-80ab-0242c0a82005
+< X-Kapacitor-Version: 1.6.5
+< Date: Wed, 18 Jan 2023 13:51:45 GMT
+<
+* Connection #0 to host localhost left intact
+```  
+
+Скриншот веб-интерфейса chronograf:  
 <p align="center">
   <img width="1000" height="550" src="./resources/chronograf_1.png">
 </p>  
 
-4. Скриншот:  
+### 4. 
+Скриншот метрик утилизации места на диске:  
 <p align="center">
   <img width="1000" height="550" src="./resources/chronograf_2.png">
 </p>  
 
-5. Как ни пробовал запускать так и не получил данных о контейнерах в списке вывода, по умолчание докер есть в конфигах и по идее его даже не надо добавлять как описано в задании. Всё запускал через sudo, доступ на запись в /var/run/docker.sock раздал, в режиме `:Z` также не получается.
+### 5. 
+Как ни пробовал запускать так и не получил данных о контейнерах в списке вывода, по умолчание докер есть в конфигах и по идее его даже не надо добавлять как описано в задании. Всё запускал через sudo, доступ на запись в /var/run/docker.sock раздал, в режиме `:Z` также не получается.
