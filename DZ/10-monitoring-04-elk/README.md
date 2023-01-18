@@ -57,3 +57,25 @@ Filebeat следует сконфигурировать для отправки
 и источниками из раздела "Дополнительные ссылки" данного ДЗ.
 
 ## Ответы: 
+### 1.
+Пришлось поменять порты logstash (с 5046 на 5044), также прописать сеть для filebeat чтобы он видел хост logstash. Также в compose выставлена команда `command: logstash -f /etc/logstash/conf.d/logstash.conf` для запуска с параметром conf-файла.  
+Скриншот консоли:  
+<p align="center">
+  <img width="1000" height="550" src="./resources/terminal_01.png">
+</p>  
+
+Скриншот интерфейса kibana:  
+<p align="center">
+  <img width="1000" height="550" src="./resources/elk_01.png">
+</p>  
+
+### 2. 
+Скриншот index-patterns:  
+<p align="center">
+  <img width="1000" height="550" src="./resources/elk_02.png">
+</p>  
+
+Скриншот Discover с логом приложения(сортировка по полю message):  
+<p align="center">
+  <img width="1000" height="550" src="./resources/elk_03.png">
+</p>  
