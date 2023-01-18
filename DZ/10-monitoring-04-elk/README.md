@@ -61,7 +61,7 @@ Filebeat следует сконфигурировать для отправки
 Пришлось поменять порты logstash (с 5046 на 5044), также прописать сеть для filebeat чтобы он видел хост logstash. Также в compose выставлена команда `command: logstash -f /etc/logstash/conf.d/logstash.conf` для запуска с параметром conf-файла.  
 Скриншот консоли:  
 <p align="center">
-  <img width="1000" height="550" src="./resources/terminal_01.png">
+  <img width="1000" height="200" src="./resources/terminal_01.png">
 </p>  
 
 Скриншот интерфейса kibana:  
