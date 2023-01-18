@@ -182,4 +182,7 @@ root@vagrant:/home/vagrant# curl http://localhost:9092/kapacitor/v1/ping -v
 </p>  
 
 ### 5. 
-Как ни пробовал запускать так и не получил данных о контейнерах в списке вывода, по умолчание докер есть в конфигах и по идее его даже не надо добавлять как описано в задании. Всё запускал через sudo, доступ на запись в /var/run/docker.sock раздал, в режиме `:Z` также не получается.
+Скриншот метрик Docker:  
+<p align="center">
+  <img width="1000" height="550" src="./resources/chronograf_3.png">
+</p>  
