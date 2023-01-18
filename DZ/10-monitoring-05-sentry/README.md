@@ -69,5 +69,5 @@ Free cloud account имеет следующие ограничения:
 ### 3.
 Скриншот тела сообщения из оповещения на почте:  
 <p align="center">
-  <img width="1000" height="550" src="./resources/Sentry_04.png">
+  <img width="1000" height="550" src="./resources/Sentry_4.png">
 </p>  
