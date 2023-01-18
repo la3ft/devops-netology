@@ -50,7 +50,24 @@ Free cloud account имеет следующие ограничения:
 
 ## Ответы: 
 ### 1.
+Скриншот меню Projects:  
+<p align="center">
+  <img width="1000" height="200" src="./resources/Sentry_01.png">
+</p>  
 
 ### 2.
+Скриншот `Stack trace`:  
+<p align="center">
+  <img width="1000" height="200" src="./resources/Sentry_02.png">
+</p>  
+
+Скриншот списка событий проекта:  
+<p align="center">
+  <img width="1000" height="200" src="./resources/Sentry_03.png">
+</p>  
 
 ### 3.
+Скриншот тела сообщения из оповещения на почте:  
+<p align="center">
+  <img width="1000" height="200" src="./resources/Sentry_04.png">
+</p>  
