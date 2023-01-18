@@ -52,7 +52,7 @@ Free cloud account имеет следующие ограничения:
 ### 1.
 Скриншот меню Projects:  
 <p align="center">
-  <img width="1000" height="550" src="./resources/Sentry_01.png">
+  <img width="1000" height="550" src="./resources/Sentry_1.png">
 </p>  
 
 ### 2.
