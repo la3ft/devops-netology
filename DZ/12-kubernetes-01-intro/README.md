@@ -63,6 +63,16 @@ kubeconfig: Misconfigured
 WARNING: Your kubectl is pointing to stale minikube-vm.
 ```
 
-### 2. 
+### 2. Усиановлено:
+```
+vagrant@vagrant:~/tst/minikube$ vim server.js
+vagrant@vagrant:~/tst/minikube$ vim Dockerfike
+vagrant@vagrant:~/tst/minikube$ sudo docker build /home/vagrant/tst/minikube/
+vagrant@vagrant:~/tst/minikube$ sudo kubectl create deployment node --image=k8s.gcr.io/echoserver:1.4
+deployment.apps/node created
+vagrant@vagrant:~/tst/minikube$ sudo kubectl get deployments
+NAME   READY   UP-TO-DATE   AVAILABLE   AGE
+node   0/1     1            0           6s
+```
 
 ### 3. 
