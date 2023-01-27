@@ -44,7 +44,24 @@
 
 ## Ответы:
 ### 1. Установка
-  Также необходимо установить cri-tools(https://github.com/kubernetes-sigs/cri-tools) и 
+  Также необходимо установить cri-tools(https://github.com/kubernetes-sigs/cri-tools) и cri-dockerd(https://github.com/Mirantis/cri-dockerd)
+```
+vagrant@vagrant:~$ minikube version
+minikube version: v1.28.0
+commit: 986b1ebd987211ed16f8cc10aed7d2c42fc8392f
+
+vagrant@vagrant:~/tst$ minikube status
+E0127 16:24:32.163750   31453 status.go:415] kubeconfig endpoint: extract IP: "minikube" does not appear in /home/vagrant/.kube/config
+minikube
+type: Control Plane
+host: Running
+kubelet: Running
+apiserver: Stopped
+kubeconfig: Misconfigured
+
+
+WARNING: Your kubectl is pointing to stale minikube-vm.
+```
 
 ### 2. 
 
