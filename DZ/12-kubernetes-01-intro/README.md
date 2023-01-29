@@ -95,3 +95,7 @@ vagrant@vagrant:~/tst/minikube$ sudo minikube addons enable dashboard
 ```
 
 ### 3. 
+```
+vagrant@vagrant:~$ curl http://10.0.2.15:32559
+Hello World!
+```
