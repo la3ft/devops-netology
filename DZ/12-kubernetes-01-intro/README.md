@@ -63,16 +63,35 @@ kubeconfig: Misconfigured
 WARNING: Your kubectl is pointing to stale minikube-vm.
 ```
 
-### 2. Усиановлено:
+### 2. Установлено:
 ```
 vagrant@vagrant:~/tst/minikube$ vim server.js
 vagrant@vagrant:~/tst/minikube$ vim Dockerfike
-vagrant@vagrant:~/tst/minikube$ sudo docker build /home/vagrant/tst/minikube/
-vagrant@vagrant:~/tst/minikube$ sudo kubectl create deployment node --image=k8s.gcr.io/echoserver:1.4
-deployment.apps/node created
+vagrant@vagrant:~/tst/minikube$ sudo docker build -t hello-world:latest -f Dockerfile .
+vagrant@vagrant:~/tst/minikube$ kubectl create deployment hello-node --image=hello-world
+deployment.apps/hello-node created
 vagrant@vagrant:~/tst/minikube$ sudo kubectl get deployments
-NAME   READY   UP-TO-DATE   AVAILABLE   AGE
-node   0/1     1            0           6s
+vagrant@vagrant:~/tst/minikube$ sudo kubectl get deployments
+NAME         READY   UP-TO-DATE   AVAILABLE   AGE
+hello-node   0/1     1            0           12s
+vagrant@vagrant:~/tst/minikube$ sudo kubectl expose deployment hello-node --type=LoadBalancer --port=8080
+service/hello-node exposed
+vagrant@vagrant:~/tst/minikube$ sudo kubectl get services
+NAME         TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+hello-node   LoadBalancer   10.103.249.29   <pending>     8080:32559/TCP   11s
+kubernetes   ClusterIP      10.96.0.1       <none>        443/TCP          82s
+vagrant@vagrant:~/tst/minikube$ sudo minikube service hello-node
+|-----------|------------|-------------|------------------------|
+| NAMESPACE |    NAME    | TARGET PORT |          URL           |
+|-----------|------------|-------------|------------------------|
+| default   | hello-node |        8080 | http://10.0.2.15:32559 |
+|-----------|------------|-------------|------------------------|
+🎉  Opening service default/hello-node in default browser...
+👉  http://10.0.2.15:32559
+```
+Аддоны:
+```
+vagrant@vagrant:~/tst/minikube$ sudo minikube addons enable dashboard
 ```
 
 ### 3. 
