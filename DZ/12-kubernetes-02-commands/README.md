@@ -45,4 +45,20 @@ hello-deployment-d6bbf86fc-wlj9s   1/1     Running   0          2m3s
 
 ### 2. 2
 
-### 3. 3
+### 3. Измнено количество реплик.
+Создадим файл hello-deployment.yaml, часть содержимого можно подсмотреть в уже созданном деплойменте - `kubectl edit deployment hello-deployment`. Отредактируем и укажем значение `replicas: 5` в разделе spec. Применим изменения с помощью команды `kubectl apply -f hello-deployment.yaml`.
+```
+root@vagrant:/home/vagrant# kubectl apply -f /home/vagrant/hello-deployment.yaml
+deployment.apps/hello-deployment configured
+```
+Просмотрим результат:
+```
+root@vagrant:/home/vagrant# kubectl get pods
+NAME                               READY   STATUS    RESTARTS   AGE
+hello-deployment-94b846554-czxrm   1/1     Running   0          2m24s
+hello-deployment-94b846554-h5vkw   1/1     Running   0          2m28s
+hello-deployment-94b846554-k9mg2   1/1     Running   0          2m28s
+hello-deployment-94b846554-ktfjl   1/1     Running   0          2m28s
+hello-deployment-94b846554-l5gxk   1/1     Running   0          2m24s
+```
+Также можно изменить количество с помощью команды `kubectl scale --replicas=5 deployment/hello-deployment -n default`.
