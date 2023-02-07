@@ -30,7 +30,18 @@
  * проверить что все поды перешли в статус running (kubectl get pods)
 
 ## Ответы:
-### 1. 1
+### 1. Запуск в deployment.
+```
+root@vagrant:/home/vagrant# kubectl create deployment hello-deployment --image=k8s.gcr.io/echoserver:1.4 --replicas=2
+deployment.apps/hello-deployment created
+root@vagrant:/home/vagrant# kubectl get deployment
+NAME               READY   UP-TO-DATE   AVAILABLE   AGE
+hello-deployment   2/2     2            2           108s
+root@vagrant:/home/vagrant# kubectl get pods
+NAME                               READY   STATUS    RESTARTS   AGE
+hello-deployment-d6bbf86fc-phq5d   1/1     Running   0          2m3s
+hello-deployment-d6bbf86fc-wlj9s   1/1     Running   0          2m3s
+```
 
 ### 2. 2
 
