@@ -64,3 +64,13 @@ all:
 ```
 ansible-playbook -i inventory/mycluster/hosts.yaml cluster.yml -b -v -kK
 ```
+После завершения проверим вывод на мастере:
+```
+root@node1:/home/laft# kubectl get nodes
+NAME    STATUS   ROLES           AGE     VERSION
+node1   Ready    control-plane   7m20s   v1.26.2
+node2   Ready    <none>          6m18s   v1.26.2
+node3   Ready    <none>          6m18s   v1.26.2
+node4   Ready    <none>          6m17s   v1.26.2
+node5   Ready    <none>          6m17s   v1.26.2
+```
