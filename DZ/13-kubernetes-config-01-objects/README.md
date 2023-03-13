@@ -91,16 +91,63 @@ spec:
           - name: POSTGRES_DB
             value: news
 ```
-Применим написанную нами конфигурацию и проверим работу:
+Применим написанную нами конфигурацию:
 ```
-root@node1:/home/laft/manifests# kubectl create -f front_and_back.yaml
+root@node1:/home/vagrant/manifests# kubectl create -f front_and_back.yaml
 deployment.apps/front-and-back created
-root@node1:/home/laft/manifests# kubectl create -f DB.yaml
+root@node1:/home/vagrant/manifests# kubectl create -f DB.yaml
 statefulset.apps/db-01 created
 ```
+Проверим работу:
+```
+root@node1:/home/vagrant/manifests# kubectl get po
+NAME                              READY   STATUS    RESTARTS   AGE
+db-01-0                           1/1     Running   0          11s
+front-and-back-6cb88c57cd-ht46t   2/2     Running   0          7s
+```
+Удалим созданное:
+```
+root@node1:/home/vagrant/manifests# kubectl delete -f front_and_back.yaml
+deployment.apps "front-and-back" deleted
+root@node1:/home/vagrant/manifests# kubectl delete -f DB.yaml
+statefulset.apps "db-01" deleted
+```
+
 ### 2. Создадим общий файл конфигурации с описанием деплойментов и сервисов к ним:
 [prod.yaml](https://github.com/la3ft/devops-netology/blob/main/DZ/13-kubernetes-config-01-objects/manifests/prod.yaml)  
-Применим написанную нами конфигурацию и проверим работу:
+Применим написанную нами конфигурацию:
 ```
-root@node1:/home/laft/manifests# kubectl create -f prod.yaml
+root@node1:/home/vagrant/manifests# kubectl create -f prod.yaml
+statefulset.apps/db-01 created
+service/db-postgres created
+deployment.apps/backend-01 created
+service/backend-srv created
+deployment.apps/frontend-dpl created
+service/frontend-srv created
+```
+  
+Проверим работу:
+```
+root@node1:/home/vagrant/manifests# kubectl get all
+NAME                                READY   STATUS    RESTARTS   AGE
+pod/backend-01-8666db7c4c-pkcxm     1/1     Running   0          2m8s
+pod/db-01-0                         1/1     Running   0          2m8s
+pod/frontend-dpl-5dc795b97b-z444g   1/1     Running   0          2m8s
+
+NAME                   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+service/backend-srv    ClusterIP   10.233.30.114   <none>        9000/TCP   2m8s
+service/db-postgres    ClusterIP   10.233.32.177   <none>        5432/TCP   2m13s
+service/frontend-srv   ClusterIP   10.233.42.76    <none>        8000/TCP   2m8s
+service/kubernetes     ClusterIP   10.233.0.1      <none>        443/TCP    16m
+
+NAME                           READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/backend-01     1/1     1            1           2m8s
+deployment.apps/frontend-dpl   1/1     1            1           2m8s
+
+NAME                                      DESIRED   CURRENT   READY   AGE
+replicaset.apps/backend-01-8666db7c4c     1         1         1       2m8s
+replicaset.apps/frontend-dpl-5dc795b97b   1         1         1       2m8s
+
+NAME                     READY   AGE
+statefulset.apps/db-01   1/1     2m13s
 ```
