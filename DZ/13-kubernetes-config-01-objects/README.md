@@ -23,12 +23,83 @@ docker commit b2b049f342ab la3ft/netology-back
 docker image push la3ft/netology-back
 ...13-kubernetes-config/frontend# docker build -t netology-front .
 docker run -d --name netology-front netology-front
-docker commit 8dbde2dcc600 la3ft/netology-front
+docker commit 198330b8d64f la3ft/netology-front
 docker image push la3ft/netology-front
 ```
 
 https://hub.docker.com/repository/docker/la3ft/netology-back/general
 https://hub.docker.com/repository/docker/la3ft/netology-front/general
 
+Напишем yaml-файл для deployment(front_and_back.yaml) :
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front-and-back
+  labels:
+    app: front-back
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: front-back
+  template:
+    metadata:
+      labels:
+        app: front-back
+    spec:
+      containers:
+      - name: frontend
+        image: la3ft/netology-front
+        ports:
+        - containerPort: 80
+      - name: backend
+        image: la3ft/netology-back
+        ports:
+        - containerPort: 9000
+```
+  
+Напишем yaml-файл для statefulset(DB.yaml) :
+```yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: db-01
+spec:
+  selector:
+    matchLabels:
+      app: db
+  serviceName: "db-postgres"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: db
+        image: postgres:14-alpine
+        ports:
+        - containerPort: 5432
+        env:
+          - name: POSTGRES_PASSWORD
+            value: postgres
+          - name: POSTGRES_USER
+            value: postgres
+          - name: POSTGRES_DB
+            value: news
+```
+Применим написанную нами конфигурацию:
+```
+root@node1:/home/laft/manifests# kubectl create -f front_and_back.yaml
+deployment.apps/front-and-back created
+root@node1:/home/laft/manifests# kubectl create -f DB.yaml
+statefulset.apps/db-01 created
+```
+### 2. Создадим общий файл конфигурации с описанием деплойментов и сервисов к ним:
 
-### 2. 
+```
+
+```
