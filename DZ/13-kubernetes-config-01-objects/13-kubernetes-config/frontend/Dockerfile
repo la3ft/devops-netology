@@ -1,4 +1,4 @@
-FROM node:lts-buster as builder
+FROM node:16-buster as builder
 
 RUN mkdir /app
 
