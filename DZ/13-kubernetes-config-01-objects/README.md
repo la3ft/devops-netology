@@ -113,8 +113,8 @@ root@node1:/home/vagrant/manifests# kubectl delete -f DB.yaml
 statefulset.apps "db-01" deleted
 ```
 
-### 2. Создадим общий файл конфигурации с описанием деплойментов и сервисов к ним:
-[prod.yaml](https://github.com/la3ft/devops-netology/blob/main/DZ/13-kubernetes-config-01-objects/manifests/prod.yaml)  
+### 2. Создадим общий файл конфигурации с описанием деплойментов и сервисов к ним:  
+Конфигурация - [prod.yaml](https://github.com/la3ft/devops-netology/blob/main/DZ/13-kubernetes-config-01-objects/manifests/prod.yaml)  
 Применим написанную нами конфигурацию:
 ```
 root@node1:/home/vagrant/manifests# kubectl create -f prod.yaml
