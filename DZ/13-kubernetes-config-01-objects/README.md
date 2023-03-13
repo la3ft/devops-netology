@@ -91,7 +91,7 @@ spec:
           - name: POSTGRES_DB
             value: news
 ```
-Применим написанную нами конфигурацию:
+Применим написанную нами конфигурацию и проверим работу:
 ```
 root@node1:/home/laft/manifests# kubectl create -f front_and_back.yaml
 deployment.apps/front-and-back created
@@ -99,7 +99,8 @@ root@node1:/home/laft/manifests# kubectl create -f DB.yaml
 statefulset.apps/db-01 created
 ```
 ### 2. Создадим общий файл конфигурации с описанием деплойментов и сервисов к ним:
-
+[prod.yaml](https://github.com/la3ft/devops-netology/blob/main/DZ/13-kubernetes-config-01-objects/manifests/prod.yaml)  
+Применим написанную нами конфигурацию и проверим работу:
 ```
-
+root@node1:/home/laft/manifests# kubectl create -f prod.yaml
 ```
