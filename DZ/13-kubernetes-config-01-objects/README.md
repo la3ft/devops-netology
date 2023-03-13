@@ -27,7 +27,7 @@ docker commit 198330b8d64f la3ft/netology-front
 docker image push la3ft/netology-front
 ```
 
-https://hub.docker.com/repository/docker/la3ft/netology-back/general
+https://hub.docker.com/repository/docker/la3ft/netology-back/general  
 https://hub.docker.com/repository/docker/la3ft/netology-front/general
 
 Напишем yaml-файл для deployment(front_and_back.yaml) :
