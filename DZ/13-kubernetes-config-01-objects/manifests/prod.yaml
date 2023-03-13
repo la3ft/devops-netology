@@ -1,0 +1,132 @@
+# DB StatefulSet
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: db-01
+spec:
+  selector:
+     matchLabels:
+       app: db
+  serviceName: "db-postgres"
+  replicas: 1
+  template:
+     metadata:
+       labels:
+         app: db
+     spec:
+       terminationGracePeriodSeconds: 10
+       containers:
+       - name: db
+         image: postgres:14-alpine
+         ports:
+         - containerPort: 5432
+         env:
+           - name: POSTGRES_PASSWORD
+             value: postgres
+           - name: POSTGRES_USER
+             value: postgres
+           - name: POSTGRES_DB
+             value: news
+
+# DB service
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-postgres
+spec:
+  selector:
+     app: db
+  ports:
+     - protocol: TCP
+       port: 5432
+       targetPort: 5432
+
+# Backend deployment
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-01
+  labels:
+     app: backend
+spec:
+  replicas: 1
+  selector:
+     matchLabels:
+       app: backend
+  template:
+     metadata:
+       labels:
+         app: backend
+     spec:
+       containers:
+       - name: backend
+         image: la3ft/netology-back
+         ports:
+         - containerPort: 9000
+         env:
+           - name: DATABASE_URL
+             value: postgres://postgres:postgres@db-postgres:5432/news
+
+# Backend service
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-srv
+spec:
+  selector:
+     app: backend
+  ports:
+     - protocol: TCP
+       port: 9000
+       targetPort: 9000
+
+# Frontend deployment
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-dpl
+  labels:
+     app: frontend
+spec:
+  replicas: 1
+  selector:
+     matchLabels:
+       app: frontend
+  template:
+     metadata:
+       labels:
+         app: frontend
+     spec:
+       containers:
+       - name: frontend
+         image: la3ft/netology-front
+         ports:
+         - containerPort: 80
+         env:
+           - name: BASE_URL
+             value: http://backend:9000
+
+# Frontend service
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-srv
+spec:
+  selector:
+     app: frontend
+  ports:
+     - name: web
+       protocol: TCP
+       port: 8000
+       targetPort: 80
