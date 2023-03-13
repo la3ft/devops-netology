@@ -15,6 +15,20 @@
 * в окружении бекенда прописан адрес сервиса базы данных.
 
 ## Ответы:
-### 1. 
+### 1. Создадим образы с указанных Dockerfile и закинем их в нашу репу на dockerhub:
+```
+...13-kubernetes-config/backend# docker build -t netology-back .
+docker run -d --name netology-back netology-back
+docker commit b2b049f342ab la3ft/netology-back
+docker image push la3ft/netology-back
+...13-kubernetes-config/frontend# docker build -t netology-front .
+docker run -d --name netology-front netology-front
+docker commit 8dbde2dcc600 la3ft/netology-front
+docker image push la3ft/netology-front
+```
+
+https://hub.docker.com/repository/docker/la3ft/netology-back/general
+https://hub.docker.com/repository/docker/la3ft/netology-front/general
+
 
 ### 2. 
