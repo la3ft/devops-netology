@@ -1,3 +1,17 @@
+# PVC
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-pvc
+spec:
+  storageClassName: "nfs"
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+
 # DB StatefulSet
 ---
 apiVersion: apps/v1
@@ -63,6 +77,10 @@ spec:
        labels:
          app: backend
      spec:
+       volumes:
+       - name: nfs
+         persistentVolumeClaim:
+           claimName: nfs-pvc
        containers:
        - name: backend
          image: la3ft/netology-back
@@ -71,6 +89,9 @@ spec:
          env:
            - name: DATABASE_URL
              value: postgres://postgres:postgres@db-postgres:5432/news
+         volumeMounts:
+           - name: nfs
+             mountPath: /static
 
 # Backend service
 ---
@@ -106,6 +127,10 @@ spec:
        labels:
          app: frontend
      spec:
+       volumes:
+       - name: nfs
+         persistentVolumeClaim:
+           claimName: nfs-pvc
        containers:
        - name: frontend
          image: la3ft/netology-front
@@ -114,6 +139,9 @@ spec:
          env:
            - name: BASE_URL
              value: http://backend:9000
+         volumeMounts:
+           - name: nfs
+             mountPath: /static
 
 # Frontend service
 ---
