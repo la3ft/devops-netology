@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front-and-back
+  labels:
+    app: front-back
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: front-back
+  template:
+    metadata:
+      labels:
+        app: front-back
+    spec:
+      containers:
+      - name: frontend
+        image: la3ft/netology-front
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: "/static"
+          name: my-volume
+      - name: backend
+        image: la3ft/netology-back
+        ports:
+        - containerPort: 9000
+        volumeMounts:
+        - mountPath: "/static"
+          name: my-volume
+      volumes:
+      - name: my-volume
+        emptyDir: {}
