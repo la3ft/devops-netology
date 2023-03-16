@@ -93,7 +93,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend-dpl
+  name: frontend-0l
   labels:
      app: frontend
 spec:
