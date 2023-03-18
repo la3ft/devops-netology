@@ -3,7 +3,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "helm.fullname" . }}-front
+  name: {{ include "helm.fullname" . }}front-back-db
   labels:
     {{- include "helm.labels" . | nindent 4 }}
 spec:
@@ -71,7 +71,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "helm.fullname" . }}-front
+  name: {{ include "helm.fullname" . }}front-back-db
   labels:
     {{- include "helm.labels" . | nindent 4 }}
     {{- toYaml .Values.labels.frontend | nindent 4 }}
