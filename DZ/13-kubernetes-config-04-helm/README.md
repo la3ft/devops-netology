@@ -16,7 +16,7 @@
 
 ### 1. Создадим чарт:
 ```
-13-kubernetes-config-04-helm$ helm create front-back-db
+/13-kubernetes-config-04-helm$ helm create front-back-db
 Creating front-back-db
 ```
 Добавим описания в созданной папке `front-back-db/templates/` для каждого компонента по отдельности:  
@@ -24,5 +24,16 @@ Creating front-back-db
 [backend.yaml](front-back-db/templates/backend.yaml)  
 [db.yaml](front-back-db/templates/db.yaml)  
 Изменим файл переменных `front-back-db/values.yaml` - [values](front-back-db/values.yaml)  
+Проверим lint'ом:
+```
+/13-kubernetes-config-04-helm# helm lint front-back-db/
+==> Linting front-back-db/
+[INFO] Chart.yaml: icon is recommended
 
+1 chart(s) linted, 0 chart(s) failed
+```
+Запишем манифест на основе созданного нами шаблона
+```
+/13-kubernetes-config-04-helm# helm template front-back-db > front-back-db.yaml
+```
 ### 2. 
