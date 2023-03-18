@@ -2,103 +2,75 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount:
-  frontend: 1
-  backend: 1
-  db: 1
-
-labels:
-  frontend:
-    app: front
+deployment:
   backend:
-    app: back
-  db:
-    app: db
+    replicaCount: 1
+    name: backend
+    image:
+      repository: "la3ft/netology-back"
+      pullPolicy: IfNotPresent
+      tag: "latest"
+    ports:
+      containerPort: 9000
+    env:
+      - name: "DATABASE_URL"
+        value: "postgres://postgres:postgres@db:5432/news"
+    service:
+      port: 9000
 
-persistence:
-  enabled: false
-
-image:
   frontend:
-    repository: la3ft/netology-front
-    pullPolicy: Always
-    tag: "latest"
-  backend:
-    repository: la3ft/netology-back
-    pullPolicy: Always
-    tag: "latest"
-  db:
+    replicaCount: 1
+    name: frontend
+    image:
+      repository: "la3ft/netology-front"
+      pullPolicy: IfNotPresent
+      tag: "latest"
+    ports:
+      containerPort: 80
+    env:
+      - name: "BASE_URL"
+        value: "http://backend:9000"
+    service:
+      port: 80
+
+statefulset:
+  replicaCount: 1
+  name: db
+  image:
     repository: postgres
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     tag: "14-alpine"
-
-env:
-  frontend:
-    - name: BASE_URL
-      value: http://backend:9000
-  backend:
-    - name: DATABASE_URL
-      value: postgres://postgres:postgres@db:5432/news
-  db:
-    - name: POSTGRES_USER
-      value: "postgres"
+  ports:
+    containerPort: 5432
+  env:
     - name: POSTGRES_PASSWORD
-      value: "postgres"
+      value: postgres
+    - name: POSTGRES_USER
+      value: postgres
     - name: POSTGRES_DB
-      value: "news"
-
-imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
-
-serviceAccount:
-  create: true
-  annotations: {}
-  name: ""
-
-podAnnotations: {}
-
-podSecurityContext: {}
-
-securityContext: {}
-
-service:
-  frontend:
-    type: NodePort
-    port: 80
-    targetPort: 8000
-  backend:
-    type: ClusterIP
-    port: 9000
-    targetPort: 9000
-  db:
-    type: ClusterIP
+      value: news
+  service:
     port: 5432
-    targetPort: 5432
 
-endpoint:
-  frontend: 80
-  backend: 9000
-  db: 5432
-
-ingress:
-  enabled: false
-  className: ""
-  annotations: {}
-  hosts:
-    - host: minikube
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-  tls: []
 
 resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
 
 autoscaling:
   enabled: false
   minReplicas: 1
-  maxReplicas: 3
+  maxReplicas: 100
   targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
 
 nodeSelector: {}
 

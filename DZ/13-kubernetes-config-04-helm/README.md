@@ -20,9 +20,9 @@
 Creating front-back-db
 ```
 Добавим описания в созданной папке `front-back-db/templates/` для каждого компонента по отдельности:  
-[frontend.yaml](front-back-db/templates/frontend.yaml)  
-[backend.yaml](front-back-db/templates/backend.yaml)  
-[db.yaml](front-back-db/templates/db.yaml)  
+[frontend.yaml](front-back-db/templates/frontend-srv.yaml)  
+[backend.yaml](front-back-db/templates/backend-srv.yaml)  
+[db.yaml](front-back-db/templates/db-srv.yaml)  
 Изменим файл переменных `front-back-db/values.yaml` - [values](front-back-db/values.yaml)  
 Проверим lint'ом:
 ```

@@ -11,7 +11,7 @@ metadata:
     app.kubernetes.io/version: "1.16.0"
     app.kubernetes.io/managed-by: Helm
 ---
-# Source: front-back-db/templates/backend.yaml
+# Source: front-back-db/templates/backend-srv.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -34,7 +34,7 @@ spec:
     app.kubernetes.io/name: front-back-db
     app.kubernetes.io/instance: release-name
 ---
-# Source: front-back-db/templates/db.yaml
+# Source: front-back-db/templates/db-srv.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -57,7 +57,7 @@ spec:
     app.kubernetes.io/instance: release-name
     app: db
 ---
-# Source: front-back-db/templates/frontend.yaml
+# Source: front-back-db/templates/frontend-srv.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -80,7 +80,7 @@ spec:
     app.kubernetes.io/name: front-back-db
     app.kubernetes.io/instance: release-name
 ---
-# Source: front-back-db/templates/backend.yaml
+# Source: front-back-db/templates/backend-srv.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -132,7 +132,7 @@ spec:
             - name: DATABASE_URL
               value: postgres://postgres:postgres@db:5432/news
 ---
-# Source: front-back-db/templates/frontend.yaml
+# Source: front-back-db/templates/frontend-srv.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -184,7 +184,7 @@ spec:
             - name: BASE_URL
               value: http://backend:9000
 ---
-# Source: front-back-db/templates/db.yaml
+# Source: front-back-db/templates/db-srv.yaml
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:

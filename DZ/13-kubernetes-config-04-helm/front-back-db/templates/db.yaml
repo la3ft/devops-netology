@@ -1,71 +1,27 @@
----
-
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ include "front-back-db.fullname" . }}-db
-  labels:
-    {{- include "front-back-db.labels" . | nindent 4 }}
-    {{- toYaml .Values.labels.db | nindent 4 }}
+  namespace: {{.Values.namespace}}
+  name: {{ .Values.statefulset.name }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount.db }}
-  {{- end }}
   selector:
     matchLabels:
-      {{- include "front-back-db.selectorLabels" . | nindent 6 }}
-      {{- toYaml .Values.labels.db | nindent 6 }}
-  serviceName: {{ include "front-back-db.fullname" . }}-db
+      app: {{ .Values.statefulset.name }}
+  serviceName: {{ .Values.statefulset.name }}
+  replicas: 1
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
-      annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       labels:
-        {{- include "front-back-db.selectorLabels" . | nindent 8 }}
-        {{- toYaml .Values.labels.db | nindent 8 }}
+        app: {{ .Values.statefulset.name }}
     spec:
+      terminationGracePeriodSeconds: 10
       containers:
-        - name: {{ .Chart.Name }}-db
-          image: "{{ .Values.image.db.repository }}:{{ .Values.image.db.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.db.pullPolicy }}
-          volumeMounts:
-              - name: db-data
-                mountPath: /data
-          ports:
-            - containerPort: {{ .Values.endpoint.db }}
-              protocol: TCP
-          env:
-            {{- toYaml .Values.env.db | nindent 12 }}
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-
----
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: {{ include "front-back-db.fullname" . }}-db
-  labels:
-    {{- include "front-back-db.labels" . | nindent 4 }}
-    {{- toYaml .Values.labels.db | nindent 4 }}
-spec:
-  clusterIP: None
-  ports:
-    - port: {{ .Values.service.db.port }}
-      targetPort: {{ .Values.service.db.targetPort }}
-      protocol: TCP
-  selector:
-    {{- include "front-back-db.selectorLabels" . | nindent 4 }}
-    {{- toYaml .Values.labels.db | nindent 4 }}
+      - name: {{ .Values.statefulset.name }}
+        image: {{ .Values.statefulset.image.repository }}:{{ .Values.statefulset.image.tag }}
+        ports:
+        - containerPort: {{ .Values.statefulset.ports.containerPort }}
+        env:
+        {{- range .Values.statefulset.env }}
+          - name: {{ .name }}
+            value: {{ .value }}
+        {{ end }}
