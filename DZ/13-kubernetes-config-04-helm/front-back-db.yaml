@@ -80,28 +80,6 @@ spec:
     app.kubernetes.io/name: front-back-db
     app.kubernetes.io/instance: release-name
 ---
-# Source: front-back-db/templates/service.yaml
-apiVersion: v1
-kind: Service
-metadata:
-  name: release-name-front-back-db
-  labels:
-    helm.sh/chart: front-back-db-0.1.0
-    app.kubernetes.io/name: front-back-db
-    app.kubernetes.io/instance: release-name
-    app.kubernetes.io/version: "1.16.0"
-    app.kubernetes.io/managed-by: Helm
-spec:
-  type: 
-  ports:
-    - port: 
-      targetPort: http
-      protocol: TCP
-      name: http
-  selector:
-    app.kubernetes.io/name: front-back-db
-    app.kubernetes.io/instance: release-name
----
 # Source: front-back-db/templates/backend.yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -153,53 +131,6 @@ spec:
           env:
             - name: DATABASE_URL
               value: postgres://postgres:postgres@db:5432/news
----
-# Source: front-back-db/templates/deployment.yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: release-name-front-back-db
-  labels:
-    helm.sh/chart: front-back-db-0.1.0
-    app.kubernetes.io/name: front-back-db
-    app.kubernetes.io/instance: release-name
-    app.kubernetes.io/version: "1.16.0"
-    app.kubernetes.io/managed-by: Helm
-spec:
-  replicas: map[backend:1 db:1 frontend:1]
-  selector:
-    matchLabels:
-      app.kubernetes.io/name: front-back-db
-      app.kubernetes.io/instance: release-name
-  template:
-    metadata:
-      labels:
-        app.kubernetes.io/name: front-back-db
-        app.kubernetes.io/instance: release-name
-    spec:
-      serviceAccountName: release-name-front-back-db
-      securityContext:
-        {}
-      containers:
-        - name: front-back-db
-          securityContext:
-            {}
-          image: ":1.16.0"
-          imagePullPolicy: 
-          ports:
-            - name: http
-              containerPort: 
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
-          resources:
-            {}
 ---
 # Source: front-back-db/templates/frontend.yaml
 apiVersion: apps/v1
