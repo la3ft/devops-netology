@@ -1,16 +1,4 @@
 ---
-# Source: front-back-db/templates/serviceaccount.yaml
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: release-name-front-back-db
-  labels:
-    helm.sh/chart: front-back-db-0.1.0
-    app.kubernetes.io/name: front-back-db
-    app.kubernetes.io/instance: release-name
-    app.kubernetes.io/version: "1.16.0"
-    app.kubernetes.io/managed-by: Helm
----
 # Source: front-back-db/templates/backend.yaml
 apiVersion: v1
 kind: Service
