@@ -11,4 +11,15 @@
 
 ## Ответ:
 
-### 1. 
+### 1. Установим Qbec: 
+```
+/13-kubernetes-config-05-qbec# wget https://github.com/splunk/qbec/releases/download/v0.15.2/qbec-linux-amd64.tar.gz
+/13-kubernetes-config-05-qbec# tar -xzf qbec-linux-amd64.tar.gz -C /home/vagrant/qbec
+/13-kubernetes-config-05-qbec# mv /home/vagrant/qbec /usr/local
+/13-kubernetes-config-05-qbec# export PATH=$PATH:/usr/local/qbec
+```
+  
+Инициализируем создание структуры папок:
+```
+/13-kubernetes-config-05-qbec# qbec init front-back-db --with-example
+```
