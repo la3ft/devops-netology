@@ -19,6 +19,10 @@
 13-kubernetes-config-04-helm$ helm create front-back-db
 Creating front-back-db
 ```
-
+Добавим описания в созданной папке `front-back-db/templates/` для каждого компонента по отдельности:  
+[frontend.yaml](front-back-db/templates/frontend.yaml)  
+[backend.yaml](front-back-db/templates/backend.yaml)  
+[db.yaml](front-back-db/templates/db.yaml)  
+Изменим файл переменных `front-back-db/values.yaml` - [values](front-back-db/values.yaml)  
 
 ### 2. 
