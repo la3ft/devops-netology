@@ -1,0 +1,107 @@
+# Default values for helm.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount:
+  frontend: 1
+  backend: 1
+  db: 1
+
+labels:
+  frontend:
+    app: front
+  backend:
+    app: back
+  db:
+    app: db
+
+persistence:
+  enabled: false
+
+image:
+  frontend:
+    repository: la3ft/netology-front
+    pullPolicy: Always
+    tag: "latest"
+  backend:
+    repository: la3ft/netology-back
+    pullPolicy: Always
+    tag: "latest"
+  db:
+    repository: postgres
+    pullPolicy: Always
+    tag: "14-alpine"
+
+env:
+  frontend:
+    - name: BASE_URL
+      value: http://backend:9000
+  backend:
+    - name: DATABASE_URL
+      value: postgres://postgres:postgres@db:5432/news
+  db:
+    - name: POSTGRES_USER
+      value: "postgres"
+    - name: POSTGRES_PASSWORD
+      value: "postgres"
+    - name: POSTGRES_DB
+      value: "news"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+
+securityContext: {}
+
+service:
+  frontend:
+    type: NodePort
+    port: 80
+    targetPort: 8000
+  backend:
+    type: ClusterIP
+    port: 9000
+    targetPort: 9000
+  db:
+    type: ClusterIP
+    port: 5432
+    targetPort: 5432
+
+endpoint:
+  frontend: 80
+  backend: 9000
+  db: 5432
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: minikube
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+
+resources: {}
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

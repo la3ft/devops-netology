@@ -14,6 +14,11 @@
 
 ## Ответы:
 
-### 1. 
+### 1. Создадим чарт:
+```
+13-kubernetes-config-04-helm$ helm create front-back-db
+Creating front-back-db
+```
+
 
 ### 2. 

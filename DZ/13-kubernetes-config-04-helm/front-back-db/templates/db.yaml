@@ -1,0 +1,82 @@
+---
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "helm.fullname" . }}
+  labels:
+    {{- include "helm.labels" . | nindent 4 }}
+    {{- toYaml .Values.labels.db | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount.db }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "helm.selectorLabels" . | nindent 6 }}
+      {{- toYaml .Values.labels.db | nindent 6 }}
+  serviceName: {{ include "helm.fullname" . }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "helm.selectorLabels" . | nindent 8 }}
+        {{- toYaml .Values.labels.db | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}-db
+          image: "{{ .Values.image.db.repository }}:{{ .Values.image.db.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.db.pullPolicy }}
+          volumeMounts:
+              - name: db-data
+                mountPath: /data
+          ports:
+            - containerPort: {{ .Values.endpoint.db }}
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            {{- toYaml .Values.env.db | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      volumes:
+      - name: db-data
+      {{- if .Values.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: prod-nfs-pvc
+          claimName: {{ .Values.persistence.existingClaim | default (include "helm.fullname" .) }}
+      {{- else }}
+          emptyDir: {}
+      {{ end }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "helm.fullname" . }}
+  labels:
+    {{- include "helm.labels" . | nindent 4 }}
+    {{- toYaml .Values.labels.db | nindent 4 }}
+spec:
+  clusterIP: None
+  ports:
+    - port: {{ .Values.service.db.port }}
+      targetPort: {{ .Values.service.db.targetPort }}
+      protocol: TCP
+  selector:
+    {{- include "helm.selectorLabels" . | nindent 4 }}
+    {{- toYaml .Values.labels.db | nindent 4 }}
