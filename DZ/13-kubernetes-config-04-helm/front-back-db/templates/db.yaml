@@ -3,9 +3,9 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ include "helm.fullname" . }}
+  name: {{ include "front-back-db.fullname" . }}
   labels:
-    {{- include "helm.labels" . | nindent 4 }}
+    {{- include "front-back-db.labels" . | nindent 4 }}
     {{- toYaml .Values.labels.db | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
@@ -13,9 +13,9 @@ spec:
   {{- end }}
   selector:
     matchLabels:
-      {{- include "helm.selectorLabels" . | nindent 6 }}
+      {{- include "front-back-db.selectorLabels" . | nindent 6 }}
       {{- toYaml .Values.labels.db | nindent 6 }}
-  serviceName: {{ include "helm.fullname" . }}
+  serviceName: {{ include "front-back-db.fullname" . }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -23,7 +23,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "helm.selectorLabels" . | nindent 8 }}
+        {{- include "front-back-db.selectorLabels" . | nindent 8 }}
         {{- toYaml .Values.labels.db | nindent 8 }}
     spec:
       containers:
@@ -46,7 +46,7 @@ spec:
       {{- if .Values.persistence.enabled }}
         persistentVolumeClaim:
           claimName: prod-nfs-pvc
-          claimName: {{ .Values.persistence.existingClaim | default (include "helm.fullname" .) }}
+          claimName: {{ .Values.persistence.existingClaim | default (include "front-back-db.fullname" .) }}
       {{- else }}
           emptyDir: {}
       {{ end }}
@@ -67,9 +67,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "helm.fullname" . }}
+  name: {{ include "front-back-db.fullname" . }}
   labels:
-    {{- include "helm.labels" . | nindent 4 }}
+    {{- include "front-back-db.labels" . | nindent 4 }}
     {{- toYaml .Values.labels.db | nindent 4 }}
 spec:
   clusterIP: None
@@ -78,5 +78,5 @@ spec:
       targetPort: {{ .Values.service.db.targetPort }}
       protocol: TCP
   selector:
-    {{- include "helm.selectorLabels" . | nindent 4 }}
+    {{- include "front-back-db.selectorLabels" . | nindent 4 }}
     {{- toYaml .Values.labels.db | nindent 4 }}
