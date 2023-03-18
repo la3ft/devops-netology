@@ -1,0 +1,322 @@
+---
+# Source: front-back-db/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: release-name-front-back-db
+  labels:
+    helm.sh/chart: front-back-db-0.1.0
+    app.kubernetes.io/name: front-back-db
+    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+---
+# Source: front-back-db/templates/backend.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: release-name-front-back-db
+  labels:
+    helm.sh/chart: front-back-db-0.1.0
+    app.kubernetes.io/name: front-back-db
+    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+    app: back
+spec:
+  type: ClusterIP
+  ports:
+    - port: 9000
+      targetPort: 9000
+      protocol: TCP
+      name: backend
+  selector:
+    app.kubernetes.io/name: front-back-db
+    app.kubernetes.io/instance: release-name
+---
+# Source: front-back-db/templates/db.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: release-name-front-back-db
+  labels:
+    helm.sh/chart: front-back-db-0.1.0
+    app.kubernetes.io/name: front-back-db
+    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+    app: db
+spec:
+  clusterIP: None
+  ports:
+    - port: 5432
+      targetPort: 5432
+      protocol: TCP
+  selector:
+    app.kubernetes.io/name: front-back-db
+    app.kubernetes.io/instance: release-name
+    app: db
+---
+# Source: front-back-db/templates/frontend.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: release-name-front-back-db
+  labels:
+    helm.sh/chart: front-back-db-0.1.0
+    app.kubernetes.io/name: front-back-db
+    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+    app: front
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 8000
+      protocol: TCP
+      name: frontend
+  selector:
+    app.kubernetes.io/name: front-back-db
+    app.kubernetes.io/instance: release-name
+---
+# Source: front-back-db/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: release-name-front-back-db
+  labels:
+    helm.sh/chart: front-back-db-0.1.0
+    app.kubernetes.io/name: front-back-db
+    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: 
+  ports:
+    - port: 
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: front-back-db
+    app.kubernetes.io/instance: release-name
+---
+# Source: front-back-db/templates/backend.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: release-name-front-back-db
+  labels:
+    helm.sh/chart: front-back-db-0.1.0
+    app.kubernetes.io/name: front-back-db
+    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: front-back-db
+      app.kubernetes.io/instance: release-name
+      app: back
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: front-back-db
+        app.kubernetes.io/instance: release-name
+        app: back
+    spec:
+      serviceAccountName: release-name-front-back-db
+      securityContext:
+        {}
+      containers:
+        - name: front-back-db
+          securityContext:
+            {}
+          image: "la3ft/netology-back:latest"
+          imagePullPolicy: Always
+          ports:
+            - name: backend
+              containerPort: 9000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /news
+              port: 9000
+          readinessProbe:
+            httpGet:
+              path: /news
+              port: 9000
+          resources:
+            {}
+          env:
+            - name: DATABASE_URL
+              value: postgres://postgres:postgres@db:5432/news
+---
+# Source: front-back-db/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: release-name-front-back-db
+  labels:
+    helm.sh/chart: front-back-db-0.1.0
+    app.kubernetes.io/name: front-back-db
+    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: map[backend:1 db:1 frontend:1]
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: front-back-db
+      app.kubernetes.io/instance: release-name
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: front-back-db
+        app.kubernetes.io/instance: release-name
+    spec:
+      serviceAccountName: release-name-front-back-db
+      securityContext:
+        {}
+      containers:
+        - name: front-back-db
+          securityContext:
+            {}
+          image: ":1.16.0"
+          imagePullPolicy: 
+          ports:
+            - name: http
+              containerPort: 
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {}
+---
+# Source: front-back-db/templates/frontend.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: release-name-front-back-db
+  labels:
+    helm.sh/chart: front-back-db-0.1.0
+    app.kubernetes.io/name: front-back-db
+    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: front-back-db
+      app.kubernetes.io/instance: release-name
+      app: front
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: front-back-db
+        app.kubernetes.io/instance: release-name
+        app: front
+    spec:
+      serviceAccountName: release-name-front-back-db
+      securityContext:
+        {}
+      containers:
+        - name: front-back-db-front
+          securityContext:
+            {}
+          image: "la3ft/netology-front:latest"
+          imagePullPolicy: Always
+          ports:
+            - name: frontend
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+          resources:
+            {}
+          env:
+            - name: BASE_URL
+              value: http://backend:9000
+---
+# Source: front-back-db/templates/db.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: release-name-front-back-db
+  labels:
+    helm.sh/chart: front-back-db-0.1.0
+    app.kubernetes.io/name: front-back-db
+    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+    app: db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: front-back-db
+      app.kubernetes.io/instance: release-name
+      app: db
+  serviceName: release-name-front-back-db
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: front-back-db
+        app.kubernetes.io/instance: release-name
+        app: db
+    spec:
+      containers:
+        - name: front-back-db-db
+          image: "postgres:14-alpine"
+          imagePullPolicy: Always
+          volumeMounts:
+              - name: db-data
+                mountPath: /data
+          ports:
+            - containerPort: 5432
+              protocol: TCP
+          resources:
+            {}
+          env:
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
+            - name: POSTGRES_DB
+              value: news
+---
+# Source: front-back-db/templates/tests/test-connection.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "release-name-front-back-db-test-connection"
+  labels:
+    helm.sh/chart: front-back-db-0.1.0
+    app.kubernetes.io/name: front-back-db
+    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['release-name-front-back-db:']
+  restartPolicy: Never
