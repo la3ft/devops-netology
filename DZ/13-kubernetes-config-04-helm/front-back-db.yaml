@@ -15,7 +15,7 @@ metadata:
 apiVersion: v1
 kind: Service
 metadata:
-  name: release-name-front-back-db
+  name: release-name-front-back-db-back
   labels:
     helm.sh/chart: front-back-db-0.1.0
     app.kubernetes.io/name: front-back-db
@@ -38,7 +38,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: release-name-front-back-db
+  name: release-name-front-back-db-db
   labels:
     helm.sh/chart: front-back-db-0.1.0
     app.kubernetes.io/name: front-back-db
@@ -61,7 +61,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: release-name-front-back-db
+  name: release-name-front-back-db-front
   labels:
     helm.sh/chart: front-back-db-0.1.0
     app.kubernetes.io/name: front-back-db
@@ -84,7 +84,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: release-name-front-back-db
+  name: release-name-front-back-db-back
   labels:
     helm.sh/chart: front-back-db-0.1.0
     app.kubernetes.io/name: front-back-db
@@ -136,7 +136,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: release-name-front-back-db
+  name: release-name-front-back-db-front
   labels:
     helm.sh/chart: front-back-db-0.1.0
     app.kubernetes.io/name: front-back-db
@@ -188,7 +188,7 @@ spec:
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: release-name-front-back-db
+  name: release-name-front-back-db-db
   labels:
     helm.sh/chart: front-back-db-0.1.0
     app.kubernetes.io/name: front-back-db
@@ -203,7 +203,7 @@ spec:
       app.kubernetes.io/name: front-back-db
       app.kubernetes.io/instance: release-name
       app: db
-  serviceName: release-name-front-back-db
+  serviceName: release-name-front-back-db-db
   template:
     metadata:
       labels:
@@ -221,8 +221,6 @@ spec:
           ports:
             - containerPort: 5432
               protocol: TCP
-          resources:
-            {}
           env:
             - name: POSTGRES_USER
               value: postgres
