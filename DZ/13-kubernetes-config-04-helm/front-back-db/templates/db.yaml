@@ -3,7 +3,7 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ include "front-back-db.fullname" . }}
+  name: {{ include "front-back-db.fullname" . }}-db
   labels:
     {{- include "front-back-db.labels" . | nindent 4 }}
     {{- toYaml .Values.labels.db | nindent 4 }}
@@ -15,7 +15,7 @@ spec:
     matchLabels:
       {{- include "front-back-db.selectorLabels" . | nindent 6 }}
       {{- toYaml .Values.labels.db | nindent 6 }}
-  serviceName: {{ include "front-back-db.fullname" . }}
+  serviceName: {{ include "front-back-db.fullname" . }}-db
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -36,20 +36,9 @@ spec:
           ports:
             - containerPort: {{ .Values.endpoint.db }}
               protocol: TCP
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
           env:
             {{- toYaml .Values.env.db | nindent 12 }}
       {{- with .Values.nodeSelector }}
-      volumes:
-      - name: db-data
-      {{- if .Values.persistence.enabled }}
-        persistentVolumeClaim:
-          claimName: prod-nfs-pvc
-          claimName: {{ .Values.persistence.existingClaim | default (include "front-back-db.fullname" .) }}
-      {{- else }}
-          emptyDir: {}
-      {{ end }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
@@ -67,7 +56,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "front-back-db.fullname" . }}
+  name: {{ include "front-back-db.fullname" . }}-db
   labels:
     {{- include "front-back-db.labels" . | nindent 4 }}
     {{- toYaml .Values.labels.db | nindent 4 }}
