@@ -9,7 +9,7 @@ spec:
       server: https://127.0.0.1:6443
       excludes:
         - endpoint
-    production:
+    prod:
       defaultNamespace: prod
       server: https://127.0.0.1:6443
   vars: {}
