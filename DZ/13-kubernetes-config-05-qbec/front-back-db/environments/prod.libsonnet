@@ -11,6 +11,9 @@ prod {
     },
     db +: {
       replicas: 3,
+    },
+    endpoint: {
+      address: "158.160.58.47"
     }
   }
 }
