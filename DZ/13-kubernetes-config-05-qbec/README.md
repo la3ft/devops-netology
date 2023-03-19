@@ -24,3 +24,12 @@
 ```
 /13-kubernetes-config-05-qbec# qbec init front-back-db --with-example
 ```
+
+Напишем наши компоненты в формате jsonnet `(front-back-db/components/)`:  
+[backend.jsonnet](front-back-db/components/backend.jsonnet)  
+[db.jsonnet](front-back-db/components/db.jsonnet)  
+[frontend.jsonnet](front-back-db/components/frontend.jsonnet)  
+  
+Создадим файлы окружения:  
+[stage.libsonnet](front-back-db/environments/stage.libsonnet)  
+[prod.libsonnet](front-back-db/environments/prod.libsonnet)  
