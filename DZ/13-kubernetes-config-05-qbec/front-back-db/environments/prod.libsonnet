@@ -1,5 +1,5 @@
 
-local production = import './stage.libsonnet';
+local prod = import './stage.libsonnet';
 
 prod {
   components +: {
