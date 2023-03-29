@@ -99,3 +99,5 @@ True
 ... )
 {'request_id': '02c0aaff-4e0c-60d1-7a3c-734c73528883', 'lease_id': '', 'renewable': False, 'lease_duration': 0, 'data': {'data': {'netology': 'Big secret!!!'}, 'metadata': {'created_time': '2023-03-29T13:07:08.793673756Z', 'custom_metadata': None, 'deletion_time': '', 'destroyed': False, 'version': 2}}, 'wrap_info': None, 'warnings': None, 'auth': None}
 ```
+  
+*Примечание: https://gitlab.com/k11s-os/k8s-lessons/-/tree/main/Vault*
