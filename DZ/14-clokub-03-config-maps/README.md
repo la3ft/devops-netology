@@ -94,6 +94,7 @@ BinaryData
 ====
 
 Events:  <none>
+
 /14-clokub-03-config-maps# kubectl get configmap nginx-config -o yaml
 apiVersion: v1
 data:
