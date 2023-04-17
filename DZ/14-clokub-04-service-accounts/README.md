@@ -44,51 +44,8 @@ kubectl delete serviceaccount netology
 kubectl apply -f netology.yml
 ```
 
-## Задача 2 (*): Работа с сервис-акаунтами внутри модуля
 
-Выбрать любимый образ контейнера, подключить сервис-акаунты и проверить
-доступность API Kubernetes
-
-```
-kubectl run -i --tty fedora --image=fedora --restart=Never -- sh
-```
-
-Просмотреть переменные среды
-
-```
-env | grep KUBE
-```
-
-Получить значения переменных
-
-```
-K8S=https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT
-SADIR=/var/run/secrets/kubernetes.io/serviceaccount
-TOKEN=$(cat $SADIR/token)
-CACERT=$SADIR/ca.crt
-NAMESPACE=$(cat $SADIR/namespace)
-```
-
-Подключаемся к API
-
-```
-curl -H "Authorization: Bearer $TOKEN" --cacert $CACERT $K8S/api/v1/
-```
-
-В случае с minikube может быть другой адрес и порт, который можно взять здесь
-
-```
-cat ~/.kube/config
-```
-
-или здесь
-
-```
-kubectl cluster-info
-```
-
-## Ответы:
+## Ответ:
 
 ### 1. 
-
-### 2. 
+ 
